@@ -1,0 +1,14 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "e2e"
+# Security fixes in transitive dependencies (SEC-18): fflate via satori (GHSA-px8p-9vwx-vf98),
+# esbuild via drizzle-kit's @esbuild-kit loader (GHSA-67mh-4wv8-2f99).
+overrides:
+  fflate: ">=0.7.5"
+  "esbuild@<0.25.0": ">=0.25.0"
+onlyBuiltDependencies:
+  - better-sqlite3
+  - esbuild
+  - "@biomejs/biome"
+  - "@resvg/resvg-js"

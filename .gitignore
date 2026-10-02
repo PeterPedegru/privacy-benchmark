@@ -1,0 +1,62 @@
+# Planning docs and private research stay local, never committed
+plans/
+
+# Secrets and environment files (only the example is committed)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.crt
+secrets/
+.claude/settings.local.json
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Builds and caches
+dist/
+apps/server/.bundle-*/
+build/
+.turbo/
+.vite/
+*.tsbuildinfo
+apps/web/src/routeTree.gen.ts
+
+# Local data: SQLite database, fetched sources, evaluation outputs
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+evals/results/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Tests
+coverage/
+playwright-report/
+test-results/
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# Throwaway scripts (reviews, local experiments)
+apps/server/src/scripts/_*.ts
+apps/server/scripts/_*.mjs
+
+# Agent worktrees
+.claude/worktrees/
+
+# The hand-labelled golden set quotes private research and stays out of the public repository.
+evals/golden/

@@ -1,0 +1,655 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`sample dataset (pinned scores) > scores example-coprocessor.json as pinned > example-coprocessor 1`] = `
+{
+  "complete": true,
+  "level": "L1",
+  "overall": 25.986,
+  "rubricVersion": "1.3.0",
+  "suites": {
+    "coverage": {
+      "benchmarks": {
+        "coverage.anonymity-set": {
+          "rules": [],
+          "score": 27,
+          "unknown": 0,
+        },
+        "coverage.callstack": {
+          "rules": [],
+          "score": 0,
+          "unknown": 0,
+        },
+        "coverage.confidentiality": {
+          "rules": [],
+          "score": 33,
+          "unknown": 0,
+        },
+        "coverage.execution": {
+          "rules": [],
+          "score": 39,
+          "unknown": 0,
+        },
+        "coverage.identity": {
+          "rules": [],
+          "score": 18,
+          "unknown": 0,
+        },
+        "coverage.metadata": {
+          "rules": [],
+          "score": 36,
+          "unknown": 0,
+        },
+        "coverage.unlinkability": {
+          "rules": [],
+          "score": 38,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 29.65,
+    },
+    "custody": {
+      "benchmarks": {
+        "custody.access": {
+          "rules": [],
+          "score": 50,
+          "unknown": 0,
+        },
+        "custody.exit": {
+          "rules": [],
+          "score": 43,
+          "unknown": 0,
+        },
+        "custody.freeze": {
+          "rules": [],
+          "score": 10,
+          "unknown": 0,
+        },
+        "custody.pause": {
+          "rules": [],
+          "score": 18,
+          "unknown": 0,
+        },
+        "custody.self-custody": {
+          "rules": [],
+          "score": 35,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 27.6,
+    },
+    "decentralization": {
+      "benchmarks": {
+        "decentralization.censorship": {
+          "rules": [],
+          "score": 15,
+          "unknown": 0,
+        },
+        "decentralization.operators": {
+          "rules": [],
+          "score": 16,
+          "unknown": 0,
+        },
+        "decentralization.proving": {
+          "rules": [],
+          "score": 35,
+          "unknown": 0,
+        },
+        "decentralization.settlement": {
+          "rules": [],
+          "score": 20,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 20.3,
+    },
+    "governance": {
+      "benchmarks": {
+        "governance.process": {
+          "rules": [],
+          "score": 25,
+          "unknown": 0,
+        },
+        "governance.roles": {
+          "rules": [],
+          "score": 5,
+          "unknown": 0,
+        },
+        "governance.upgrades": {
+          "rules": [],
+          "score": 20,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 16,
+    },
+    "programmability": {
+      "benchmarks": {
+        "programmability.blending": {
+          "rules": [],
+          "score": 30,
+          "unknown": 0,
+        },
+        "programmability.composability": {
+          "rules": [],
+          "score": 50,
+          "unknown": 0,
+        },
+        "programmability.contracts": {
+          "rules": [],
+          "score": 28,
+          "unknown": 0,
+        },
+        "programmability.developer": {
+          "rules": [],
+          "score": 42,
+          "unknown": 0,
+        },
+        "programmability.disclosure": {
+          "rules": [],
+          "score": 30,
+          "unknown": 0,
+        },
+        "programmability.performance": {
+          "rules": [],
+          "score": 27,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 34.35,
+    },
+    "security": {
+      "benchmarks": {
+        "security.assurance": {
+          "rules": [],
+          "score": 43,
+          "unknown": 1,
+        },
+        "security.maturity": {
+          "rules": [],
+          "score": 10,
+          "unknown": 0,
+        },
+        "security.soundness": {
+          "rules": [],
+          "score": 15,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 21.9,
+    },
+    "trust": {
+      "benchmarks": {
+        "trust.crypto": {
+          "rules": [],
+          "score": 33,
+          "unknown": 0,
+        },
+        "trust.decryption": {
+          "rules": [],
+          "score": 33,
+          "unknown": 0,
+        },
+        "trust.disclosure": {
+          "rules": [],
+          "score": 0,
+          "unknown": 1,
+        },
+      },
+      "rules": [],
+      "score": 24.75,
+    },
+  },
+  "trustTier": "C",
+  "walkaway": {
+    "notes": [
+      "Leaving privately can be gated by a third party; the public exit always works",
+    ],
+    "passed": false,
+    "reasons": [
+      "A single party can halt the system, and there is no live permissionless exit",
+      "Spending needs a party other than the user",
+    ],
+  },
+}
+`;
+
+exports[`sample dataset (pinned scores) > scores example-pool.json as pinned > example-pool 1`] = `
+{
+  "complete": true,
+  "level": "L1",
+  "overall": 52.112,
+  "rubricVersion": "1.3.0",
+  "suites": {
+    "coverage": {
+      "benchmarks": {
+        "coverage.anonymity-set": {
+          "rules": [],
+          "score": 41,
+          "unknown": 0,
+        },
+        "coverage.callstack": {
+          "rules": [],
+          "score": 62,
+          "unknown": 0,
+        },
+        "coverage.confidentiality": {
+          "rules": [],
+          "score": 80,
+          "unknown": 0,
+        },
+        "coverage.execution": {
+          "rules": [],
+          "score": 56,
+          "unknown": 0,
+        },
+        "coverage.identity": {
+          "rules": [],
+          "score": 85,
+          "unknown": 0,
+        },
+        "coverage.metadata": {
+          "rules": [],
+          "score": 61,
+          "unknown": 0,
+        },
+        "coverage.unlinkability": {
+          "rules": [],
+          "score": 38,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 58,
+    },
+    "custody": {
+      "benchmarks": {
+        "custody.access": {
+          "rules": [],
+          "score": 50,
+          "unknown": 0,
+        },
+        "custody.exit": {
+          "rules": [],
+          "score": 63,
+          "unknown": 0,
+        },
+        "custody.freeze": {
+          "rules": [],
+          "score": 55,
+          "unknown": 0,
+        },
+        "custody.pause": {
+          "rules": [],
+          "score": 45,
+          "unknown": 0,
+        },
+        "custody.self-custody": {
+          "rules": [],
+          "score": 30,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 48.6,
+    },
+    "decentralization": {
+      "benchmarks": {
+        "decentralization.censorship": {
+          "rules": [],
+          "score": 54,
+          "unknown": 0,
+        },
+        "decentralization.operators": {
+          "rules": [],
+          "score": 45,
+          "unknown": 1,
+        },
+        "decentralization.proving": {
+          "rules": [],
+          "score": 35,
+          "unknown": 0,
+        },
+        "decentralization.settlement": {
+          "rules": [],
+          "score": 70,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 50.7,
+    },
+    "governance": {
+      "benchmarks": {
+        "governance.process": {
+          "rules": [],
+          "score": 25,
+          "unknown": 0,
+        },
+        "governance.roles": {
+          "rules": [],
+          "score": 75,
+          "unknown": 0,
+        },
+        "governance.upgrades": {
+          "rules": [],
+          "score": 40,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 48.5,
+    },
+    "programmability": {
+      "benchmarks": {
+        "programmability.blending": {
+          "rules": [],
+          "score": 50,
+          "unknown": 0,
+        },
+        "programmability.composability": {
+          "rules": [],
+          "score": 60,
+          "unknown": 0,
+        },
+        "programmability.contracts": {
+          "rules": [],
+          "score": 50,
+          "unknown": 0,
+        },
+        "programmability.developer": {
+          "rules": [],
+          "score": 65,
+          "unknown": 0,
+        },
+        "programmability.disclosure": {
+          "rules": [],
+          "score": 40,
+          "unknown": 0,
+        },
+        "programmability.performance": {
+          "rules": [],
+          "score": 47,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 51.05,
+    },
+    "security": {
+      "benchmarks": {
+        "security.assurance": {
+          "rules": [],
+          "score": 70,
+          "unknown": 0,
+        },
+        "security.maturity": {
+          "rules": [],
+          "score": 55,
+          "unknown": 0,
+        },
+        "security.soundness": {
+          "rules": [],
+          "score": 70,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 65.5,
+    },
+    "trust": {
+      "benchmarks": {
+        "trust.crypto": {
+          "rules": [],
+          "score": 53,
+          "unknown": 0,
+        },
+        "trust.decryption": {
+          "rules": [],
+          "score": 42,
+          "unknown": 0,
+        },
+        "trust.disclosure": {
+          "rules": [],
+          "score": 32,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 42.8,
+    },
+  },
+  "trustTier": "C",
+  "walkaway": {
+    "notes": [
+      "Leaving privately can be gated by a third party; the public exit always works",
+    ],
+    "passed": false,
+    "reasons": [
+      "A single party can halt the system, and there is no live permissionless exit",
+      "Users can't recover funds without the operator",
+      "Spending needs a party other than the user",
+    ],
+  },
+}
+`;
+
+exports[`sample dataset (pinned scores) > scores example-rollup.json as pinned > example-rollup 1`] = `
+{
+  "complete": true,
+  "level": "L1",
+  "overall": 67.336,
+  "rubricVersion": "1.3.0",
+  "suites": {
+    "coverage": {
+      "benchmarks": {
+        "coverage.anonymity-set": {
+          "rules": [],
+          "score": 61,
+          "unknown": 0,
+        },
+        "coverage.callstack": {
+          "rules": [],
+          "score": 82,
+          "unknown": 0,
+        },
+        "coverage.confidentiality": {
+          "rules": [],
+          "score": 63,
+          "unknown": 0,
+        },
+        "coverage.execution": {
+          "rules": [],
+          "score": 79,
+          "unknown": 0,
+        },
+        "coverage.identity": {
+          "rules": [],
+          "score": 85,
+          "unknown": 1,
+        },
+        "coverage.metadata": {
+          "rules": [],
+          "score": 61,
+          "unknown": 0,
+        },
+        "coverage.unlinkability": {
+          "rules": [],
+          "score": 58,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 67.9,
+    },
+    "custody": {
+      "benchmarks": {
+        "custody.access": {
+          "rules": [],
+          "score": 50,
+          "unknown": 1,
+        },
+        "custody.exit": {
+          "rules": [],
+          "score": 80,
+          "unknown": 0,
+        },
+        "custody.freeze": {
+          "rules": [],
+          "score": 55,
+          "unknown": 0,
+        },
+        "custody.pause": {
+          "rules": [],
+          "score": 79,
+          "unknown": 0,
+        },
+        "custody.self-custody": {
+          "rules": [],
+          "score": 70,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 68.5,
+    },
+    "decentralization": {
+      "benchmarks": {
+        "decentralization.censorship": {
+          "rules": [],
+          "score": 67,
+          "unknown": 0,
+        },
+        "decentralization.operators": {
+          "rules": [],
+          "score": 60,
+          "unknown": 0,
+        },
+        "decentralization.proving": {
+          "rules": [],
+          "score": 65,
+          "unknown": 0,
+        },
+        "decentralization.settlement": {
+          "rules": [],
+          "score": 40,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 59.1,
+    },
+    "governance": {
+      "benchmarks": {
+        "governance.process": {
+          "rules": [],
+          "score": 60,
+          "unknown": 1,
+        },
+        "governance.roles": {
+          "rules": [],
+          "score": 90,
+          "unknown": 0,
+        },
+        "governance.upgrades": {
+          "rules": [],
+          "score": 78,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 77.7,
+    },
+    "programmability": {
+      "benchmarks": {
+        "programmability.blending": {
+          "rules": [],
+          "score": 100,
+          "unknown": 0,
+        },
+        "programmability.composability": {
+          "rules": [],
+          "score": 90,
+          "unknown": 0,
+        },
+        "programmability.contracts": {
+          "rules": [],
+          "score": 60,
+          "unknown": 0,
+        },
+        "programmability.developer": {
+          "rules": [],
+          "score": 100,
+          "unknown": 0,
+        },
+        "programmability.disclosure": {
+          "rules": [],
+          "score": 50,
+          "unknown": 1,
+        },
+        "programmability.performance": {
+          "rules": [],
+          "score": 62,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 74.3,
+    },
+    "security": {
+      "benchmarks": {
+        "security.assurance": {
+          "rules": [],
+          "score": 76,
+          "unknown": 0,
+        },
+        "security.maturity": {
+          "rules": [],
+          "score": 75,
+          "unknown": 0,
+        },
+        "security.soundness": {
+          "rules": [],
+          "score": 60,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 69.3,
+    },
+    "trust": {
+      "benchmarks": {
+        "trust.crypto": {
+          "rules": [],
+          "score": 43,
+          "unknown": 1,
+        },
+        "trust.decryption": {
+          "rules": [],
+          "score": 70,
+          "unknown": 0,
+        },
+        "trust.disclosure": {
+          "rules": [],
+          "score": 52,
+          "unknown": 0,
+        },
+      },
+      "rules": [],
+      "score": 57.4,
+    },
+  },
+  "trustTier": "C",
+  "walkaway": {
+    "passed": false,
+    "reasons": [
+      "Spending needs a party other than the user",
+    ],
+  },
+}
+`;

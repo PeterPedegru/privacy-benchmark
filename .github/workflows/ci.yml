@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# The workflow only reads the repository (R3-SEC-15).
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The migration check compares the journal with the base branch (pull requests) or the previous push.
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Migration journal order
+        # drizzle silently skips a migration whose timestamp is older than the newest applied one (R3-REL-13).
+        run: node apps/server/scripts/check-migrations.mjs --base "$BASE"
+        env:
+          BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
+      - name: Lint
+        run: pnpm lint
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: No floating or misused promises
+        # Every query is async on Postgres: a forgotten await is a silent race, and a promise used as a value is a bug
+        # TypeScript doesn't report.
+        run: node apps/server/scripts/check-floating-promises.mjs
+      - name: Unit tests
+        run: pnpm test
+      - name: Golden labels are valid under the current rubric
+        run: pnpm --filter @pb/server exec tsx ../../evals/validate.ts
+      - name: Install Playwright browser
+        run: pnpm --filter @pb/e2e exec playwright install --with-deps chromium
+      - name: End-to-end tests (desktop + mobile)
+        run: pnpm test:e2e
+        env:
+          CI: "1"
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-results
+          path: e2e/test-results
+          retention-days: 7

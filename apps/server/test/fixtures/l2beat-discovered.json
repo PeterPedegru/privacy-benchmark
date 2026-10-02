@@ -1,0 +1,103 @@
+{
+  "name": "privacy-pools",
+  "timestamp": 1779964040,
+  "entries": [
+    {
+      "name": "WithdrawalVerifier",
+      "address": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d",
+      "type": "Contract",
+      "proxyType": "immutable",
+      "critical": true,
+      "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs.",
+      "values": { "$immutable": true }
+    },
+    {
+      "name": "PrivacyPoolETH",
+      "address": "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB",
+      "type": "Contract",
+      "proxyType": "immutable",
+      "category": { "name": "Local Infrastructure", "priority": 5 },
+      "description": "Native-asset Privacy Pool that escrows ETH commitments for one scope.",
+      "values": { "$immutable": true, "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46" }
+    },
+    {
+      "name": "PrivacyPoolsEntrypoint",
+      "address": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "type": "Contract",
+      "proxyType": "EIP1967 proxy",
+      "critical": true,
+      "description": "Main hub for Privacy Pools.",
+      "implementationNames": {
+        "eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c": "Entrypoint",
+        "eth:0x6818809EefCe719E480a7526D76bD3e561526b46": "ERC1967Proxy"
+      },
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c",
+        "$pastUpgrades": [
+          ["2025-03-29T16:20:47.000Z", "0x4987", ["eth:0xdD8aA0560a08E39C0b3A84BBa356Bc025AfbD4C1"]],
+          ["2025-05-22T20:30:23.000Z", "0xde1c", ["eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c"]]
+        ],
+        "$upgradeCount": 2,
+        "accessControl": {
+          "ASP_POSTMAN": {
+            "adminRole": "OWNER_ROLE",
+            "members": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159", "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187"]
+          },
+          "DEFAULT_ADMIN_ROLE": { "adminRole": "OWNER_ROLE", "members": [] },
+          "OWNER_ROLE": { "adminRole": "OWNER_ROLE", "members": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"] }
+        }
+      }
+    },
+    {
+      "name": "Privacy Pools Multisig",
+      "address": "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159",
+      "type": "Contract",
+      "proxyType": "gnosis safe",
+      "critical": true,
+      "values": {
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E",
+          "eth:0xb1A1D5b0f3d4E8e89E55daBFEb0B96118cbc16fc",
+          "eth:0x652E36f8EA937c19417380dCDb48D6e4375d13dA",
+          "eth:0xE8A2cC5c2349615D947b9d9fE5D7F144730cAf77"
+        ],
+        "$threshold": 2,
+        "GnosisSafe_modules": [],
+        "VERSION": "1.4.1",
+        "multisigThreshold": "2 of 4 (50%)"
+      }
+    },
+    { "address": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187", "type": "EOA", "proxyType": "EOA" },
+    { "address": "eth:0xb1A1D5b0f3d4E8e89E55daBFEb0B96118cbc16fc", "type": "EOA", "proxyType": "EOA" }
+  ],
+  "permissions": {
+    "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159": {
+      "receivedPermissions": [
+        {
+          "description": "authorize UUPS upgrades to the Entrypoint implementation.",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "permission": "interact",
+          "role": ".ownerRoleMembers"
+        },
+        {
+          "description": "withdraw fees held in the Entrypoint.",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "permission": "interact",
+          "role": ".ownerRoleMembers"
+        }
+      ]
+    },
+    "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187": {
+      "receivedPermissions": [
+        {
+          "description": "publish new association-set roots and IPFS CIDs used by withdrawals.",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "permission": "interact",
+          "role": ".aspPostmen"
+        }
+      ]
+    }
+  }
+}

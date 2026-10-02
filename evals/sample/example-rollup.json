@@ -1,0 +1,2465 @@
+{
+  "project": {
+    "slug": "example-rollup",
+    "name": "Example Private Rollup",
+    "website": "https://example-rollup.example",
+    "logoUrl": null,
+    "tagline": "Fictional rollup with private and public smart contracts",
+    "description": "Example Private Rollup is a fictional project in the sample dataset. Its answers, sources and quotes are generated for demos and tests; none of it describes a real system.",
+    "category": "l2",
+    "mechanism": "private_execution",
+    "attributes": ["zk"],
+    "chains": ["Example Chain"],
+    "l2beatSlug": null,
+    "defillamaSlug": null
+  },
+  "asOf": "2026-09-30",
+  "summary": "Example Private Rollup is fictional sample data: its scores show how the benchmark presents a project, not the properties of a real system.",
+  "context": {
+    "status": "Fictional sample project",
+    "launched": "Not a real system"
+  },
+  "powers": ["Sample data: a fictional admin multisig can upgrade the contracts.", "Sample data: a fictional operator orders transactions."],
+  "sources": [
+    {
+      "id": "docs",
+      "url": "https://example-rollup.example/docs",
+      "title": "Example Private Rollup docs (fictional sample)",
+      "kind": "docs",
+      "sourceClass": "official_docs",
+      "date": "2026-09-01"
+    },
+    {
+      "id": "code",
+      "url": "https://example-rollup.example/code",
+      "title": "Example Private Rollup contracts (fictional sample)",
+      "kind": "code",
+      "sourceClass": "code_onchain",
+      "date": "2026-09-01"
+    },
+    {
+      "id": "audit",
+      "url": "https://example-rollup.example/audit",
+      "title": "Example Private Rollup audit (fictional sample)",
+      "kind": "audit",
+      "sourceClass": "independent",
+      "date": "2026-08-15"
+    }
+  ],
+  "answers": [
+    {
+      "criterionId": "coverage.confidentiality.amounts",
+      "status": "answered",
+      "optionId": "hidden",
+      "rationale": "Sample data: \"Hidden\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are transfer amounts hidden from public observers?\" its generated answer is \"Hidden\", recorded here as if quoted from its contracts.",
+          "claim": "Amounts: Hidden.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are transfer amounts hidden from public observers?\" its generated answer is \"Hidden\", recorded here as if quoted from its audit.",
+          "claim": "Amounts: Hidden.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.confidentiality.balances",
+      "status": "answered",
+      "optionId": "derivable",
+      "rationale": "Sample data: \"Derivable with effort\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are holders' balances hidden?\" its generated answer is \"Derivable with effort\", recorded here as if quoted from its audit.",
+          "claim": "Balances: Derivable with effort.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are holders' balances hidden?\" its generated answer is \"Derivable with effort\", recorded here as if quoted from its docs.",
+          "claim": "Balances: Derivable with effort.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.confidentiality.asset",
+      "status": "answered",
+      "optionId": "per-asset",
+      "rationale": "Sample data: \"Revealed by per-asset pools or tags\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is the token or asset that moved hidden?\" its generated answer is \"Revealed by per-asset pools or tags\", recorded here as if quoted from its docs.",
+          "claim": "Asset type: Revealed by per-asset pools or tags.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is the token or asset that moved hidden?\" its generated answer is \"Revealed by per-asset pools or tags\", recorded here as if quoted from its contracts.",
+          "claim": "Asset type: Revealed by per-asset pools or tags.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.confidentiality.boundary",
+      "status": "answered",
+      "optionId": "boundary-public",
+      "rationale": "Sample data: \"Entry and exit amounts are public; everything inside is hidden\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are amounts visible when funds enter or leave the private system (shield, wrap, bridge)?\" its generated answer is \"Entry and exit amounts are public; everything inside is hidden\", recorded here as if quoted from its audit.",
+          "claim": "Boundary: Entry and exit amounts are public; everything inside is hidden.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are amounts visible when funds enter or leave the private system (shield, wrap, bridge)?\" its generated answer is \"Entry and exit amounts are public; everything inside is hidden\", recorded here as if quoted from its docs.",
+          "claim": "Boundary: Entry and exit amounts are public; everything inside is hidden.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.sender",
+      "status": "answered",
+      "optionId": "hidden",
+      "rationale": "Sample data: \"Hidden\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is the sender hidden in private transfers?\" its generated answer is \"Hidden\", recorded here as if quoted from its audit.",
+          "claim": "Sender: Hidden.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is the sender hidden in private transfers?\" its generated answer is \"Hidden\", recorded here as if quoted from its docs.",
+          "claim": "Sender: Hidden.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.recipient",
+      "status": "answered",
+      "optionId": "mixing",
+      "rationale": "Sample data: \"Hidden only through deposit/withdraw mixing\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is the recipient hidden in private transfers?\" its generated answer is \"Hidden only through deposit/withdraw mixing\", recorded here as if quoted from its contracts.",
+          "claim": "Recipient: Hidden only through deposit/withdraw mixing.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is the recipient hidden in private transfers?\" its generated answer is \"Hidden only through deposit/withdraw mixing\", recorded here as if quoted from its audit.",
+          "claim": "Recipient: Hidden only through deposit/withdraw mixing.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.history",
+      "status": "answered",
+      "optionId": "linkable",
+      "rationale": "Sample data: \"No\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are spends cryptographically unlinkable from the receipts that funded them?\" its generated answer is \"No\", recorded here as if quoted from its audit.",
+          "claim": "History: No.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are spends cryptographically unlinkable from the receipts that funded them?\" its generated answer is \"No\", recorded here as if quoted from its docs.",
+          "claim": "History: No.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.public-apps",
+      "status": "answered",
+      "optionId": "anonymous",
+      "rationale": "Sample data: \"Initiator hidden\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users call public contracts or DeFi without revealing their account?\" its generated answer is \"Initiator hidden\", recorded here as if quoted from its docs.",
+          "claim": "Public app access: Initiator hidden.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users call public contracts or DeFi without revealing their account?\" its generated answer is \"Initiator hidden\", recorded here as if quoted from its contracts.",
+          "claim": "Public app access: Initiator hidden.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.fees",
+      "status": "answered",
+      "optionId": "optional-relayer",
+      "rationale": "Sample data: \"Relayers exist but aren't the reference client's default, or one relayer handles most traffic\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does paying fees reveal who paid?\" its generated answer is \"Relayers exist but aren't the reference client's default, or one relayer handles most traffic\", recorded here as if quoted from its contracts.",
+          "claim": "Fee payment: Relayers exist but aren't the reference client's default, or one relayer handles most traffic.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does paying fees reveal who paid?\" its generated answer is \"Relayers exist but aren't the reference client's default, or one relayer handles most traffic\", recorded here as if quoted from its audit.",
+          "claim": "Fee payment: Relayers exist but aren't the reference client's default, or one relayer handles most traffic.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.identity.persistent-id",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "Sample data: \"None\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is any stable public identifier attached to private activity?\" its generated answer is \"None\", recorded here as if quoted from its docs.",
+          "claim": "Persistent identifier: None.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is any stable public identifier attached to private activity?\" its generated answer is \"None\", recorded here as if quoted from its contracts.",
+          "claim": "Persistent identifier: None.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.identity.registration",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "Sample data: \"None\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Must users register an identity or credential to use private features at the protocol level?\" its generated answer is \"None\", recorded here as if quoted from its contracts.",
+          "claim": "Registration: None.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Must users register an identity or credential to use private features at the protocol level?\" its generated answer is \"None\", recorded here as if quoted from its audit.",
+          "claim": "Registration: None.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.identity.reusable-address",
+      "status": "answered",
+      "optionId": "unlinkable-receive",
+      "rationale": "Sample data: \"Shielded, stealth or one-time receiving by default\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users receive without publishing an address that links their payments?\" its generated answer is \"Shielded, stealth or one-time receiving by default\", recorded here as if quoted from its contracts.",
+          "claim": "Reusable addresses: Shielded, stealth or one-time receiving by default.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users receive without publishing an address that links their payments?\" its generated answer is \"Shielded, stealth or one-time receiving by default\", recorded here as if quoted from its audit.",
+          "claim": "Reusable addresses: Shielded, stealth or one-time receiving by default.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.identity.identity-proofs",
+      "status": "unknown",
+      "rationale": "Sample data: left unknown to show how an unsettled criterion scores.",
+      "confidence": "low",
+      "labelConfidence": "certain",
+      "evidence": []
+    },
+    {
+      "criterionId": "coverage.execution.private-state",
+      "status": "answered",
+      "optionId": "general",
+      "rationale": "Sample data: \"General private state\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can contracts hold private state?\" its generated answer is \"General private state\", recorded here as if quoted from its contracts.",
+          "claim": "Private state: General private state.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can contracts hold private state?\" its generated answer is \"General private state\", recorded here as if quoted from its audit.",
+          "claim": "Private state: General private state.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.execution.private-logic",
+      "status": "answered",
+      "optionId": "general-hidden",
+      "rationale": "Sample data: \"General-purpose; inputs and logic hidden\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can user-defined logic execute privately?\" its generated answer is \"General-purpose; inputs and logic hidden\", recorded here as if quoted from its audit.",
+          "claim": "Private logic: General-purpose; inputs and logic hidden.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can user-defined logic execute privately?\" its generated answer is \"General-purpose; inputs and logic hidden\", recorded here as if quoted from its docs.",
+          "claim": "Private logic: General-purpose; inputs and logic hidden.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.execution.function-hiding",
+      "status": "answered",
+      "optionId": "contract-hidden",
+      "rationale": "Sample data: \"Contract hidden, function type inferable\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is it hidden which contract and function a transaction called?\" its generated answer is \"Contract hidden, function type inferable\", recorded here as if quoted from its contracts.",
+          "claim": "Function hiding: Contract hidden, function type inferable.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is it hidden which contract and function a transaction called?\" its generated answer is \"Contract hidden, function type inferable\", recorded here as if quoted from its audit.",
+          "claim": "Function hiding: Contract hidden, function type inferable.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.execution.shared-state",
+      "status": "answered",
+      "optionId": "limited",
+      "rationale": "Sample data: \"Limited\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can the system compute over many users' private inputs at once (FHE, MPC, pooled encrypted state)?\" its generated answer is \"Limited\", recorded here as if quoted from its audit.",
+          "claim": "Shared private state: Limited.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can the system compute over many users' private inputs at once (FHE, MPC, pooled encrypted state)?\" its generated answer is \"Limited\", recorded here as if quoted from its docs.",
+          "claim": "Shared private state: Limited.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.callstack.targets",
+      "status": "answered",
+      "optionId": "hidden",
+      "rationale": "Sample data: \"Hidden\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is it hidden which contracts ran inside the transaction?\" its generated answer is \"Hidden\", recorded here as if quoted from its audit.",
+          "claim": "Call targets: Hidden.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is it hidden which contracts ran inside the transaction?\" its generated answer is \"Hidden\", recorded here as if quoted from its docs.",
+          "claim": "Call targets: Hidden.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.callstack.structure",
+      "status": "answered",
+      "optionId": "hidden",
+      "rationale": "Sample data: \"Hidden (fixed-shape or padded proofs)\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are the depth and number of nested calls hidden from observers?\" its generated answer is \"Hidden (fixed-shape or padded proofs)\", recorded here as if quoted from its contracts.",
+          "claim": "Call structure: Hidden (fixed-shape or padded proofs).",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are the depth and number of nested calls hidden from observers?\" its generated answer is \"Hidden (fixed-shape or padded proofs)\", recorded here as if quoted from its audit.",
+          "claim": "Call structure: Hidden (fixed-shape or padded proofs).",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.callstack.public-boundary",
+      "status": "answered",
+      "optionId": "args-leak",
+      "rationale": "Sample data: \"Caller hidden but public-call arguments or counts leak\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"What leaks when private code calls public code?\" its generated answer is \"Caller hidden but public-call arguments or counts leak\", recorded here as if quoted from its contracts.",
+          "claim": "Public boundary: Caller hidden but public-call arguments or counts leak.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"What leaks when private code calls public code?\" its generated answer is \"Caller hidden but public-call arguments or counts leak\", recorded here as if quoted from its audit.",
+          "claim": "Public boundary: Caller hidden but public-call arguments or counts leak.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.metadata.network",
+      "status": "answered",
+      "optionId": "opt-in",
+      "rationale": "Sample data: \"Available, opt-in\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does the reference client hide the user's IP from every network party by default (Tor, a mixnet, or peer-to-peer gossip for submissions and reads)?\" its generated answer is \"Available, opt-in\", recorded here as if quoted from its contracts.",
+          "claim": "Network layer: Available, opt-in.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does the reference client hide the user's IP from every network party by default (Tor, a mixnet, or peer-to-peer gossip for submissions and reads)?\" its generated answer is \"Available, opt-in\", recorded here as if quoted from its audit.",
+          "claim": "Network layer: Available, opt-in.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.metadata.reads",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "Sample data: \"Partial leakage (tags, PIR, TEE-ORAM)\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users find and read their private data without revealing which data is theirs to a third-party node?\" its generated answer is \"Partial leakage (tags, PIR, TEE-ORAM)\", recorded here as if quoted from its contracts.",
+          "claim": "Private reads: Partial leakage (tags, PIR, TEE-ORAM).",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users find and read their private data without revealing which data is theirs to a third-party node?\" its generated answer is \"Partial leakage (tags, PIR, TEE-ORAM)\", recorded here as if quoted from its audit.",
+          "claim": "Private reads: Partial leakage (tags, PIR, TEE-ORAM).",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.metadata.pending",
+      "status": "answered",
+      "optionId": "opaque",
+      "rationale": "Sample data: \"Yes\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Do the mempool and sequencer see only proofs or ciphertexts before inclusion?\" its generated answer is \"Yes\", recorded here as if quoted from its docs.",
+          "claim": "Pending transactions: Yes.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Do the mempool and sequencer see only proofs or ciphertexts before inclusion?\" its generated answer is \"Yes\", recorded here as if quoted from its contracts.",
+          "claim": "Pending transactions: Yes.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.metadata.fingerprinting",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "Sample data: \"Partial\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are there mitigations for timing, fee, size and shape fingerprints?\" its generated answer is \"Partial\", recorded here as if quoted from its audit.",
+          "claim": "Fingerprinting: Partial.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are there mitigations for timing, fee, size and shape fingerprints?\" its generated answer is \"Partial\", recorded here as if quoted from its docs.",
+          "claim": "Fingerprinting: Partial.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.anonymity-set.structure",
+      "status": "answered",
+      "optionId": "per-asset",
+      "rationale": "Sample data: \"Shared per asset or per pool\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"How is the anonymity set structured?\" its generated answer is \"Shared per asset or per pool\", recorded here as if quoted from its contracts.",
+          "claim": "Structure: Shared per asset or per pool.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"How is the anonymity set structured?\" its generated answer is \"Shared per asset or per pool\", recorded here as if quoted from its audit.",
+          "claim": "Structure: Shared per asset or per pool.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.anonymity-set.default",
+      "status": "answered",
+      "optionId": "opt-in",
+      "rationale": "Sample data: \"Opt-in\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is activity private by default?\" its generated answer is \"Opt-in\", recorded here as if quoted from its audit.",
+          "claim": "Privacy by default: Opt-in.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is activity private by default?\" its generated answer is \"Opt-in\", recorded here as if quoted from its docs.",
+          "claim": "Privacy by default: Opt-in.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.anonymity-set.usage",
+      "status": "answered",
+      "optionId": "medium",
+      "rationale": "Sample data: \"≥ $10M or ≥ 1,000/day\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"How much value sits in private state, or how many private transactions happen per day? (Use the higher tier.)\" its generated answer is \"≥ $10M or ≥ 1,000/day\", recorded here as if quoted from its docs.",
+          "claim": "Measured usage: ≥ $10M or ≥ 1,000/day.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"How much value sits in private state, or how many private transactions happen per day? (Use the higher tier.)\" its generated answer is \"≥ $10M or ≥ 1,000/day\", recorded here as if quoted from its contracts.",
+          "claim": "Measured usage: ≥ $10M or ≥ 1,000/day.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.anonymity-set.effective",
+      "status": "answered",
+      "optionId": "small-reduction",
+      "rationale": "Sample data: \"Studied; reduction < 20%\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Do independent measurements show how much heuristics shrink the set?\" its generated answer is \"Studied; reduction < 20%\", recorded here as if quoted from its audit.",
+          "claim": "Effective anonymity: Studied; reduction < 20%.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Do independent measurements show how much heuristics shrink the set?\" its generated answer is \"Studied; reduction < 20%\", recorded here as if quoted from its docs.",
+          "claim": "Effective anonymity: Studied; reduction < 20%.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.decryption.standing-access",
+      "status": "answered",
+      "optionId": "threshold-large",
+      "rationale": "Sample data: \"Threshold committee of ≥ 7 independent, named parties\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does any third party have a standing ability to decrypt or view private data?\" its generated answer is \"Threshold committee of ≥ 7 independent, named parties\", recorded here as if quoted from its docs.",
+          "claim": "Standing access: Threshold committee of ≥ 7 independent, named parties.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does any third party have a standing ability to decrypt or view private data?\" its generated answer is \"Threshold committee of ≥ 7 independent, named parties\", recorded here as if quoted from its contracts.",
+          "claim": "Standing access: Threshold committee of ≥ 7 independent, named parties.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.decryption.infra-visibility",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "Sample data: \"No; client-side proving, infrastructure sees proofs or ciphertexts only\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Do sequencers, provers, validators or relayers see plaintext of private transactions?\" its generated answer is \"No; client-side proving, infrastructure sees proofs or ciphertexts only\", recorded here as if quoted from its docs.",
+          "claim": "Infrastructure visibility: No; client-side proving, infrastructure sees proofs or ciphertexts only.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Do sequencers, provers, validators or relayers see plaintext of private transactions?\" its generated answer is \"No; client-side proving, infrastructure sees proofs or ciphertexts only\", recorded here as if quoted from its contracts.",
+          "claim": "Infrastructure visibility: No; client-side proving, infrastructure sees proofs or ciphertexts only.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.decryption.retroactive",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "Sample data: \"No global key; compromise is limited to individual users\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Would compromising one key or committee expose everyone's history?\" its generated answer is \"No global key; compromise is limited to individual users\", recorded here as if quoted from its audit.",
+          "claim": "Retroactive exposure: No global key; compromise is limited to individual users.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Would compromising one key or committee expose everyone's history?\" its generated answer is \"No global key; compromise is limited to individual users\", recorded here as if quoted from its docs.",
+          "claim": "Retroactive exposure: No global key; compromise is limited to individual users.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.disclosure.selective",
+      "status": "answered",
+      "optionId": "native",
+      "rationale": "Sample data: \"Native\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users share a view or proof of their activity with parties they choose?\" its generated answer is \"Native\", recorded here as if quoted from its audit.",
+          "claim": "Selective disclosure: Native.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users share a view or proof of their activity with parties they choose?\" its generated answer is \"Native\", recorded here as if quoted from its docs.",
+          "claim": "Selective disclosure: Native.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.disclosure.granularity",
+      "status": "answered",
+      "optionId": "account",
+      "rationale": "Sample data: \"Whole account only\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can disclosure be limited to one transaction, asset or time range?\" its generated answer is \"Whole account only\", recorded here as if quoted from its audit.",
+          "claim": "Granularity: Whole account only.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can disclosure be limited to one transaction, asset or time range?\" its generated answer is \"Whole account only\", recorded here as if quoted from its docs.",
+          "claim": "Granularity: Whole account only.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.disclosure.revocable",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "Sample data: \"No\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users rotate keys or limit disclosure going forward?\" its generated answer is \"No\", recorded here as if quoted from its docs.",
+          "claim": "Revocability: No.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users rotate keys or limit disclosure going forward?\" its generated answer is \"No\", recorded here as if quoted from its contracts.",
+          "claim": "Revocability: No.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.crypto.setup",
+      "status": "answered",
+      "optionId": "green",
+      "rationale": "Sample data: \"Green: ≥ 150 public, verifiable contributions\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"What kind of setup does the proof system rely on (L2BEAT trusted-setup framework, weakest link)?\" its generated answer is \"Green: ≥ 150 public, verifiable contributions\", recorded here as if quoted from its audit.",
+          "claim": "Setup: Green: ≥ 150 public, verifiable contributions.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"What kind of setup does the proof system rely on (L2BEAT trusted-setup framework, weakest link)?\" its generated answer is \"Green: ≥ 150 public, verifiable contributions\", recorded here as if quoted from its docs.",
+          "claim": "Setup: Green: ≥ 150 public, verifiable contributions.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.crypto.hardware",
+      "status": "unknown",
+      "rationale": "Sample data: left unknown to show how an unsettled criterion scores.",
+      "confidence": "low",
+      "labelConfidence": "certain",
+      "evidence": []
+    },
+    {
+      "criterionId": "trust.crypto.post-quantum",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "Sample data: \"Partial (e.g. PQ-hiding commitments, classical note encryption)\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does stored private data resist harvest-now-decrypt-later attacks?\" its generated answer is \"Partial (e.g. PQ-hiding commitments, classical note encryption)\", recorded here as if quoted from its docs.",
+          "claim": "Post-quantum confidentiality: Partial (e.g. PQ-hiding commitments, classical note encryption).",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does stored private data resist harvest-now-decrypt-later attacks?\" its generated answer is \"Partial (e.g. PQ-hiding commitments, classical note encryption)\", recorded here as if quoted from its contracts.",
+          "claim": "Post-quantum confidentiality: Partial (e.g. PQ-hiding commitments, classical note encryption).",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.crypto.formal-privacy",
+      "status": "answered",
+      "optionId": "claimed",
+      "rationale": "Sample data: \"Claimed ZK, audited, not formally specified\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is the privacy property formally specified, or only asserted?\" its generated answer is \"Claimed ZK, audited, not formally specified\", recorded here as if quoted from its audit.",
+          "claim": "Formal privacy: Claimed ZK, audited, not formally specified.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is the privacy property formally specified, or only asserted?\" its generated answer is \"Claimed ZK, audited, not formally specified\", recorded here as if quoted from its docs.",
+          "claim": "Formal privacy: Claimed ZK, audited, not formally specified.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.self-custody.spending",
+      "status": "answered",
+      "optionId": "co-signer",
+      "rationale": "Sample data: \"User plus a mandatory co-signer or guardian\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Who can move user funds?\" its generated answer is \"User plus a mandatory co-signer or guardian\", recorded here as if quoted from its contracts.",
+          "claim": "Spending authority: User plus a mandatory co-signer or guardian.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Who can move user funds?\" its generated answer is \"User plus a mandatory co-signer or guardian\", recorded here as if quoted from its audit.",
+          "claim": "Spending authority: User plus a mandatory co-signer or guardian.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.self-custody.backing",
+      "status": "answered",
+      "optionId": "native",
+      "rationale": "Sample data: \"Native, or a validity-proven canonical bridge\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"How are assets in the system backed?\" its generated answer is \"Native, or a validity-proven canonical bridge\", recorded here as if quoted from its audit.",
+          "claim": "Backing: Native, or a validity-proven canonical bridge.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"How are assets in the system backed?\" its generated answer is \"Native, or a validity-proven canonical bridge\", recorded here as if quoted from its docs.",
+          "claim": "Backing: Native, or a validity-proven canonical bridge.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.self-custody.recoverability",
+      "status": "answered",
+      "optionId": "yes",
+      "rationale": "Sample data: \"Yes\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users rebuild their private balance and spend without the operator's help?\" its generated answer is \"Yes\", recorded here as if quoted from its audit.",
+          "claim": "Recoverability: Yes.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users rebuild their private balance and spend without the operator's help?\" its generated answer is \"Yes\", recorded here as if quoted from its docs.",
+          "claim": "Recoverability: Yes.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.pause.pause-fn",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "Sample data: \"None exists\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is there a protocol-level pause?\" its generated answer is \"None exists\", recorded here as if quoted from its docs.",
+          "claim": "Pause function: None exists.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is there a protocol-level pause?\" its generated answer is \"None exists\", recorded here as if quoted from its contracts.",
+          "claim": "Pause function: None exists.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.pause.halt",
+      "status": "answered",
+      "optionId": "small-set",
+      "rationale": "Sample data: \"Needs collusion of a small set (≥ 3 independent)\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can a single party halt block production or ordering?\" its generated answer is \"Needs collusion of a small set (≥ 3 independent)\", recorded here as if quoted from its contracts.",
+          "claim": "Halt: Needs collusion of a small set (≥ 3 independent).",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can a single party halt block production or ordering?\" its generated answer is \"Needs collusion of a small set (≥ 3 independent)\", recorded here as if quoted from its audit.",
+          "claim": "Halt: Needs collusion of a small set (≥ 3 independent).",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.pause.exits-during-pause",
+      "status": "answered",
+      "optionId": "yes",
+      "rationale": "Sample data: \"Yes\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Do withdrawals keep working through any pause or halt?\" its generated answer is \"Yes\", recorded here as if quoted from its docs.",
+          "claim": "Exits during a pause: Yes.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Do withdrawals keep working through any pause or halt?\" its generated answer is \"Yes\", recorded here as if quoted from its contracts.",
+          "claim": "Exits during a pause: Yes.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.pause.track-record",
+      "status": "answered",
+      "optionId": "one",
+      "rationale": "Sample data: \"One\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Have there been pauses or halts, intentional or outages, in the last 12 months?\" its generated answer is \"One\", recorded here as if quoted from its docs.",
+          "claim": "Track record: One.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Have there been pauses or halts, intentional or outages, in the last 12 months?\" its generated answer is \"One\", recorded here as if quoted from its contracts.",
+          "claim": "Track record: One.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.freeze.blocklist",
+      "status": "answered",
+      "optionId": "issuer-hooks",
+      "rationale": "Sample data: \"Issuer-controlled hooks exist in the standard\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can the protocol or its native token standard freeze individual users?\" its generated answer is \"Issuer-controlled hooks exist in the standard\", recorded here as if quoted from its docs.",
+          "claim": "Blocklist / freeze: Issuer-controlled hooks exist in the standard.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can the protocol or its native token standard freeze individual users?\" its generated answer is \"Issuer-controlled hooks exist in the standard\", recorded here as if quoted from its contracts.",
+          "claim": "Blocklist / freeze: Issuer-controlled hooks exist in the standard.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.freeze.seizure",
+      "status": "answered",
+      "optionId": "impossible",
+      "rationale": "Sample data: \"Impossible\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is forced transfer, burn or clawback possible?\" its generated answer is \"Impossible\", recorded here as if quoted from its docs.",
+          "claim": "Seizure: Impossible.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is forced transfer, burn or clawback possible?\" its generated answer is \"Impossible\", recorded here as if quoted from its contracts.",
+          "claim": "Seizure: Impossible.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.freeze.systemic",
+      "status": "answered",
+      "optionId": "yes",
+      "rationale": "Sample data: \"Yes\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Could one blacklist action (e.g. on a pool or escrow contract) freeze every user's balance of an asset?\" its generated answer is \"Yes\", recorded here as if quoted from its contracts.",
+          "claim": "Systemic freeze: Yes.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Could one blacklist action (e.g. on a pool or escrow contract) freeze every user's balance of an asset?\" its generated answer is \"Yes\", recorded here as if quoted from its audit.",
+          "claim": "Systemic freeze: Yes.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.exit.unilateral",
+      "status": "answered",
+      "optionId": "costly",
+      "rationale": "Sample data: \"Exists but bonded, costly or slow\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users exit with their funds if the operator or governance is hostile or offline?\" its generated answer is \"Exists but bonded, costly or slow\", recorded here as if quoted from its audit.",
+          "claim": "Unilateral exit: Exists but bonded, costly or slow.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users exit with their funds if the operator or governance is hostile or offline?\" its generated answer is \"Exists but bonded, costly or slow\", recorded here as if quoted from its docs.",
+          "claim": "Unilateral exit: Exists but bonded, costly or slow.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.exit.window",
+      "status": "answered",
+      "optionId": "infinite",
+      "rationale": "Sample data: \"∞ (immutable)\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"How long do users have to leave before an unwanted upgrade takes effect?\" its generated answer is \"∞ (immutable)\", recorded here as if quoted from its contracts.",
+          "claim": "Exit window: ∞ (immutable).",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"How long do users have to leave before an unwanted upgrade takes effect?\" its generated answer is \"∞ (immutable)\", recorded here as if quoted from its audit.",
+          "claim": "Exit window: ∞ (immutable).",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.exit.gatekeeper",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "Sample data: \"None needed\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does exiting need permission or cooperation from anyone (decryption committee, approval list, operator signature)?\" its generated answer is \"None needed\", recorded here as if quoted from its audit.",
+          "claim": "No gatekeeper: None needed.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does exiting need permission or cooperation from anyone (decryption committee, approval list, operator signature)?\" its generated answer is \"None needed\", recorded here as if quoted from its docs.",
+          "claim": "No gatekeeper: None needed.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.access.entry",
+      "status": "unknown",
+      "rationale": "Sample data: left unknown to show how an unsettled criterion scores.",
+      "confidence": "low",
+      "labelConfidence": "certain",
+      "evidence": []
+    },
+    {
+      "criterionId": "custody.access.private-exit",
+      "status": "answered",
+      "optionId": "no-gate",
+      "rationale": "Sample data: \"No gate\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can a third party deny a user's private exit or spend?\" its generated answer is \"No gate\", recorded here as if quoted from its docs.",
+          "claim": "Private exit or spend: No gate.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can a third party deny a user's private exit or spend?\" its generated answer is \"No gate\", recorded here as if quoted from its contracts.",
+          "claim": "Private exit or spend: No gate.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.access.screening",
+      "status": "answered",
+      "optionId": "address-screening",
+      "rationale": "Sample data: \"Third-party screening of public addresses\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"If there is compliance screening, how does it work?\" its generated answer is \"Third-party screening of public addresses\", recorded here as if quoted from its contracts.",
+          "claim": "Screening method: Third-party screening of public addresses.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"If there is compliance screening, how does it work?\" its generated answer is \"Third-party screening of public addresses\", recorded here as if quoted from its audit.",
+          "claim": "Screening method: Third-party screening of public addresses.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.contracts.model",
+      "status": "answered",
+      "optionId": "general-single",
+      "rationale": "Sample data: \"General-purpose, but public-only or confidential-values-only\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"What kind of contracts can developers write?\" its generated answer is \"General-purpose, but public-only or confidential-values-only\", recorded here as if quoted from its docs.",
+          "claim": "Contract model: General-purpose, but public-only or confidential-values-only.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"What kind of contracts can developers write?\" its generated answer is \"General-purpose, but public-only or confidential-values-only\", recorded here as if quoted from its contracts.",
+          "claim": "Contract model: General-purpose, but public-only or confidential-values-only.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.contracts.deployment",
+      "status": "answered",
+      "optionId": "allowlisted",
+      "rationale": "Sample data: \"Allowlisted deployers\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can anyone deploy contracts?\" its generated answer is \"Allowlisted deployers\", recorded here as if quoted from its contracts.",
+          "claim": "Permissionless deployment: Allowlisted deployers.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can anyone deploy contracts?\" its generated answer is \"Allowlisted deployers\", recorded here as if quoted from its audit.",
+          "claim": "Permissionless deployment: Allowlisted deployers.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.contracts.standards",
+      "status": "answered",
+      "optionId": "emerging",
+      "rationale": "Sample data: \"Emerging or draft\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are there standard interfaces for private tokens, NFTs and accounts?\" its generated answer is \"Emerging or draft\", recorded here as if quoted from its contracts.",
+          "claim": "Private standards: Emerging or draft.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are there standard interfaces for private tokens, NFTs and accounts?\" its generated answer is \"Emerging or draft\", recorded here as if quoted from its audit.",
+          "claim": "Private standards: Emerging or draft.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.contracts.accounts",
+      "status": "answered",
+      "optionId": "native",
+      "rationale": "Sample data: \"Native\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is there native account abstraction (custom auth, recovery, fee sponsorship)?\" its generated answer is \"Native\", recorded here as if quoted from its contracts.",
+          "claim": "Programmable accounts: Native.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is there native account abstraction (custom auth, recovery, fee sponsorship)?\" its generated answer is \"Native\", recorded here as if quoted from its audit.",
+          "claim": "Programmable accounts: Native.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.composability.private-private",
+      "status": "answered",
+      "optionId": "arbitrary",
+      "rationale": "Sample data: \"Arbitrary\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can private functions of different contracts call each other atomically in one transaction?\" its generated answer is \"Arbitrary\", recorded here as if quoted from its docs.",
+          "claim": "Private ↔ private: Arbitrary.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can private functions of different contracts call each other atomically in one transaction?\" its generated answer is \"Arbitrary\", recorded here as if quoted from its contracts.",
+          "claim": "Private ↔ private: Arbitrary.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.composability.private-public",
+      "status": "answered",
+      "optionId": "both",
+      "rationale": "Sample data: \"Both directions\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can private and public logic compose atomically in one transaction?\" its generated answer is \"Both directions\", recorded here as if quoted from its audit.",
+          "claim": "Private ↔ public: Both directions.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can private and public logic compose atomically in one transaction?\" its generated answer is \"Both directions\", recorded here as if quoted from its docs.",
+          "claim": "Private ↔ public: Both directions.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.composability.liquidity",
+      "status": "answered",
+      "optionId": "adapters",
+      "rationale": "Sample data: \"Through adapters or bridges\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can private users reach existing public DeFi (AMMs, lending) without leaving privacy?\" its generated answer is \"Through adapters or bridges\", recorded here as if quoted from its docs.",
+          "claim": "Liquidity access: Through adapters or bridges.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can private users reach existing public DeFi (AMMs, lending) without leaving privacy?\" its generated answer is \"Through adapters or bridges\", recorded here as if quoted from its contracts.",
+          "claim": "Liquidity access: Through adapters or bridges.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.composability.cross-domain",
+      "status": "answered",
+      "optionId": "trust-minimized",
+      "rationale": "Sample data: \"Trust-minimized, from private context\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can private contracts send and receive messages to and from other chains?\" its generated answer is \"Trust-minimized, from private context\", recorded here as if quoted from its audit.",
+          "claim": "Cross-domain messaging: Trust-minimized, from private context.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can private contracts send and receive messages to and from other chains?\" its generated answer is \"Trust-minimized, from private context\", recorded here as if quoted from its docs.",
+          "claim": "Cross-domain messaging: Trust-minimized, from private context.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.blending.granularity",
+      "status": "answered",
+      "optionId": "per-function",
+      "rationale": "Sample data: \"Per function or variable\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can developers choose private or public per function or state variable?\" its generated answer is \"Per function or variable\", recorded here as if quoted from its audit.",
+          "claim": "Granularity of choice: Per function or variable.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can developers choose private or public per function or state variable?\" its generated answer is \"Per function or variable\", recorded here as if quoted from its docs.",
+          "claim": "Granularity of choice: Per function or variable.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.blending.private-reads",
+      "status": "answered",
+      "optionId": "consistent",
+      "rationale": "Sample data: \"Yes, with consistency guarantees\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can private logic read public state (prices, config) without leaking what it read?\" its generated answer is \"Yes, with consistency guarantees\", recorded here as if quoted from its contracts.",
+          "claim": "Reading public state privately: Yes, with consistency guarantees.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can private logic read public state (prices, config) without leaking what it read?\" its generated answer is \"Yes, with consistency guarantees\", recorded here as if quoted from its audit.",
+          "claim": "Reading public state privately: Yes, with consistency guarantees.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.blending.crossing",
+      "status": "answered",
+      "optionId": "atomic",
+      "rationale": "Sample data: \"Native, atomic\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can values move between public and private state within the system atomically?\" its generated answer is \"Native, atomic\", recorded here as if quoted from its contracts.",
+          "claim": "Moving state across: Native, atomic.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can values move between public and private state within the system atomically?\" its generated answer is \"Native, atomic\", recorded here as if quoted from its audit.",
+          "claim": "Moving state across: Native, atomic.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.disclosure.primitives",
+      "status": "answered",
+      "optionId": "limited",
+      "rationale": "Sample data: \"Limited or fixed mechanism\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does the protocol give apps primitives to implement disclosure (per-app viewing keys, encrypted logs to designated recipients, disclosure proofs)?\" its generated answer is \"Limited or fixed mechanism\", recorded here as if quoted from its contracts.",
+          "claim": "Disclosure primitives: Limited or fixed mechanism.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does the protocol give apps primitives to implement disclosure (per-app viewing keys, encrypted logs to designated recipients, disclosure proofs)?\" its generated answer is \"Limited or fixed mechanism\", recorded here as if quoted from its audit.",
+          "claim": "Disclosure primitives: Limited or fixed mechanism.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.disclosure.compliance-proofs",
+      "status": "answered",
+      "optionId": "native",
+      "rationale": "Sample data: \"Native or widely supported\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users prove compliance statements (association-set membership, not sanctioned, credential attributes) without revealing identity or history?\" its generated answer is \"Native or widely supported\", recorded here as if quoted from its contracts.",
+          "claim": "Private compliance proofs: Native or widely supported.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users prove compliance statements (association-set membership, not sanctioned, credential attributes) without revealing identity or history?\" its generated answer is \"Native or widely supported\", recorded here as if quoted from its audit.",
+          "claim": "Private compliance proofs: Native or widely supported.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.disclosure.verifiable",
+      "status": "unknown",
+      "rationale": "Sample data: left unknown to show how an unsettled criterion scores.",
+      "confidence": "low",
+      "labelConfidence": "certain",
+      "evidence": []
+    },
+    {
+      "criterionId": "programmability.developer.toolchain",
+      "status": "answered",
+      "optionId": "stable",
+      "rationale": "Sample data: \"Stable, documented, with testing framework and debugger\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"How mature is the language and toolchain for private contracts?\" its generated answer is \"Stable, documented, with testing framework and debugger\", recorded here as if quoted from its contracts.",
+          "claim": "Language & toolchain: Stable, documented, with testing framework and debugger.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"How mature is the language and toolchain for private contracts?\" its generated answer is \"Stable, documented, with testing framework and debugger\", recorded here as if quoted from its audit.",
+          "claim": "Language & toolchain: Stable, documented, with testing framework and debugger.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.developer.local-dev",
+      "status": "answered",
+      "optionId": "full",
+      "rationale": "Sample data: \"Full\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is there a local network or sandbox with test tooling?\" its generated answer is \"Full\", recorded here as if quoted from its contracts.",
+          "claim": "Local development: Full.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is there a local network or sandbox with test tooling?\" its generated answer is \"Full\", recorded here as if quoted from its audit.",
+          "claim": "Local development: Full.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.developer.sdks",
+      "status": "answered",
+      "optionId": "mature",
+      "rationale": "Sample data: \"Mature SDKs, multiple wallets\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are there client SDKs and wallets supporting private apps?\" its generated answer is \"Mature SDKs, multiple wallets\", recorded here as if quoted from its docs.",
+          "claim": "SDKs & wallets: Mature SDKs, multiple wallets.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are there client SDKs and wallets supporting private apps?\" its generated answer is \"Mature SDKs, multiple wallets\", recorded here as if quoted from its contracts.",
+          "claim": "SDKs & wallets: Mature SDKs, multiple wallets.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.developer.familiarity",
+      "status": "answered",
+      "optionId": "mainstream",
+      "rationale": "Sample data: \"Mainstream languages or EVM tooling\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does it build on widely used languages or tooling?\" its generated answer is \"Mainstream languages or EVM tooling\", recorded here as if quoted from its contracts.",
+          "claim": "Familiarity: Mainstream languages or EVM tooling.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does it build on widely used languages or tooling?\" its generated answer is \"Mainstream languages or EVM tooling\", recorded here as if quoted from its audit.",
+          "claim": "Familiarity: Mainstream languages or EVM tooling.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.performance.proving-time",
+      "status": "answered",
+      "optionId": "moderate",
+      "rationale": "Sample data: \"≤ 30 s\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"How long does a private transfer take to prove on a consumer laptop with the reference client?\" its generated answer is \"≤ 30 s\", recorded here as if quoted from its contracts.",
+          "claim": "Client proving time: ≤ 30 s.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"How long does a private transfer take to prove on a consumer laptop with the reference client?\" its generated answer is \"≤ 30 s\", recorded here as if quoted from its audit.",
+          "claim": "Client proving time: ≤ 30 s.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.performance.throughput",
+      "status": "answered",
+      "optionId": "10",
+      "rationale": "Sample data: \"≥ 10 TPS\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"What sustained private-transaction throughput does the live system handle?\" its generated answer is \"≥ 10 TPS\", recorded here as if quoted from its audit.",
+          "claim": "Throughput: ≥ 10 TPS.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"What sustained private-transaction throughput does the live system handle?\" its generated answer is \"≥ 10 TPS\", recorded here as if quoted from its docs.",
+          "claim": "Throughput: ≥ 10 TPS.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.performance.cost",
+      "status": "answered",
+      "optionId": "low",
+      "rationale": "Sample data: \"< $1\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"What is the typical all-in cost of a private $1,000 transfer, including percentage fees?\" its generated answer is \"< $1\", recorded here as if quoted from its audit.",
+          "claim": "Cost: < $1.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"What is the typical all-in cost of a private $1,000 transfer, including percentage fees?\" its generated answer is \"< $1\", recorded here as if quoted from its docs.",
+          "claim": "Cost: < $1.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.upgrades.upgradeability",
+      "status": "answered",
+      "optionId": "30d",
+      "rationale": "Sample data: \"Upgradeable with ≥ 30-day delay\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can the core contracts or protocol be upgraded, and with what delay?\" its generated answer is \"Upgradeable with ≥ 30-day delay\", recorded here as if quoted from its docs.",
+          "claim": "Upgradeability: Upgradeable with ≥ 30-day delay.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can the core contracts or protocol be upgraded, and with what delay?\" its generated answer is \"Upgradeable with ≥ 30-day delay\", recorded here as if quoted from its contracts.",
+          "claim": "Upgradeability: Upgradeable with ≥ 30-day delay.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.upgrades.emergency",
+      "status": "answered",
+      "optionId": "standard-council",
+      "rationale": "Sample data: \"Council meeting L2BEAT's standard\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can a security council or multisig bypass the delay?\" its generated answer is \"Council meeting L2BEAT's standard\", recorded here as if quoted from its audit.",
+          "claim": "Emergency path: Council meeting L2BEAT's standard.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can a security council or multisig bypass the delay?\" its generated answer is \"Council meeting L2BEAT's standard\", recorded here as if quoted from its docs.",
+          "claim": "Emergency path: Council meeting L2BEAT's standard.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.upgrades.verifier",
+      "status": "answered",
+      "optionId": "same",
+      "rationale": "Sample data: \"Same delay or immutable\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Do verification keys and circuits change only through the same delay?\" its generated answer is \"Same delay or immutable\", recorded here as if quoted from its docs.",
+          "claim": "Verifier control: Same delay or immutable.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Do verification keys and circuits change only through the same delay?\" its generated answer is \"Same delay or immutable\", recorded here as if quoted from its contracts.",
+          "claim": "Verifier control: Same delay or immutable.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.roles.scope",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "Sample data: \"None beyond upgrade governance\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"What can privileged roles (fee setting, pausing, key admin, allowlists, auditors) do?\" its generated answer is \"None beyond upgrade governance\", recorded here as if quoted from its audit.",
+          "claim": "Role scope: None beyond upgrade governance.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"What can privileged roles (fee setting, pausing, key admin, allowlists, auditors) do?\" its generated answer is \"None beyond upgrade governance\", recorded here as if quoted from its docs.",
+          "claim": "Role scope: None beyond upgrade governance.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.roles.holders",
+      "status": "answered",
+      "optionId": "multisig-5",
+      "rationale": "Sample data: \"Multisig ≥ 5 with independent signers\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Who holds privileged roles?\" its generated answer is \"Multisig ≥ 5 with independent signers\", recorded here as if quoted from its audit.",
+          "claim": "Role holders: Multisig ≥ 5 with independent signers.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Who holds privileged roles?\" its generated answer is \"Multisig ≥ 5 with independent signers\", recorded here as if quoted from its docs.",
+          "claim": "Role holders: Multisig ≥ 5 with independent signers.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.roles.transparency",
+      "status": "answered",
+      "optionId": "full",
+      "rationale": "Sample data: \"Fully\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are role holders and signers named, and are role changes onchain and delayed?\" its generated answer is \"Fully\", recorded here as if quoted from its docs.",
+          "claim": "Transparency: Fully.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are role holders and signers named, and are role changes onchain and delayed?\" its generated answer is \"Fully\", recorded here as if quoted from its contracts.",
+          "claim": "Transparency: Fully.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.process.control",
+      "status": "answered",
+      "optionId": "token",
+      "rationale": "Sample data: \"Token governance with real quorum and no dominant holder\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Who ultimately controls protocol changes?\" its generated answer is \"Token governance with real quorum and no dominant holder\", recorded here as if quoted from its audit.",
+          "claim": "Ultimate control: Token governance with real quorum and no dominant holder.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Who ultimately controls protocol changes?\" its generated answer is \"Token governance with real quorum and no dominant holder\", recorded here as if quoted from its docs.",
+          "claim": "Ultimate control: Token governance with real quorum and no dominant holder.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.process.public-process",
+      "status": "answered",
+      "optionId": "onchain",
+      "rationale": "Sample data: \"Yes\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are decisions public proposals executed onchain?\" its generated answer is \"Yes\", recorded here as if quoted from its contracts.",
+          "claim": "Process: Yes.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are decisions public proposals executed onchain?\" its generated answer is \"Yes\", recorded here as if quoted from its audit.",
+          "claim": "Process: Yes.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.process.concentration",
+      "status": "unknown",
+      "rationale": "Sample data: left unknown to show how an unsettled criterion scores.",
+      "confidence": "low",
+      "labelConfidence": "certain",
+      "evidence": []
+    },
+    {
+      "criterionId": "decentralization.operators.producers",
+      "status": "answered",
+      "optionId": "permissionless",
+      "rationale": "Sample data: \"Permissionless, fewer\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"How many independent block producers or sequencers are there?\" its generated answer is \"Permissionless, fewer\", recorded here as if quoted from its audit.",
+          "claim": "Producers: Permissionless, fewer.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"How many independent block producers or sequencers are there?\" its generated answer is \"Permissionless, fewer\", recorded here as if quoted from its docs.",
+          "claim": "Producers: Permissionless, fewer.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.operators.entry",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "Sample data: \"No\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can anyone meeting objective criteria (e.g. stake) become a producer?\" its generated answer is \"No\", recorded here as if quoted from its audit.",
+          "claim": "Open entry: No.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can anyone meeting objective criteria (e.g. stake) become a producer?\" its generated answer is \"No\", recorded here as if quoted from its docs.",
+          "claim": "Open entry: No.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.operators.concentration",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "Sample data: \"No\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does any single entity or client control more than a third of production?\" its generated answer is \"No\", recorded here as if quoted from its contracts.",
+          "claim": "Concentration: No.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Does any single entity or client control more than a third of production?\" its generated answer is \"No\", recorded here as if quoted from its audit.",
+          "claim": "Concentration: No.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.censorship.forced-inclusion",
+      "status": "answered",
+      "optionId": "probabilistic",
+      "rationale": "Sample data: \"Probabilistic, via many independent producers\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users force inclusion of their transaction?\" its generated answer is \"Probabilistic, via many independent producers\", recorded here as if quoted from its contracts.",
+          "claim": "Forced inclusion: Probabilistic, via many independent producers.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can users force inclusion of their transaction?\" its generated answer is \"Probabilistic, via many independent producers\", recorded here as if quoted from its audit.",
+          "claim": "Forced inclusion: Probabilistic, via many independent producers.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.censorship.observed",
+      "status": "answered",
+      "optionId": "medium",
+      "rationale": "Sample data: \"10–50%\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"What share of blocks censor transactions?\" its generated answer is \"10–50%\", recorded here as if quoted from its docs.",
+          "claim": "Observed censorship: 10–50%.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"What share of blocks censor transactions?\" its generated answer is \"10–50%\", recorded here as if quoted from its contracts.",
+          "claim": "Observed censorship: 10–50%.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.censorship.indistinguishable",
+      "status": "answered",
+      "optionId": "yes",
+      "rationale": "Sample data: \"They can't; private txs are indistinguishable\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can producers tell whose, or what, a private transaction is?\" its generated answer is \"They can't; private txs are indistinguishable\", recorded here as if quoted from its audit.",
+          "claim": "Indistinguishable private txs: They can't; private txs are indistinguishable.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Can producers tell whose, or what, a private transaction is?\" its generated answer is \"They can't; private txs are indistinguishable\", recorded here as if quoted from its docs.",
+          "claim": "Indistinguishable private txs: They can't; private txs are indistinguishable.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.proving.client-side",
+      "status": "answered",
+      "optionId": "optional",
+      "rationale": "Sample data: \"Optional\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are private proofs generated on users' devices by default?\" its generated answer is \"Optional\", recorded here as if quoted from its contracts.",
+          "claim": "Client-side proving: Optional.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are private proofs generated on users' devices by default?\" its generated answer is \"Optional\", recorded here as if quoted from its audit.",
+          "claim": "Client-side proving: Optional.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.proving.provers",
+      "status": "answered",
+      "optionId": "permissionless",
+      "rationale": "Sample data: \"Permissionless, or not needed\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Who does block or rollup proving?\" its generated answer is \"Permissionless, or not needed\", recorded here as if quoted from its docs.",
+          "claim": "Provers: Permissionless, or not needed.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Who does block or rollup proving?\" its generated answer is \"Permissionless, or not needed\", recorded here as if quoted from its contracts.",
+          "claim": "Provers: Permissionless, or not needed.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.proving.verification",
+      "status": "answered",
+      "optionId": "fraud",
+      "rationale": "Sample data: \"Fraud proofs\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"How is validity verified?\" its generated answer is \"Fraud proofs\", recorded here as if quoted from its contracts.",
+          "claim": "Verification: Fraud proofs.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"How is validity verified?\" its generated answer is \"Fraud proofs\", recorded here as if quoted from its audit.",
+          "claim": "Verification: Fraud proofs.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.settlement.settlement",
+      "status": "answered",
+      "optionId": "committee",
+      "rationale": "Sample data: \"Committee or partial proofs\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Where is state settled?\" its generated answer is \"Committee or partial proofs\", recorded here as if quoted from its docs.",
+          "claim": "Settlement: Committee or partial proofs.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Where is state settled?\" its generated answer is \"Committee or partial proofs\", recorded here as if quoted from its contracts.",
+          "claim": "Settlement: Committee or partial proofs.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.settlement.data",
+      "status": "answered",
+      "optionId": "committee",
+      "rationale": "Sample data: \"Committee or external DA\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Where is the data needed to reconstruct state published?\" its generated answer is \"Committee or external DA\", recorded here as if quoted from its contracts.",
+          "claim": "Data availability: Committee or external DA.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Where is the data needed to reconstruct state published?\" its generated answer is \"Committee or external DA\", recorded here as if quoted from its audit.",
+          "claim": "Data availability: Committee or external DA.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.soundness.open-critical",
+      "status": "answered",
+      "optionId": "mitigated",
+      "rationale": "Sample data: \"Disclosed, mitigated operationally\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is there a known, unpatched critical vulnerability?\" its generated answer is \"Disclosed, mitigated operationally\", recorded here as if quoted from its contracts.",
+          "claim": "Open critical issues: Disclosed, mitigated operationally.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is there a known, unpatched critical vulnerability?\" its generated answer is \"Disclosed, mitigated operationally\", recorded here as if quoted from its audit.",
+          "claim": "Open critical issues: Disclosed, mitigated operationally.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.soundness.history",
+      "status": "answered",
+      "optionId": "one",
+      "rationale": "Sample data: \"One, handled transparently\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"How many critical vulnerabilities or exploits in the last 24 months?\" its generated answer is \"One, handled transparently\", recorded here as if quoted from its audit.",
+          "claim": "History: One, handled transparently.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"How many critical vulnerabilities or exploits in the last 24 months?\" its generated answer is \"One, handled transparently\", recorded here as if quoted from its docs.",
+          "claim": "History: One, handled transparently.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.soundness.defense-in-depth",
+      "status": "answered",
+      "optionId": "several",
+      "rationale": "Sample data: \"Several layers\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are there layers of defense against proof or crypto bugs (multiple provers, re-execution, caps, delayed withdrawals)?\" its generated answer is \"Several layers\", recorded here as if quoted from its docs.",
+          "claim": "Defense in depth: Several layers.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are there layers of defense against proof or crypto bugs (multiple provers, re-execution, caps, delayed withdrawals)?\" its generated answer is \"Several layers\", recorded here as if quoted from its contracts.",
+          "claim": "Defense in depth: Several layers.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.assurance.open-source",
+      "status": "answered",
+      "optionId": "all",
+      "rationale": "Sample data: \"All, OSI license\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are the protocol, circuits and default client open source under an OSI license?\" its generated answer is \"All, OSI license\", recorded here as if quoted from its audit.",
+          "claim": "Open source: All, OSI license.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are the protocol, circuits and default client open source under an OSI license?\" its generated answer is \"All, OSI license\", recorded here as if quoted from its docs.",
+          "claim": "Open source: All, OSI license.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.assurance.reproducibility",
+      "status": "answered",
+      "optionId": "full",
+      "rationale": "Sample data: \"Fully\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is prover source published, can verifier contracts and circuit hashes be regenerated, and are deployed contracts verified?\" its generated answer is \"Fully\", recorded here as if quoted from its audit.",
+          "claim": "Reproducibility: Fully.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is prover source published, can verifier contracts and circuit hashes be regenerated, and are deployed contracts verified?\" its generated answer is \"Fully\", recorded here as if quoted from its docs.",
+          "claim": "Reproducibility: Fully.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.assurance.audits",
+      "status": "answered",
+      "optionId": "one",
+      "rationale": "Sample data: \"One\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Has the live version been audited independently?\" its generated answer is \"One\", recorded here as if quoted from its audit.",
+          "claim": "Audits: One.",
+          "citedUrl": "https://example-rollup.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Has the live version been audited independently?\" its generated answer is \"One\", recorded here as if quoted from its docs.",
+          "claim": "Audits: One.",
+          "citedUrl": "https://example-rollup.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.assurance.formal-verification",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "Sample data: \"Partial\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are core contracts or circuits formally verified?\" its generated answer is \"Partial\", recorded here as if quoted from its docs.",
+          "claim": "Formal verification: Partial.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Are core contracts or circuits formally verified?\" its generated answer is \"Partial\", recorded here as if quoted from its contracts.",
+          "claim": "Formal verification: Partial.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.assurance.bounty",
+      "status": "answered",
+      "optionId": "smaller",
+      "rationale": "Sample data: \"Smaller\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is there a public bug bounty, and how large?\" its generated answer is \"Smaller\", recorded here as if quoted from its contracts.",
+          "claim": "Bug bounty: Smaller.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Is there a public bug bounty, and how large?\" its generated answer is \"Smaller\", recorded here as if quoted from its audit.",
+          "claim": "Bug bounty: Smaller.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.maturity.status",
+      "status": "answered",
+      "optionId": "mainnet",
+      "rationale": "Sample data: \"Mainnet, no training wheels\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"What is the system's production status?\" its generated answer is \"Mainnet, no training wheels\", recorded here as if quoted from its contracts.",
+          "claim": "Status: Mainnet, no training wheels.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"What is the system's production status?\" its generated answer is \"Mainnet, no training wheels\", recorded here as if quoted from its audit.",
+          "claim": "Status: Mainnet, no training wheels.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.maturity.age",
+      "status": "answered",
+      "optionId": "1y",
+      "rationale": "Sample data: \"≥ 1 year\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Private Rollup is fictional sample data. For \"How long have the privacy features been live in production?\" its generated answer is \"≥ 1 year\", recorded here as if quoted from its docs.",
+          "claim": "Time in production: ≥ 1 year.",
+          "citedUrl": "https://example-rollup.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"How long have the privacy features been live in production?\" its generated answer is \"≥ 1 year\", recorded here as if quoted from its contracts.",
+          "claim": "Time in production: ≥ 1 year.",
+          "citedUrl": "https://example-rollup.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.maturity.continuity",
+      "status": "answered",
+      "optionId": "once",
+      "rationale": "Sample data: \"Once\" was generated for Example Private Rollup, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Private Rollup is fictional sample data. For \"Have upgrades forced users to migrate funds or state?\" its generated answer is \"Once\", recorded here as if quoted from its contracts.",
+          "claim": "Continuity: Once.",
+          "citedUrl": "https://example-rollup.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Private Rollup is fictional sample data. For \"Have upgrades forced users to migrate funds or state?\" its generated answer is \"Once\", recorded here as if quoted from its audit.",
+          "claim": "Continuity: Once.",
+          "citedUrl": "https://example-rollup.example/audit"
+        }
+      ]
+    }
+  ],
+  "matrix": {
+    "public_observer": {
+      "sender": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "recipient": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "amount": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      },
+      "asset": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "link": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      },
+      "function": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      },
+      "metadata": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      }
+    },
+    "chain_analyst": {
+      "sender": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "recipient": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      },
+      "amount": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "asset": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "link": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "function": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "metadata": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      }
+    },
+    "network_observer": {
+      "sender": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "recipient": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      },
+      "amount": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "asset": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "link": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "function": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      },
+      "metadata": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      }
+    },
+    "privileged_insider": {
+      "sender": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "recipient": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "amount": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      },
+      "asset": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "link": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      },
+      "function": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "metadata": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      }
+    },
+    "future_adversary": {
+      "sender": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "recipient": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "amount": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "asset": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      },
+      "link": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      },
+      "function": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "metadata": {
+        "state": "private",
+        "note": "Sample data: private for this fictional project."
+      }
+    }
+  }
+}

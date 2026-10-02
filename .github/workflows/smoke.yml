@@ -1,0 +1,71 @@
+name: Post-deploy smoke
+
+# Railway reports each deploy to GitHub as a deployment. When one succeeds, the read-only smoke project
+# (e2e/tests/smoke.spec.ts) runs against the deployed URL (R3-REL-15). A failure fails this workflow and opens
+# (or comments on) an issue labelled `smoke-failure`, so it reaches people who watch the repo.
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: Base URL to check (defaults to the production URL in e2e/playwright.config.ts)
+        required: false
+
+concurrency:
+  group: smoke-${{ github.event.deployment.environment || 'manual' }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  smoke:
+    if: github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # The input, then the SMOKE_URL repository variable, then the deployment's URL. Railway reports its own
+      # dashboard page as the environment URL, so that one is ignored (the app's URL is the e2e default).
+      TARGET_URL: ${{ inputs.url || vars.SMOKE_URL }}
+      DEPLOYMENT_URL: ${{ github.event.deployment_status.environment_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.deployment.sha || github.sha }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Install Playwright browser
+        run: pnpm --filter @pb/e2e exec playwright install --with-deps chromium
+      - name: Smoke tests against the deployment
+        run: |
+          if [ -z "$TARGET_URL" ] && [ -n "$DEPLOYMENT_URL" ] && ! echo "$DEPLOYMENT_URL" | grep -q "railway.com"; then TARGET_URL="$DEPLOYMENT_URL"; fi
+          if [ -n "$TARGET_URL" ]; then export SMOKE_URL="$TARGET_URL"; fi
+          echo "Checking ${SMOKE_URL:-the default production URL}"
+          pnpm test:smoke
+        env:
+          CI: "1"
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: smoke-results
+          path: e2e/test-results
+          retention-days: 14
+      - name: Report the failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ENVIRONMENT: ${{ github.event.deployment.environment || 'manual run' }}
+          SHA: ${{ github.event.deployment.sha || github.sha }}
+        run: |
+          body="Smoke tests failed after the deploy of ${SHA} to ${ENVIRONMENT} (${TARGET_URL:-default URL}). Run: ${RUN_URL}"
+          gh label create smoke-failure --color B60205 --description "Post-deploy smoke test failed" 2>/dev/null || true
+          open=$(gh issue list --label smoke-failure --state open --json number --jq '.[0].number')
+          if [ -n "$open" ]; then gh issue comment "$open" --body "$body"; else gh issue create --title "Post-deploy smoke failed (${ENVIRONMENT})" --label smoke-failure --body "$body"; fi

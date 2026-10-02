@@ -1,0 +1,1 @@
+ALTER TABLE `criterion_results` ADD `accepted_flags` text;

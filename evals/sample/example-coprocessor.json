@@ -1,0 +1,2507 @@
+{
+  "project": {
+    "slug": "example-coprocessor",
+    "name": "Example Confidential Coprocessor",
+    "website": "https://example-coprocessor.example",
+    "logoUrl": null,
+    "tagline": "Fictional coprocessor for confidential token balances",
+    "description": "Example Confidential Coprocessor is a fictional project in the sample dataset. Its answers, sources and quotes are generated for demos and tests; none of it describes a real system.",
+    "category": "coprocessor",
+    "mechanism": "confidential_amounts",
+    "attributes": ["zk"],
+    "chains": ["Example Chain"],
+    "l2beatSlug": null,
+    "defillamaSlug": null
+  },
+  "asOf": "2026-09-30",
+  "summary": "Example Confidential Coprocessor is fictional sample data: its scores show how the benchmark presents a project, not the properties of a real system.",
+  "context": {
+    "status": "Fictional sample project",
+    "launched": "Not a real system"
+  },
+  "powers": ["Sample data: a fictional admin multisig can upgrade the contracts.", "Sample data: a fictional operator orders transactions."],
+  "sources": [
+    {
+      "id": "docs",
+      "url": "https://example-coprocessor.example/docs",
+      "title": "Example Confidential Coprocessor docs (fictional sample)",
+      "kind": "docs",
+      "sourceClass": "official_docs",
+      "date": "2026-09-01"
+    },
+    {
+      "id": "code",
+      "url": "https://example-coprocessor.example/code",
+      "title": "Example Confidential Coprocessor contracts (fictional sample)",
+      "kind": "code",
+      "sourceClass": "code_onchain",
+      "date": "2026-09-01"
+    },
+    {
+      "id": "audit",
+      "url": "https://example-coprocessor.example/audit",
+      "title": "Example Confidential Coprocessor audit (fictional sample)",
+      "kind": "audit",
+      "sourceClass": "independent",
+      "date": "2026-08-15"
+    }
+  ],
+  "answers": [
+    {
+      "criterionId": "coverage.confidentiality.amounts",
+      "status": "answered",
+      "optionId": "ranges",
+      "rationale": "Sample data: \"Hidden, but fixed denominations or linked fields reveal ranges\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are transfer amounts hidden from public observers?\" its generated answer is \"Hidden, but fixed denominations or linked fields reveal ranges\", recorded here as if quoted from its contracts.",
+          "claim": "Amounts: Hidden, but fixed denominations or linked fields reveal ranges.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are transfer amounts hidden from public observers?\" its generated answer is \"Hidden, but fixed denominations or linked fields reveal ranges\", recorded here as if quoted from its audit.",
+          "claim": "Amounts: Hidden, but fixed denominations or linked fields reveal ranges.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.confidentiality.balances",
+      "status": "answered",
+      "optionId": "public",
+      "rationale": "Sample data: \"Public\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are holders' balances hidden?\" its generated answer is \"Public\", recorded here as if quoted from its audit.",
+          "claim": "Balances: Public.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are holders' balances hidden?\" its generated answer is \"Public\", recorded here as if quoted from its docs.",
+          "claim": "Balances: Public.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.confidentiality.asset",
+      "status": "answered",
+      "optionId": "per-asset",
+      "rationale": "Sample data: \"Revealed by per-asset pools or tags\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is the token or asset that moved hidden?\" its generated answer is \"Revealed by per-asset pools or tags\", recorded here as if quoted from its docs.",
+          "claim": "Asset type: Revealed by per-asset pools or tags.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is the token or asset that moved hidden?\" its generated answer is \"Revealed by per-asset pools or tags\", recorded here as if quoted from its contracts.",
+          "claim": "Asset type: Revealed by per-asset pools or tags.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.confidentiality.boundary",
+      "status": "answered",
+      "optionId": "boundary-public",
+      "rationale": "Sample data: \"Entry and exit amounts are public; everything inside is hidden\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are amounts visible when funds enter or leave the private system (shield, wrap, bridge)?\" its generated answer is \"Entry and exit amounts are public; everything inside is hidden\", recorded here as if quoted from its audit.",
+          "claim": "Boundary: Entry and exit amounts are public; everything inside is hidden.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are amounts visible when funds enter or leave the private system (shield, wrap, bridge)?\" its generated answer is \"Entry and exit amounts are public; everything inside is hidden\", recorded here as if quoted from its docs.",
+          "claim": "Boundary: Entry and exit amounts are public; everything inside is hidden.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.sender",
+      "status": "answered",
+      "optionId": "visible",
+      "rationale": "Sample data: \"Visible\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is the sender hidden in private transfers?\" its generated answer is \"Visible\", recorded here as if quoted from its audit.",
+          "claim": "Sender: Visible.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is the sender hidden in private transfers?\" its generated answer is \"Visible\", recorded here as if quoted from its docs.",
+          "claim": "Sender: Visible.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.recipient",
+      "status": "answered",
+      "optionId": "mixing",
+      "rationale": "Sample data: \"Hidden only through deposit/withdraw mixing\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is the recipient hidden in private transfers?\" its generated answer is \"Hidden only through deposit/withdraw mixing\", recorded here as if quoted from its contracts.",
+          "claim": "Recipient: Hidden only through deposit/withdraw mixing.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is the recipient hidden in private transfers?\" its generated answer is \"Hidden only through deposit/withdraw mixing\", recorded here as if quoted from its audit.",
+          "claim": "Recipient: Hidden only through deposit/withdraw mixing.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.history",
+      "status": "answered",
+      "optionId": "unlinkable",
+      "rationale": "Sample data: \"Yes\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are spends cryptographically unlinkable from the receipts that funded them?\" its generated answer is \"Yes\", recorded here as if quoted from its audit.",
+          "claim": "History: Yes.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are spends cryptographically unlinkable from the receipts that funded them?\" its generated answer is \"Yes\", recorded here as if quoted from its docs.",
+          "claim": "History: Yes.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.public-apps",
+      "status": "answered",
+      "optionId": "must-exit",
+      "rationale": "Sample data: \"Must exit privacy to interact\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users call public contracts or DeFi without revealing their account?\" its generated answer is \"Must exit privacy to interact\", recorded here as if quoted from its docs.",
+          "claim": "Public app access: Must exit privacy to interact.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users call public contracts or DeFi without revealing their account?\" its generated answer is \"Must exit privacy to interact\", recorded here as if quoted from its contracts.",
+          "claim": "Public app access: Must exit privacy to interact.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.fees",
+      "status": "answered",
+      "optionId": "optional-relayer",
+      "rationale": "Sample data: \"Relayers exist but aren't the reference client's default, or one relayer handles most traffic\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does paying fees reveal who paid?\" its generated answer is \"Relayers exist but aren't the reference client's default, or one relayer handles most traffic\", recorded here as if quoted from its contracts.",
+          "claim": "Fee payment: Relayers exist but aren't the reference client's default, or one relayer handles most traffic.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does paying fees reveal who paid?\" its generated answer is \"Relayers exist but aren't the reference client's default, or one relayer handles most traffic\", recorded here as if quoted from its audit.",
+          "claim": "Fee payment: Relayers exist but aren't the reference client's default, or one relayer handles most traffic.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.identity.persistent-id",
+      "status": "answered",
+      "optionId": "stable-tag",
+      "rationale": "Sample data: \"A stable account ID or discovery tag is visible\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is any stable public identifier attached to private activity?\" its generated answer is \"A stable account ID or discovery tag is visible\", recorded here as if quoted from its docs.",
+          "claim": "Persistent identifier: A stable account ID or discovery tag is visible.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is any stable public identifier attached to private activity?\" its generated answer is \"A stable account ID or discovery tag is visible\", recorded here as if quoted from its contracts.",
+          "claim": "Persistent identifier: A stable account ID or discovery tag is visible.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.identity.registration",
+      "status": "answered",
+      "optionId": "kyc",
+      "rationale": "Sample data: \"KYC or identity allowlist\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Must users register an identity or credential to use private features at the protocol level?\" its generated answer is \"KYC or identity allowlist\", recorded here as if quoted from its contracts.",
+          "claim": "Registration: KYC or identity allowlist.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Must users register an identity or credential to use private features at the protocol level?\" its generated answer is \"KYC or identity allowlist\", recorded here as if quoted from its audit.",
+          "claim": "Registration: KYC or identity allowlist.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.identity.reusable-address",
+      "status": "answered",
+      "optionId": "linkable",
+      "rationale": "Sample data: \"No\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users receive without publishing an address that links their payments?\" its generated answer is \"No\", recorded here as if quoted from its contracts.",
+          "claim": "Reusable addresses: No.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users receive without publishing an address that links their payments?\" its generated answer is \"No\", recorded here as if quoted from its audit.",
+          "claim": "Reusable addresses: No.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.identity.identity-proofs",
+      "status": "answered",
+      "optionId": "apps",
+      "rationale": "Sample data: \"Possible via apps\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users prove attributes (membership, compliance, credentials) without revealing identity?\" its generated answer is \"Possible via apps\", recorded here as if quoted from its docs.",
+          "claim": "Private identity proofs: Possible via apps.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users prove attributes (membership, compliance, credentials) without revealing identity?\" its generated answer is \"Possible via apps\", recorded here as if quoted from its contracts.",
+          "claim": "Private identity proofs: Possible via apps.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.execution.private-state",
+      "status": "answered",
+      "optionId": "balances-only",
+      "rationale": "Sample data: \"Private balances only (fixed asset logic)\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can contracts hold private state?\" its generated answer is \"Private balances only (fixed asset logic)\", recorded here as if quoted from its contracts.",
+          "claim": "Private state: Private balances only (fixed asset logic).",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can contracts hold private state?\" its generated answer is \"Private balances only (fixed asset logic)\", recorded here as if quoted from its audit.",
+          "claim": "Private state: Private balances only (fixed asset logic).",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.execution.private-logic",
+      "status": "answered",
+      "optionId": "general-encrypted",
+      "rationale": "Sample data: \"General-purpose on encrypted inputs, but which logic runs is public\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can user-defined logic execute privately?\" its generated answer is \"General-purpose on encrypted inputs, but which logic runs is public\", recorded here as if quoted from its audit.",
+          "claim": "Private logic: General-purpose on encrypted inputs, but which logic runs is public.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can user-defined logic execute privately?\" its generated answer is \"General-purpose on encrypted inputs, but which logic runs is public\", recorded here as if quoted from its docs.",
+          "claim": "Private logic: General-purpose on encrypted inputs, but which logic runs is public.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.execution.function-hiding",
+      "status": "answered",
+      "optionId": "visible",
+      "rationale": "Sample data: \"Visible\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is it hidden which contract and function a transaction called?\" its generated answer is \"Visible\", recorded here as if quoted from its contracts.",
+          "claim": "Function hiding: Visible.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is it hidden which contract and function a transaction called?\" its generated answer is \"Visible\", recorded here as if quoted from its audit.",
+          "claim": "Function hiding: Visible.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.execution.shared-state",
+      "status": "answered",
+      "optionId": "limited",
+      "rationale": "Sample data: \"Limited\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can the system compute over many users' private inputs at once (FHE, MPC, pooled encrypted state)?\" its generated answer is \"Limited\", recorded here as if quoted from its audit.",
+          "claim": "Shared private state: Limited.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can the system compute over many users' private inputs at once (FHE, MPC, pooled encrypted state)?\" its generated answer is \"Limited\", recorded here as if quoted from its docs.",
+          "claim": "Shared private state: Limited.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.callstack.targets",
+      "status": "answered",
+      "optionId": "visible",
+      "rationale": "Sample data: \"Visible\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is it hidden which contracts ran inside the transaction?\" its generated answer is \"Visible\", recorded here as if quoted from its audit.",
+          "claim": "Call targets: Visible.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is it hidden which contracts ran inside the transaction?\" its generated answer is \"Visible\", recorded here as if quoted from its docs.",
+          "claim": "Call targets: Visible.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.callstack.structure",
+      "status": "answered",
+      "optionId": "visible",
+      "rationale": "Sample data: \"Visible\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are the depth and number of nested calls hidden from observers?\" its generated answer is \"Visible\", recorded here as if quoted from its contracts.",
+          "claim": "Call structure: Visible.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are the depth and number of nested calls hidden from observers?\" its generated answer is \"Visible\", recorded here as if quoted from its audit.",
+          "claim": "Call structure: Visible.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.callstack.public-boundary",
+      "status": "answered",
+      "optionId": "visible",
+      "rationale": "Sample data: \"Caller and arguments visible\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What leaks when private code calls public code?\" its generated answer is \"Caller and arguments visible\", recorded here as if quoted from its contracts.",
+          "claim": "Public boundary: Caller and arguments visible.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What leaks when private code calls public code?\" its generated answer is \"Caller and arguments visible\", recorded here as if quoted from its audit.",
+          "claim": "Public boundary: Caller and arguments visible.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.metadata.network",
+      "status": "answered",
+      "optionId": "opt-in",
+      "rationale": "Sample data: \"Available, opt-in\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does the reference client hide the user's IP from every network party by default (Tor, a mixnet, or peer-to-peer gossip for submissions and reads)?\" its generated answer is \"Available, opt-in\", recorded here as if quoted from its contracts.",
+          "claim": "Network layer: Available, opt-in.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does the reference client hide the user's IP from every network party by default (Tor, a mixnet, or peer-to-peer gossip for submissions and reads)?\" its generated answer is \"Available, opt-in\", recorded here as if quoted from its audit.",
+          "claim": "Network layer: Available, opt-in.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.metadata.reads",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "Sample data: \"Partial leakage (tags, PIR, TEE-ORAM)\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users find and read their private data without revealing which data is theirs to a third-party node?\" its generated answer is \"Partial leakage (tags, PIR, TEE-ORAM)\", recorded here as if quoted from its contracts.",
+          "claim": "Private reads: Partial leakage (tags, PIR, TEE-ORAM).",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users find and read their private data without revealing which data is theirs to a third-party node?\" its generated answer is \"Partial leakage (tags, PIR, TEE-ORAM)\", recorded here as if quoted from its audit.",
+          "claim": "Private reads: Partial leakage (tags, PIR, TEE-ORAM).",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.metadata.pending",
+      "status": "answered",
+      "optionId": "plaintext",
+      "rationale": "Sample data: \"Plaintext visible before inclusion\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Do the mempool and sequencer see only proofs or ciphertexts before inclusion?\" its generated answer is \"Plaintext visible before inclusion\", recorded here as if quoted from its docs.",
+          "claim": "Pending transactions: Plaintext visible before inclusion.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Do the mempool and sequencer see only proofs or ciphertexts before inclusion?\" its generated answer is \"Plaintext visible before inclusion\", recorded here as if quoted from its contracts.",
+          "claim": "Pending transactions: Plaintext visible before inclusion.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.metadata.fingerprinting",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "Sample data: \"Partial\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are there mitigations for timing, fee, size and shape fingerprints?\" its generated answer is \"Partial\", recorded here as if quoted from its audit.",
+          "claim": "Fingerprinting: Partial.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are there mitigations for timing, fee, size and shape fingerprints?\" its generated answer is \"Partial\", recorded here as if quoted from its docs.",
+          "claim": "Fingerprinting: Partial.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.anonymity-set.structure",
+      "status": "answered",
+      "optionId": "fragmented",
+      "rationale": "Sample data: \"Fragmented across many pools or chains\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How is the anonymity set structured?\" its generated answer is \"Fragmented across many pools or chains\", recorded here as if quoted from its contracts.",
+          "claim": "Structure: Fragmented across many pools or chains.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How is the anonymity set structured?\" its generated answer is \"Fragmented across many pools or chains\", recorded here as if quoted from its audit.",
+          "claim": "Structure: Fragmented across many pools or chains.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.anonymity-set.default",
+      "status": "answered",
+      "optionId": "opt-in",
+      "rationale": "Sample data: \"Opt-in\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is activity private by default?\" its generated answer is \"Opt-in\", recorded here as if quoted from its audit.",
+          "claim": "Privacy by default: Opt-in.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is activity private by default?\" its generated answer is \"Opt-in\", recorded here as if quoted from its docs.",
+          "claim": "Privacy by default: Opt-in.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.anonymity-set.usage",
+      "status": "answered",
+      "optionId": "tiny",
+      "rationale": "Sample data: \"Live with any measured usage\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How much value sits in private state, or how many private transactions happen per day? (Use the higher tier.)\" its generated answer is \"Live with any measured usage\", recorded here as if quoted from its docs.",
+          "claim": "Measured usage: Live with any measured usage.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How much value sits in private state, or how many private transactions happen per day? (Use the higher tier.)\" its generated answer is \"Live with any measured usage\", recorded here as if quoted from its contracts.",
+          "claim": "Measured usage: Live with any measured usage.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.anonymity-set.effective",
+      "status": "answered",
+      "optionId": "no-study",
+      "rationale": "Sample data: \"No independent study yet\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Do independent measurements show how much heuristics shrink the set?\" its generated answer is \"No independent study yet\", recorded here as if quoted from its audit.",
+          "claim": "Effective anonymity: No independent study yet.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Do independent measurements show how much heuristics shrink the set?\" its generated answer is \"No independent study yet\", recorded here as if quoted from its docs.",
+          "claim": "Effective anonymity: No independent study yet.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.decryption.standing-access",
+      "status": "answered",
+      "optionId": "single",
+      "rationale": "Sample data: \"A single designated entity holds a master or auditor key\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does any third party have a standing ability to decrypt or view private data?\" its generated answer is \"A single designated entity holds a master or auditor key\", recorded here as if quoted from its docs.",
+          "claim": "Standing access: A single designated entity holds a master or auditor key.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does any third party have a standing ability to decrypt or view private data?\" its generated answer is \"A single designated entity holds a master or auditor key\", recorded here as if quoted from its contracts.",
+          "claim": "Standing access: A single designated entity holds a master or auditor key.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.decryption.infra-visibility",
+      "status": "answered",
+      "optionId": "default-remote",
+      "rationale": "Sample data: \"Client-side possible, but the default path sends plaintext to a service\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Do sequencers, provers, validators or relayers see plaintext of private transactions?\" its generated answer is \"Client-side possible, but the default path sends plaintext to a service\", recorded here as if quoted from its docs.",
+          "claim": "Infrastructure visibility: Client-side possible, but the default path sends plaintext to a service.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Do sequencers, provers, validators or relayers see plaintext of private transactions?\" its generated answer is \"Client-side possible, but the default path sends plaintext to a service\", recorded here as if quoted from its contracts.",
+          "claim": "Infrastructure visibility: Client-side possible, but the default path sends plaintext to a service.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.decryption.retroactive",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "Sample data: \"No global key; compromise is limited to individual users\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Would compromising one key or committee expose everyone's history?\" its generated answer is \"No global key; compromise is limited to individual users\", recorded here as if quoted from its audit.",
+          "claim": "Retroactive exposure: No global key; compromise is limited to individual users.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Would compromising one key or committee expose everyone's history?\" its generated answer is \"No global key; compromise is limited to individual users\", recorded here as if quoted from its docs.",
+          "claim": "Retroactive exposure: No global key; compromise is limited to individual users.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.disclosure.selective",
+      "status": "unknown",
+      "rationale": "Sample data: left unknown to show how an unsettled criterion scores.",
+      "confidence": "low",
+      "labelConfidence": "certain",
+      "evidence": []
+    },
+    {
+      "criterionId": "trust.disclosure.granularity",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "Sample data: \"No\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can disclosure be limited to one transaction, asset or time range?\" its generated answer is \"No\", recorded here as if quoted from its audit.",
+          "claim": "Granularity: No.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can disclosure be limited to one transaction, asset or time range?\" its generated answer is \"No\", recorded here as if quoted from its docs.",
+          "claim": "Granularity: No.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.disclosure.revocable",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "Sample data: \"No\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users rotate keys or limit disclosure going forward?\" its generated answer is \"No\", recorded here as if quoted from its docs.",
+          "claim": "Revocability: No.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users rotate keys or limit disclosure going forward?\" its generated answer is \"No\", recorded here as if quoted from its contracts.",
+          "claim": "Revocability: No.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.crypto.setup",
+      "status": "answered",
+      "optionId": "red",
+      "rationale": "Sample data: \"Red or unverifiable ceremony\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What kind of setup does the proof system rely on (L2BEAT trusted-setup framework, weakest link)?\" its generated answer is \"Red or unverifiable ceremony\", recorded here as if quoted from its audit.",
+          "claim": "Setup: Red or unverifiable ceremony.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What kind of setup does the proof system rely on (L2BEAT trusted-setup framework, weakest link)?\" its generated answer is \"Red or unverifiable ceremony\", recorded here as if quoted from its docs.",
+          "claim": "Setup: Red or unverifiable ceremony.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.crypto.hardware",
+      "status": "answered",
+      "optionId": "integrity-only",
+      "rationale": "Sample data: \"TEEs for integrity or defense-in-depth only\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does privacy depend on trusted hardware (TEEs)?\" its generated answer is \"TEEs for integrity or defense-in-depth only\", recorded here as if quoted from its contracts.",
+          "claim": "Hardware: TEEs for integrity or defense-in-depth only.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does privacy depend on trusted hardware (TEEs)?\" its generated answer is \"TEEs for integrity or defense-in-depth only\", recorded here as if quoted from its audit.",
+          "claim": "Hardware: TEEs for integrity or defense-in-depth only.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.crypto.post-quantum",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "Sample data: \"Partial (e.g. PQ-hiding commitments, classical note encryption)\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does stored private data resist harvest-now-decrypt-later attacks?\" its generated answer is \"Partial (e.g. PQ-hiding commitments, classical note encryption)\", recorded here as if quoted from its docs.",
+          "claim": "Post-quantum confidentiality: Partial (e.g. PQ-hiding commitments, classical note encryption).",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does stored private data resist harvest-now-decrypt-later attacks?\" its generated answer is \"Partial (e.g. PQ-hiding commitments, classical note encryption)\", recorded here as if quoted from its contracts.",
+          "claim": "Post-quantum confidentiality: Partial (e.g. PQ-hiding commitments, classical note encryption).",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.crypto.formal-privacy",
+      "status": "answered",
+      "optionId": "de-facto",
+      "rationale": "Sample data: \"Explicitly “de facto” or informal\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is the privacy property formally specified, or only asserted?\" its generated answer is \"Explicitly “de facto” or informal\", recorded here as if quoted from its audit.",
+          "claim": "Formal privacy: Explicitly “de facto” or informal.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is the privacy property formally specified, or only asserted?\" its generated answer is \"Explicitly “de facto” or informal\", recorded here as if quoted from its docs.",
+          "claim": "Formal privacy: Explicitly “de facto” or informal.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.self-custody.spending",
+      "status": "answered",
+      "optionId": "custodian",
+      "rationale": "Sample data: \"A custodian or operator\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Who can move user funds?\" its generated answer is \"A custodian or operator\", recorded here as if quoted from its contracts.",
+          "claim": "Spending authority: A custodian or operator.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Who can move user funds?\" its generated answer is \"A custodian or operator\", recorded here as if quoted from its audit.",
+          "claim": "Spending authority: A custodian or operator.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.self-custody.backing",
+      "status": "answered",
+      "optionId": "committee-bridge",
+      "rationale": "Sample data: \"Committee or multisig bridge\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How are assets in the system backed?\" its generated answer is \"Committee or multisig bridge\", recorded here as if quoted from its audit.",
+          "claim": "Backing: Committee or multisig bridge.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How are assets in the system backed?\" its generated answer is \"Committee or multisig bridge\", recorded here as if quoted from its docs.",
+          "claim": "Backing: Committee or multisig bridge.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.self-custody.recoverability",
+      "status": "answered",
+      "optionId": "yes",
+      "rationale": "Sample data: \"Yes\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users rebuild their private balance and spend without the operator's help?\" its generated answer is \"Yes\", recorded here as if quoted from its audit.",
+          "claim": "Recoverability: Yes.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users rebuild their private balance and spend without the operator's help?\" its generated answer is \"Yes\", recorded here as if quoted from its docs.",
+          "claim": "Recoverability: Yes.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.pause.pause-fn",
+      "status": "answered",
+      "optionId": "fast-path",
+      "rationale": "Sample data: \"DAO or multisig fast path\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is there a protocol-level pause?\" its generated answer is \"DAO or multisig fast path\", recorded here as if quoted from its docs.",
+          "claim": "Pause function: DAO or multisig fast path.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is there a protocol-level pause?\" its generated answer is \"DAO or multisig fast path\", recorded here as if quoted from its contracts.",
+          "claim": "Pause function: DAO or multisig fast path.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.pause.halt",
+      "status": "answered",
+      "optionId": "yes",
+      "rationale": "Sample data: \"Yes\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can a single party halt block production or ordering?\" its generated answer is \"Yes\", recorded here as if quoted from its contracts.",
+          "claim": "Halt: Yes.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can a single party halt block production or ordering?\" its generated answer is \"Yes\", recorded here as if quoted from its audit.",
+          "claim": "Halt: Yes.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.pause.exits-during-pause",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "Sample data: \"Partially\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Do withdrawals keep working through any pause or halt?\" its generated answer is \"Partially\", recorded here as if quoted from its docs.",
+          "claim": "Exits during a pause: Partially.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Do withdrawals keep working through any pause or halt?\" its generated answer is \"Partially\", recorded here as if quoted from its contracts.",
+          "claim": "Exits during a pause: Partially.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.pause.track-record",
+      "status": "answered",
+      "optionId": "several",
+      "rationale": "Sample data: \"Several\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Have there been pauses or halts, intentional or outages, in the last 12 months?\" its generated answer is \"Several\", recorded here as if quoted from its docs.",
+          "claim": "Track record: Several.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Have there been pauses or halts, intentional or outages, in the last 12 months?\" its generated answer is \"Several\", recorded here as if quoted from its contracts.",
+          "claim": "Track record: Several.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.freeze.blocklist",
+      "status": "answered",
+      "optionId": "protocol-wide",
+      "rationale": "Sample data: \"Enforced protocol-wide\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can the protocol or its native token standard freeze individual users?\" its generated answer is \"Enforced protocol-wide\", recorded here as if quoted from its docs.",
+          "claim": "Blocklist / freeze: Enforced protocol-wide.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can the protocol or its native token standard freeze individual users?\" its generated answer is \"Enforced protocol-wide\", recorded here as if quoted from its contracts.",
+          "claim": "Blocklist / freeze: Enforced protocol-wide.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.freeze.seizure",
+      "status": "answered",
+      "optionId": "issuer-only",
+      "rationale": "Sample data: \"Only the issuer, for its own asset\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is forced transfer, burn or clawback possible?\" its generated answer is \"Only the issuer, for its own asset\", recorded here as if quoted from its docs.",
+          "claim": "Seizure: Only the issuer, for its own asset.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is forced transfer, burn or clawback possible?\" its generated answer is \"Only the issuer, for its own asset\", recorded here as if quoted from its contracts.",
+          "claim": "Seizure: Only the issuer, for its own asset.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.freeze.systemic",
+      "status": "answered",
+      "optionId": "yes",
+      "rationale": "Sample data: \"Yes\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Could one blacklist action (e.g. on a pool or escrow contract) freeze every user's balance of an asset?\" its generated answer is \"Yes\", recorded here as if quoted from its contracts.",
+          "claim": "Systemic freeze: Yes.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Could one blacklist action (e.g. on a pool or escrow contract) freeze every user's balance of an asset?\" its generated answer is \"Yes\", recorded here as if quoted from its audit.",
+          "claim": "Systemic freeze: Yes.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.exit.unilateral",
+      "status": "answered",
+      "optionId": "costly",
+      "rationale": "Sample data: \"Exists but bonded, costly or slow\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users exit with their funds if the operator or governance is hostile or offline?\" its generated answer is \"Exists but bonded, costly or slow\", recorded here as if quoted from its audit.",
+          "claim": "Unilateral exit: Exists but bonded, costly or slow.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users exit with their funds if the operator or governance is hostile or offline?\" its generated answer is \"Exists but bonded, costly or slow\", recorded here as if quoted from its docs.",
+          "claim": "Unilateral exit: Exists but bonded, costly or slow.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.exit.window",
+      "status": "answered",
+      "optionId": "short",
+      "rationale": "Sample data: \"< 7 days\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How long do users have to leave before an unwanted upgrade takes effect?\" its generated answer is \"< 7 days\", recorded here as if quoted from its contracts.",
+          "claim": "Exit window: < 7 days.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How long do users have to leave before an unwanted upgrade takes effect?\" its generated answer is \"< 7 days\", recorded here as if quoted from its audit.",
+          "claim": "Exit window: < 7 days.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.exit.gatekeeper",
+      "status": "answered",
+      "optionId": "private-gated",
+      "rationale": "Sample data: \"Public exit always works; private exit gated\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does exiting need permission or cooperation from anyone (decryption committee, approval list, operator signature)?\" its generated answer is \"Public exit always works; private exit gated\", recorded here as if quoted from its audit.",
+          "claim": "No gatekeeper: Public exit always works; private exit gated.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does exiting need permission or cooperation from anyone (decryption committee, approval list, operator signature)?\" its generated answer is \"Public exit always works; private exit gated\", recorded here as if quoted from its docs.",
+          "claim": "No gatekeeper: Public exit always works; private exit gated.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.access.entry",
+      "status": "answered",
+      "optionId": "screened",
+      "rationale": "Sample data: \"Screening can refuse deposits\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can anyone enter the private system?\" its generated answer is \"Screening can refuse deposits\", recorded here as if quoted from its contracts.",
+          "claim": "Entry: Screening can refuse deposits.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can anyone enter the private system?\" its generated answer is \"Screening can refuse deposits\", recorded here as if quoted from its audit.",
+          "claim": "Entry: Screening can refuse deposits.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.access.private-exit",
+      "status": "answered",
+      "optionId": "gate-fallback",
+      "rationale": "Sample data: \"Gate, but a public fallback exists\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can a third party deny a user's private exit or spend?\" its generated answer is \"Gate, but a public fallback exists\", recorded here as if quoted from its docs.",
+          "claim": "Private exit or spend: Gate, but a public fallback exists.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can a third party deny a user's private exit or spend?\" its generated answer is \"Gate, but a public fallback exists\", recorded here as if quoted from its contracts.",
+          "claim": "Private exit or spend: Gate, but a public fallback exists.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.access.screening",
+      "status": "answered",
+      "optionId": "address-screening",
+      "rationale": "Sample data: \"Third-party screening of public addresses\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"If there is compliance screening, how does it work?\" its generated answer is \"Third-party screening of public addresses\", recorded here as if quoted from its contracts.",
+          "claim": "Screening method: Third-party screening of public addresses.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"If there is compliance screening, how does it work?\" its generated answer is \"Third-party screening of public addresses\", recorded here as if quoted from its audit.",
+          "claim": "Screening method: Third-party screening of public addresses.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.contracts.model",
+      "status": "answered",
+      "optionId": "fixed",
+      "rationale": "Sample data: \"Fixed-function private actions (transfers, swaps)\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What kind of contracts can developers write?\" its generated answer is \"Fixed-function private actions (transfers, swaps)\", recorded here as if quoted from its docs.",
+          "claim": "Contract model: Fixed-function private actions (transfers, swaps).",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What kind of contracts can developers write?\" its generated answer is \"Fixed-function private actions (transfers, swaps)\", recorded here as if quoted from its contracts.",
+          "claim": "Contract model: Fixed-function private actions (transfers, swaps).",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.contracts.deployment",
+      "status": "answered",
+      "optionId": "allowlisted",
+      "rationale": "Sample data: \"Allowlisted deployers\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can anyone deploy contracts?\" its generated answer is \"Allowlisted deployers\", recorded here as if quoted from its contracts.",
+          "claim": "Permissionless deployment: Allowlisted deployers.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can anyone deploy contracts?\" its generated answer is \"Allowlisted deployers\", recorded here as if quoted from its audit.",
+          "claim": "Permissionless deployment: Allowlisted deployers.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.contracts.standards",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "Sample data: \"None\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are there standard interfaces for private tokens, NFTs and accounts?\" its generated answer is \"None\", recorded here as if quoted from its contracts.",
+          "claim": "Private standards: None.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are there standard interfaces for private tokens, NFTs and accounts?\" its generated answer is \"None\", recorded here as if quoted from its audit.",
+          "claim": "Private standards: None.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.contracts.accounts",
+      "status": "answered",
+      "optionId": "contracts",
+      "rationale": "Sample data: \"Via contracts\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is there native account abstraction (custom auth, recovery, fee sponsorship)?\" its generated answer is \"Via contracts\", recorded here as if quoted from its contracts.",
+          "claim": "Programmable accounts: Via contracts.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is there native account abstraction (custom auth, recovery, fee sponsorship)?\" its generated answer is \"Via contracts\", recorded here as if quoted from its audit.",
+          "claim": "Programmable accounts: Via contracts.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.composability.private-private",
+      "status": "answered",
+      "optionId": "limited",
+      "rationale": "Sample data: \"Limited\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can private functions of different contracts call each other atomically in one transaction?\" its generated answer is \"Limited\", recorded here as if quoted from its docs.",
+          "claim": "Private ↔ private: Limited.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can private functions of different contracts call each other atomically in one transaction?\" its generated answer is \"Limited\", recorded here as if quoted from its contracts.",
+          "claim": "Private ↔ private: Limited.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.composability.private-public",
+      "status": "answered",
+      "optionId": "one",
+      "rationale": "Sample data: \"One direction (e.g. private enqueues public)\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can private and public logic compose atomically in one transaction?\" its generated answer is \"One direction (e.g. private enqueues public)\", recorded here as if quoted from its audit.",
+          "claim": "Private ↔ public: One direction (e.g. private enqueues public).",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can private and public logic compose atomically in one transaction?\" its generated answer is \"One direction (e.g. private enqueues public)\", recorded here as if quoted from its docs.",
+          "claim": "Private ↔ public: One direction (e.g. private enqueues public).",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.composability.liquidity",
+      "status": "answered",
+      "optionId": "adapters",
+      "rationale": "Sample data: \"Through adapters or bridges\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can private users reach existing public DeFi (AMMs, lending) without leaving privacy?\" its generated answer is \"Through adapters or bridges\", recorded here as if quoted from its docs.",
+          "claim": "Liquidity access: Through adapters or bridges.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can private users reach existing public DeFi (AMMs, lending) without leaving privacy?\" its generated answer is \"Through adapters or bridges\", recorded here as if quoted from its contracts.",
+          "claim": "Liquidity access: Through adapters or bridges.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.composability.cross-domain",
+      "status": "answered",
+      "optionId": "public-legs",
+      "rationale": "Sample data: \"Via bridges with public legs\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can private contracts send and receive messages to and from other chains?\" its generated answer is \"Via bridges with public legs\", recorded here as if quoted from its audit.",
+          "claim": "Cross-domain messaging: Via bridges with public legs.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can private contracts send and receive messages to and from other chains?\" its generated answer is \"Via bridges with public legs\", recorded here as if quoted from its docs.",
+          "claim": "Cross-domain messaging: Via bridges with public legs.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.blending.granularity",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "Sample data: \"No choice\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can developers choose private or public per function or state variable?\" its generated answer is \"No choice\", recorded here as if quoted from its audit.",
+          "claim": "Granularity of choice: No choice.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can developers choose private or public per function or state variable?\" its generated answer is \"No choice\", recorded here as if quoted from its docs.",
+          "claim": "Granularity of choice: No choice.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.blending.private-reads",
+      "status": "answered",
+      "optionId": "constrained",
+      "rationale": "Sample data: \"With leakage or staleness constraints\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can private logic read public state (prices, config) without leaking what it read?\" its generated answer is \"With leakage or staleness constraints\", recorded here as if quoted from its contracts.",
+          "claim": "Reading public state privately: With leakage or staleness constraints.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can private logic read public state (prices, config) without leaking what it read?\" its generated answer is \"With leakage or staleness constraints\", recorded here as if quoted from its audit.",
+          "claim": "Reading public state privately: With leakage or staleness constraints.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.blending.crossing",
+      "status": "answered",
+      "optionId": "steps",
+      "rationale": "Sample data: \"Via shield/unshield steps\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can values move between public and private state within the system atomically?\" its generated answer is \"Via shield/unshield steps\", recorded here as if quoted from its contracts.",
+          "claim": "Moving state across: Via shield/unshield steps.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can values move between public and private state within the system atomically?\" its generated answer is \"Via shield/unshield steps\", recorded here as if quoted from its audit.",
+          "claim": "Moving state across: Via shield/unshield steps.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.disclosure.primitives",
+      "status": "answered",
+      "optionId": "limited",
+      "rationale": "Sample data: \"Limited or fixed mechanism\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does the protocol give apps primitives to implement disclosure (per-app viewing keys, encrypted logs to designated recipients, disclosure proofs)?\" its generated answer is \"Limited or fixed mechanism\", recorded here as if quoted from its contracts.",
+          "claim": "Disclosure primitives: Limited or fixed mechanism.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does the protocol give apps primitives to implement disclosure (per-app viewing keys, encrypted logs to designated recipients, disclosure proofs)?\" its generated answer is \"Limited or fixed mechanism\", recorded here as if quoted from its audit.",
+          "claim": "Disclosure primitives: Limited or fixed mechanism.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.disclosure.compliance-proofs",
+      "status": "answered",
+      "optionId": "app-specific",
+      "rationale": "Sample data: \"App-specific\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users prove compliance statements (association-set membership, not sanctioned, credential attributes) without revealing identity or history?\" its generated answer is \"App-specific\", recorded here as if quoted from its contracts.",
+          "claim": "Private compliance proofs: App-specific.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users prove compliance statements (association-set membership, not sanctioned, credential attributes) without revealing identity or history?\" its generated answer is \"App-specific\", recorded here as if quoted from its audit.",
+          "claim": "Private compliance proofs: App-specific.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.disclosure.verifiable",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "Sample data: \"No disclosure mechanism\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does disclosed data come with proofs that it is complete and correct?\" its generated answer is \"No disclosure mechanism\", recorded here as if quoted from its docs.",
+          "claim": "Verifiable disclosure: No disclosure mechanism.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does disclosed data come with proofs that it is complete and correct?\" its generated answer is \"No disclosure mechanism\", recorded here as if quoted from its contracts.",
+          "claim": "Verifiable disclosure: No disclosure mechanism.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.developer.toolchain",
+      "status": "answered",
+      "optionId": "breaking",
+      "rationale": "Sample data: \"Usable but frequently breaking\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How mature is the language and toolchain for private contracts?\" its generated answer is \"Usable but frequently breaking\", recorded here as if quoted from its contracts.",
+          "claim": "Language & toolchain: Usable but frequently breaking.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How mature is the language and toolchain for private contracts?\" its generated answer is \"Usable but frequently breaking\", recorded here as if quoted from its audit.",
+          "claim": "Language & toolchain: Usable but frequently breaking.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.developer.local-dev",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "Sample data: \"Partial\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is there a local network or sandbox with test tooling?\" its generated answer is \"Partial\", recorded here as if quoted from its contracts.",
+          "claim": "Local development: Partial.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is there a local network or sandbox with test tooling?\" its generated answer is \"Partial\", recorded here as if quoted from its audit.",
+          "claim": "Local development: Partial.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.developer.sdks",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "Sample data: \"None\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are there client SDKs and wallets supporting private apps?\" its generated answer is \"None\", recorded here as if quoted from its docs.",
+          "claim": "SDKs & wallets: None.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are there client SDKs and wallets supporting private apps?\" its generated answer is \"None\", recorded here as if quoted from its contracts.",
+          "claim": "SDKs & wallets: None.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.developer.familiarity",
+      "status": "answered",
+      "optionId": "dsl",
+      "rationale": "Sample data: \"Domain-specific but approachable\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does it build on widely used languages or tooling?\" its generated answer is \"Domain-specific but approachable\", recorded here as if quoted from its contracts.",
+          "claim": "Familiarity: Domain-specific but approachable.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does it build on widely used languages or tooling?\" its generated answer is \"Domain-specific but approachable\", recorded here as if quoted from its audit.",
+          "claim": "Familiarity: Domain-specific but approachable.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.performance.proving-time",
+      "status": "answered",
+      "optionId": "slow",
+      "rationale": "Sample data: \"> 30 s\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How long does a private transfer take to prove on a consumer laptop with the reference client?\" its generated answer is \"> 30 s\", recorded here as if quoted from its contracts.",
+          "claim": "Client proving time: > 30 s.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How long does a private transfer take to prove on a consumer laptop with the reference client?\" its generated answer is \"> 30 s\", recorded here as if quoted from its audit.",
+          "claim": "Client proving time: > 30 s.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.performance.throughput",
+      "status": "answered",
+      "optionId": "10",
+      "rationale": "Sample data: \"≥ 10 TPS\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What sustained private-transaction throughput does the live system handle?\" its generated answer is \"≥ 10 TPS\", recorded here as if quoted from its audit.",
+          "claim": "Throughput: ≥ 10 TPS.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What sustained private-transaction throughput does the live system handle?\" its generated answer is \"≥ 10 TPS\", recorded here as if quoted from its docs.",
+          "claim": "Throughput: ≥ 10 TPS.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.performance.cost",
+      "status": "answered",
+      "optionId": "high",
+      "rationale": "Sample data: \"≥ $10\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What is the typical all-in cost of a private $1,000 transfer, including percentage fees?\" its generated answer is \"≥ $10\", recorded here as if quoted from its audit.",
+          "claim": "Cost: ≥ $10.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What is the typical all-in cost of a private $1,000 transfer, including percentage fees?\" its generated answer is \"≥ $10\", recorded here as if quoted from its docs.",
+          "claim": "Cost: ≥ $10.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.upgrades.upgradeability",
+      "status": "answered",
+      "optionId": "short",
+      "rationale": "Sample data: \"< 7-day delay\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can the core contracts or protocol be upgraded, and with what delay?\" its generated answer is \"< 7-day delay\", recorded here as if quoted from its docs.",
+          "claim": "Upgradeability: < 7-day delay.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can the core contracts or protocol be upgraded, and with what delay?\" its generated answer is \"< 7-day delay\", recorded here as if quoted from its contracts.",
+          "claim": "Upgradeability: < 7-day delay.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.upgrades.emergency",
+      "status": "answered",
+      "optionId": "small-multisig",
+      "rationale": "Sample data: \"Smaller or undisclosed multisig\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can a security council or multisig bypass the delay?\" its generated answer is \"Smaller or undisclosed multisig\", recorded here as if quoted from its audit.",
+          "claim": "Emergency path: Smaller or undisclosed multisig.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can a security council or multisig bypass the delay?\" its generated answer is \"Smaller or undisclosed multisig\", recorded here as if quoted from its docs.",
+          "claim": "Emergency path: Smaller or undisclosed multisig.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.upgrades.verifier",
+      "status": "answered",
+      "optionId": "faster",
+      "rationale": "Sample data: \"A privileged party can change them faster\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Do verification keys and circuits change only through the same delay?\" its generated answer is \"A privileged party can change them faster\", recorded here as if quoted from its docs.",
+          "claim": "Verifier control: A privileged party can change them faster.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Do verification keys and circuits change only through the same delay?\" its generated answer is \"A privileged party can change them faster\", recorded here as if quoted from its contracts.",
+          "claim": "Verifier control: A privileged party can change them faster.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.roles.scope",
+      "status": "answered",
+      "optionId": "funds-or-privacy",
+      "rationale": "Sample data: \"Roles can affect funds or privacy\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What can privileged roles (fee setting, pausing, key admin, allowlists, auditors) do?\" its generated answer is \"Roles can affect funds or privacy\", recorded here as if quoted from its audit.",
+          "claim": "Role scope: Roles can affect funds or privacy.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What can privileged roles (fee setting, pausing, key admin, allowlists, auditors) do?\" its generated answer is \"Roles can affect funds or privacy\", recorded here as if quoted from its docs.",
+          "claim": "Role scope: Roles can affect funds or privacy.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.roles.holders",
+      "status": "answered",
+      "optionId": "single",
+      "rationale": "Sample data: \"A single company or key\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Who holds privileged roles?\" its generated answer is \"A single company or key\", recorded here as if quoted from its audit.",
+          "claim": "Role holders: A single company or key.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Who holds privileged roles?\" its generated answer is \"A single company or key\", recorded here as if quoted from its docs.",
+          "claim": "Role holders: A single company or key.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.roles.transparency",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "Sample data: \"No\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are role holders and signers named, and are role changes onchain and delayed?\" its generated answer is \"No\", recorded here as if quoted from its docs.",
+          "claim": "Transparency: No.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are role holders and signers named, and are role changes onchain and delayed?\" its generated answer is \"No\", recorded here as if quoted from its contracts.",
+          "claim": "Transparency: No.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.process.control",
+      "status": "answered",
+      "optionId": "foundation",
+      "rationale": "Sample data: \"Foundation or company with community input\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Who ultimately controls protocol changes?\" its generated answer is \"Foundation or company with community input\", recorded here as if quoted from its audit.",
+          "claim": "Ultimate control: Foundation or company with community input.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Who ultimately controls protocol changes?\" its generated answer is \"Foundation or company with community input\", recorded here as if quoted from its docs.",
+          "claim": "Ultimate control: Foundation or company with community input.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.process.public-process",
+      "status": "answered",
+      "optionId": "offchain-public",
+      "rationale": "Sample data: \"Off-chain but public\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are decisions public proposals executed onchain?\" its generated answer is \"Off-chain but public\", recorded here as if quoted from its contracts.",
+          "claim": "Process: Off-chain but public.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are decisions public proposals executed onchain?\" its generated answer is \"Off-chain but public\", recorded here as if quoted from its audit.",
+          "claim": "Process: Off-chain but public.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.process.concentration",
+      "status": "answered",
+      "optionId": "yes",
+      "rationale": "Sample data: \"Yes\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can any single entity pass a proposal alone?\" its generated answer is \"Yes\", recorded here as if quoted from its docs.",
+          "claim": "Concentration: Yes.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can any single entity pass a proposal alone?\" its generated answer is \"Yes\", recorded here as if quoted from its contracts.",
+          "claim": "Concentration: Yes.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.operators.producers",
+      "status": "answered",
+      "optionId": "permissioned-few",
+      "rationale": "Sample data: \"Permissioned 2–9\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How many independent block producers or sequencers are there?\" its generated answer is \"Permissioned 2–9\", recorded here as if quoted from its audit.",
+          "claim": "Producers: Permissioned 2–9.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How many independent block producers or sequencers are there?\" its generated answer is \"Permissioned 2–9\", recorded here as if quoted from its docs.",
+          "claim": "Producers: Permissioned 2–9.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.operators.entry",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "Sample data: \"No\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can anyone meeting objective criteria (e.g. stake) become a producer?\" its generated answer is \"No\", recorded here as if quoted from its audit.",
+          "claim": "Open entry: No.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can anyone meeting objective criteria (e.g. stake) become a producer?\" its generated answer is \"No\", recorded here as if quoted from its docs.",
+          "claim": "Open entry: No.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.operators.concentration",
+      "status": "answered",
+      "optionId": "unclear",
+      "rationale": "Sample data: \"Unclear\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does any single entity or client control more than a third of production?\" its generated answer is \"Unclear\", recorded here as if quoted from its contracts.",
+          "claim": "Concentration: Unclear.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Does any single entity or client control more than a third of production?\" its generated answer is \"Unclear\", recorded here as if quoted from its audit.",
+          "claim": "Concentration: Unclear.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.censorship.forced-inclusion",
+      "status": "answered",
+      "optionId": "escape-hatch",
+      "rationale": "Sample data: \"Only through an escape hatch or bond\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users force inclusion of their transaction?\" its generated answer is \"Only through an escape hatch or bond\", recorded here as if quoted from its contracts.",
+          "claim": "Forced inclusion: Only through an escape hatch or bond.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can users force inclusion of their transaction?\" its generated answer is \"Only through an escape hatch or bond\", recorded here as if quoted from its audit.",
+          "claim": "Forced inclusion: Only through an escape hatch or bond.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.censorship.observed",
+      "status": "answered",
+      "optionId": "high",
+      "rationale": "Sample data: \"> 50%, or known censorship\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What share of blocks censor transactions?\" its generated answer is \"> 50%, or known censorship\", recorded here as if quoted from its docs.",
+          "claim": "Observed censorship: > 50%, or known censorship.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What share of blocks censor transactions?\" its generated answer is \"> 50%, or known censorship\", recorded here as if quoted from its contracts.",
+          "claim": "Observed censorship: > 50%, or known censorship.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.censorship.indistinguishable",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "Sample data: \"They can\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can producers tell whose, or what, a private transaction is?\" its generated answer is \"They can\", recorded here as if quoted from its audit.",
+          "claim": "Indistinguishable private txs: They can.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Can producers tell whose, or what, a private transaction is?\" its generated answer is \"They can\", recorded here as if quoted from its docs.",
+          "claim": "Indistinguishable private txs: They can.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.proving.client-side",
+      "status": "answered",
+      "optionId": "optional",
+      "rationale": "Sample data: \"Optional\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are private proofs generated on users' devices by default?\" its generated answer is \"Optional\", recorded here as if quoted from its contracts.",
+          "claim": "Client-side proving: Optional.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are private proofs generated on users' devices by default?\" its generated answer is \"Optional\", recorded here as if quoted from its audit.",
+          "claim": "Client-side proving: Optional.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.proving.provers",
+      "status": "answered",
+      "optionId": "single",
+      "rationale": "Sample data: \"Single entity\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Who does block or rollup proving?\" its generated answer is \"Single entity\", recorded here as if quoted from its docs.",
+          "claim": "Provers: Single entity.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Who does block or rollup proving?\" its generated answer is \"Single entity\", recorded here as if quoted from its contracts.",
+          "claim": "Provers: Single entity.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.proving.verification",
+      "status": "answered",
+      "optionId": "fraud",
+      "rationale": "Sample data: \"Fraud proofs\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How is validity verified?\" its generated answer is \"Fraud proofs\", recorded here as if quoted from its contracts.",
+          "claim": "Verification: Fraud proofs.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How is validity verified?\" its generated answer is \"Fraud proofs\", recorded here as if quoted from its audit.",
+          "claim": "Verification: Fraud proofs.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.settlement.settlement",
+      "status": "answered",
+      "optionId": "operator",
+      "rationale": "Sample data: \"Operator attestations\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Where is state settled?\" its generated answer is \"Operator attestations\", recorded here as if quoted from its docs.",
+          "claim": "Settlement: Operator attestations.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Where is state settled?\" its generated answer is \"Operator attestations\", recorded here as if quoted from its contracts.",
+          "claim": "Settlement: Operator attestations.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.settlement.data",
+      "status": "answered",
+      "optionId": "committee",
+      "rationale": "Sample data: \"Committee or external DA\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Where is the data needed to reconstruct state published?\" its generated answer is \"Committee or external DA\", recorded here as if quoted from its contracts.",
+          "claim": "Data availability: Committee or external DA.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Where is the data needed to reconstruct state published?\" its generated answer is \"Committee or external DA\", recorded here as if quoted from its audit.",
+          "claim": "Data availability: Committee or external DA.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.soundness.open-critical",
+      "status": "answered",
+      "optionId": "mitigated",
+      "rationale": "Sample data: \"Disclosed, mitigated operationally\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is there a known, unpatched critical vulnerability?\" its generated answer is \"Disclosed, mitigated operationally\", recorded here as if quoted from its contracts.",
+          "claim": "Open critical issues: Disclosed, mitigated operationally.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is there a known, unpatched critical vulnerability?\" its generated answer is \"Disclosed, mitigated operationally\", recorded here as if quoted from its audit.",
+          "claim": "Open critical issues: Disclosed, mitigated operationally.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.soundness.history",
+      "status": "answered",
+      "optionId": "several",
+      "rationale": "Sample data: \"Several\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How many critical vulnerabilities or exploits in the last 24 months?\" its generated answer is \"Several\", recorded here as if quoted from its audit.",
+          "claim": "History: Several.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How many critical vulnerabilities or exploits in the last 24 months?\" its generated answer is \"Several\", recorded here as if quoted from its docs.",
+          "claim": "History: Several.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.soundness.defense-in-depth",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "Sample data: \"None\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are there layers of defense against proof or crypto bugs (multiple provers, re-execution, caps, delayed withdrawals)?\" its generated answer is \"None\", recorded here as if quoted from its docs.",
+          "claim": "Defense in depth: None.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are there layers of defense against proof or crypto bugs (multiple provers, re-execution, caps, delayed withdrawals)?\" its generated answer is \"None\", recorded here as if quoted from its contracts.",
+          "claim": "Defense in depth: None.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.assurance.open-source",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "Sample data: \"Partial\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are the protocol, circuits and default client open source under an OSI license?\" its generated answer is \"Partial\", recorded here as if quoted from its audit.",
+          "claim": "Open source: Partial.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are the protocol, circuits and default client open source under an OSI license?\" its generated answer is \"Partial\", recorded here as if quoted from its docs.",
+          "claim": "Open source: Partial.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.assurance.reproducibility",
+      "status": "unknown",
+      "rationale": "Sample data: left unknown to show how an unsettled criterion scores.",
+      "confidence": "low",
+      "labelConfidence": "certain",
+      "evidence": []
+    },
+    {
+      "criterionId": "security.assurance.audits",
+      "status": "answered",
+      "optionId": "one",
+      "rationale": "Sample data: \"One\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Has the live version been audited independently?\" its generated answer is \"One\", recorded here as if quoted from its audit.",
+          "claim": "Audits: One.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        },
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Has the live version been audited independently?\" its generated answer is \"One\", recorded here as if quoted from its docs.",
+          "claim": "Audits: One.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.assurance.formal-verification",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "Sample data: \"Partial\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are core contracts or circuits formally verified?\" its generated answer is \"Partial\", recorded here as if quoted from its docs.",
+          "claim": "Formal verification: Partial.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Are core contracts or circuits formally verified?\" its generated answer is \"Partial\", recorded here as if quoted from its contracts.",
+          "claim": "Formal verification: Partial.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.assurance.bounty",
+      "status": "answered",
+      "optionId": "smaller",
+      "rationale": "Sample data: \"Smaller\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is there a public bug bounty, and how large?\" its generated answer is \"Smaller\", recorded here as if quoted from its contracts.",
+          "claim": "Bug bounty: Smaller.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Is there a public bug bounty, and how large?\" its generated answer is \"Smaller\", recorded here as if quoted from its audit.",
+          "claim": "Bug bounty: Smaller.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.maturity.status",
+      "status": "answered",
+      "optionId": "not-live",
+      "rationale": "Sample data: \"Not live\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What is the system's production status?\" its generated answer is \"Not live\", recorded here as if quoted from its contracts.",
+          "claim": "Status: Not live.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"What is the system's production status?\" its generated answer is \"Not live\", recorded here as if quoted from its audit.",
+          "claim": "Status: Not live.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.maturity.age",
+      "status": "answered",
+      "optionId": "3m",
+      "rationale": "Sample data: \"≥ 3 months\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "docs",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How long have the privacy features been live in production?\" its generated answer is \"≥ 3 months\", recorded here as if quoted from its docs.",
+          "claim": "Time in production: ≥ 3 months.",
+          "citedUrl": "https://example-coprocessor.example/docs"
+        },
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"How long have the privacy features been live in production?\" its generated answer is \"≥ 3 months\", recorded here as if quoted from its contracts.",
+          "claim": "Time in production: ≥ 3 months.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.maturity.continuity",
+      "status": "answered",
+      "optionId": "repeatedly",
+      "rationale": "Sample data: \"Repeatedly\" was generated for Example Confidential Coprocessor, a fictional project, to show how an answer, its rationale and its evidence appear. Nothing here was researched or describes a real system.",
+      "confidence": "high",
+      "labelConfidence": "certain",
+      "evidence": [
+        {
+          "sourceId": "code",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Have upgrades forced users to migrate funds or state?\" its generated answer is \"Repeatedly\", recorded here as if quoted from its contracts.",
+          "claim": "Continuity: Repeatedly.",
+          "citedUrl": "https://example-coprocessor.example/code"
+        },
+        {
+          "sourceId": "audit",
+          "quote": "Example Confidential Coprocessor is fictional sample data. For \"Have upgrades forced users to migrate funds or state?\" its generated answer is \"Repeatedly\", recorded here as if quoted from its audit.",
+          "claim": "Continuity: Repeatedly.",
+          "citedUrl": "https://example-coprocessor.example/audit"
+        }
+      ]
+    }
+  ],
+  "matrix": {
+    "public_observer": {
+      "sender": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "recipient": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "amount": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "asset": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "link": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "function": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "metadata": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      }
+    },
+    "chain_analyst": {
+      "sender": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "recipient": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "amount": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "asset": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "link": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "function": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "metadata": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      }
+    },
+    "network_observer": {
+      "sender": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "recipient": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "amount": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "asset": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "link": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "function": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "metadata": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      }
+    },
+    "privileged_insider": {
+      "sender": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "recipient": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "amount": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "asset": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "link": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "function": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "metadata": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      }
+    },
+    "future_adversary": {
+      "sender": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "recipient": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "amount": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "asset": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      },
+      "link": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "function": {
+        "state": "exposed",
+        "note": "Sample data: exposed for this fictional project."
+      },
+      "metadata": {
+        "state": "at_risk",
+        "note": "Sample data: at risk for this fictional project."
+      }
+    }
+  }
+}

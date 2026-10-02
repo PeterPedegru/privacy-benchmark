@@ -1,0 +1,1 @@
+ALTER TABLE `criterion_results` ADD `decisive_evidence_ids` text DEFAULT '[]' NOT NULL;

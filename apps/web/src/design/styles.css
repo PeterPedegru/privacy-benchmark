@@ -1,0 +1,331 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter/opsz.css";
+@import "@fontsource-variable/jetbrains-mono/index.css";
+@import "@fontsource/newsreader/400-italic.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- tokens ---------- */
+:root {
+  --bg: #ffffff;
+  --bg-2: #fafafb;
+  --surface: #f3f4f6;
+  --surface-2: #edeff3;
+  --line-weak: #edeff3;
+  --line: #e4e7ec;
+  --line-strong: #d3d8df;
+  --fg: #1b1c1f;
+  --fg-2: #2a2d33;
+  --fg-3: #505967;
+  --muted: #6f7988;
+  --faint: #a4adba;
+  --accent: #5b4cf0;
+  --accent-hover: #4a3bdb;
+  --accent-soft: #f1efff;
+  --accent-fill: #e6e2ff;
+  --accent-line: #c8c0ff;
+  --accent-fg: #3a2db8;
+  --ring: color-mix(in oklab, var(--accent) 32%, transparent);
+  --best-neutral: #eef0f3;
+  --band-strong-bg: #e3f9ee;
+  --band-strong-bd: #c6f0da;
+  --band-strong-fg: #0a6b45;
+  --band-fair-bg: #fff5d6;
+  --band-fair-bd: #fbe6a6;
+  --band-fair-fg: #7a5600;
+  --band-weak-bg: #ffefe2;
+  --band-weak-bd: #fdd9b8;
+  --band-weak-fg: #9a4a00;
+  --band-poor-bg: #ffeeee;
+  --band-poor-bd: #fdd6d6;
+  --band-poor-fg: #a3272a;
+  --shadow-hairline: 0 1px 3px #0000000a, 0 0 2px #1c28402e;
+  --shadow-1: 0 1px 3px #00000003, 0 2px 4px -1px #00000005;
+  --shadow-3: var(--shadow-1), 0 4px 8px -2px #00000008, 0 8px 16px -4px #0000000a;
+  --shadow-5: var(--shadow-3), 0 16px 32px -8px #0000000d, 0 32px 64px -16px #0000000f;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0e0e10;
+  --bg-2: #131316;
+  --surface: #1a1b1e;
+  --surface-2: #232529;
+  --line-weak: #1c1d21;
+  --line: #27292e;
+  --line-strong: #363940;
+  --fg: #f5f6f8;
+  --fg-2: #e3e6eb;
+  --fg-3: #b5bdc9;
+  --muted: #8f99a8;
+  --faint: #5f6774;
+  --accent: #8e84ff;
+  --accent-hover: #a39bff;
+  --accent-soft: #8e84ff14;
+  --accent-fill: #8e84ff2e;
+  --accent-line: #8e84ff66;
+  --accent-fg: #c4bfff;
+  --best-neutral: #ffffff12;
+  --band-strong-bg: #0fc27b1f;
+  --band-strong-bd: #0fc27b40;
+  --band-strong-fg: #5fe0a8;
+  --band-fair-bg: #f5b9001f;
+  --band-fair-bd: #f5b90040;
+  --band-fair-fg: #f7cf5a;
+  --band-weak-bg: #ff8a3d1f;
+  --band-weak-bd: #ff8a3d40;
+  --band-weak-fg: #ffad73;
+  --band-poor-bg: #ff5b591f;
+  --band-poor-bd: #ff5b5940;
+  --band-poor-fg: #ff8e8c;
+  --shadow-hairline: 0 1px 3px #0000004d, 0 0 0 1px #ffffff0f;
+  --shadow-1: 0 1px 3px #00000033;
+  --shadow-3: 0 1px 3px #0000004d, 0 8px 24px -6px #00000080;
+  --shadow-5: 0 1px 3px #0000004d, 0 24px 64px -12px #000000b3;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line-weak: var(--line-weak);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fill: var(--accent-fill);
+  --color-accent-line: var(--accent-line);
+  --color-accent-fg: var(--accent-fg);
+  --color-best: var(--best-neutral);
+  --color-strong-bg: var(--band-strong-bg);
+  --color-strong-bd: var(--band-strong-bd);
+  --color-strong-fg: var(--band-strong-fg);
+  --color-fair-bg: var(--band-fair-bg);
+  --color-fair-bd: var(--band-fair-bd);
+  --color-fair-fg: var(--band-fair-fg);
+  --color-weak-bg: var(--band-weak-bg);
+  --color-weak-bd: var(--band-weak-bd);
+  --color-weak-fg: var(--band-weak-fg);
+  --color-poor-bg: var(--band-poor-bg);
+  --color-poor-bd: var(--band-poor-bd);
+  --color-poor-fg: var(--band-poor-fg);
+  --shadow-hairline: var(--shadow-hairline);
+  --shadow-1: var(--shadow-1);
+  --shadow-3: var(--shadow-3);
+  --shadow-5: var(--shadow-5);
+}
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Newsreader", Georgia, serif;
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.125rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-sm--letter-spacing: -0.005em;
+  --text-base: 1rem;
+  --text-base--line-height: 1.375rem;
+  --text-base--letter-spacing: -0.01em;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.5rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.625rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 1.875rem;
+  --text-3xl: 2rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-3xl--letter-spacing: -0.01em;
+  --text-4xl: 2.5rem;
+  --text-4xl--line-height: 2.75rem;
+  --text-4xl--letter-spacing: -0.012em;
+  --text-5xl: 3.5rem;
+  --text-5xl--line-height: 3.75rem;
+  --text-5xl--letter-spacing: -0.018em;
+
+  --radius-sm: 0.3125rem;
+  --radius-md: 0.4375rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.25rem;
+
+  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+  --container-page: 80rem;
+  --container-wide: 90rem;
+}
+
+/* ---------- base ---------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv11", "ss01";
+  }
+  ::selection {
+    background: var(--accent-fill);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  button {
+    cursor: pointer;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+  .hairline {
+    border-color: var(--line);
+  }
+  .dot-grid {
+    background-image: radial-gradient(circle, var(--line-strong) 0.8px, transparent 0.8px);
+    background-size: 16px 16px;
+  }
+  .pinstripes {
+    background-image: repeating-linear-gradient(90deg, var(--line-weak) 0 1px, transparent 1px 8px);
+  }
+  .fade-b {
+    mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  }
+  .fade-x {
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .two-tone > span:last-child {
+    color: var(--muted);
+  }
+  .glow-hero {
+    background:
+      radial-gradient(60% 55% at 50% 100%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%),
+      radial-gradient(35% 30% at 50% 100%, color-mix(in oklab, var(--accent) 30%, transparent), transparent 70%);
+  }
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.35s var(--ease-out-cubic);
+  }
+  .link-underline:hover {
+    background-size: 100% 1px;
+  }
+  .unverified {
+    text-decoration: underline dotted var(--faint);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+  }
+}
+
+@property --btn-glow {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #202124;
+}
+
+.btn-primary {
+  background: radial-gradient(120% 120% at 50% -10%, var(--btn-glow), #1b1c1f 60%);
+  transition: --btn-glow 0.3s var(--ease-out-cubic);
+}
+.btn-primary:hover {
+  --btn-glow: #5a6272;
+  transition-duration: 50ms;
+}
+.dark .btn-primary {
+  background: radial-gradient(120% 120% at 50% -10%, var(--btn-glow), #f5f6f8 60%);
+  --btn-glow: #ffffff;
+}
+.dark .btn-primary:hover {
+  --btn-glow: #d8dcff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.shimmer {
+  background: linear-gradient(90deg, var(--surface) 25%, var(--surface-2) 37%, var(--surface) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.6s ease infinite;
+}
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.pulse-dot {
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+/* One cheap opacity fade for dense content (the benchmark table and its criteria rows) instead of a JS
+   animation per cell. Opacity only, so it stays on the compositor. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.fade-in {
+  animation: fade-in 0.45s var(--ease-out-cubic) both;
+}

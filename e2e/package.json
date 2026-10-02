@@ -1,0 +1,16 @@
+{
+  "name": "@pb/e2e",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test --project=desktop --project=mobile",
+    "smoke": "playwright test --project=smoke",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "^26.6.3",
+    "typescript": "5.9.3"
+  }
+}
