@@ -1,4 +1,4 @@
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import type {
   BenchmarkCell,
   CriterionFlag,
@@ -523,6 +523,17 @@ async function rebuild(db: DB, fp: string): Promise<SnapshotCache> {
     memo: newMemo(),
   };
   return cache;
+}
+
+/**
+ * A version of the published, visible data that's the same on every replica (a hash of what decides it), for
+ * clients to know when to refetch. It names nothing: hidden projects' ids stay out of it.
+ */
+export async function publishedDataVersion(db: DB): Promise<string> {
+  return createHash("sha256")
+    .update((await snapshotCache(db)).fingerprint)
+    .digest("hex")
+    .slice(0, 16);
 }
 
 /** The current publish generation (changes whenever the published or visible set changes). */

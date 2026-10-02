@@ -351,15 +351,20 @@ describe("release requests", () => {
 
   it("hides a published project from the public site until it's shown again, keeping its results", async () => {
     const publicView = async () => ({
+      // Clients refetch what they hold when the data version changes.
+      version: ((await (await app.request("/api/public/meta")).json()) as { dataVersion: string }).dataVersion,
       board: ((await (await app.request("/api/public/leaderboard")).json()) as { rows: { slug: string }[] }).rows.some((r) => r.slug === "beta"),
       page: (await app.request("/api/public/projects/beta")).status,
       compare: ((await (await app.request("/api/public/compare?p=beta")).json()) as { snapshots: unknown[] }).snapshots.length,
     });
-    expect(await publicView()).toEqual({ board: true, page: 200, compare: 1 });
+    const shown = await publicView();
+    expect(shown).toMatchObject({ board: true, page: 200, compare: 1 });
     expect((await send("/api/admin/projects/p2", { status: "archived" }, "PATCH")).status).toBe(200);
-    expect(await publicView()).toEqual({ board: false, page: 404, compare: 0 });
+    const hidden = await publicView();
+    expect(hidden).toMatchObject({ board: false, page: 404, compare: 0 });
+    expect(hidden.version).not.toBe(shown.version);
     // The published result stays, so showing the project brings it straight back.
     expect((await send("/api/admin/projects/p2", { status: "active" }, "PATCH")).status).toBe(200);
-    expect(await publicView()).toEqual({ board: true, page: 200, compare: 1 });
+    expect(await publicView()).toEqual(shown);
   });
 });

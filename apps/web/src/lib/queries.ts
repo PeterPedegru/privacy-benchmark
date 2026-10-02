@@ -6,6 +6,8 @@ import { api } from "./api";
 
 export interface Meta {
   rubricVersion: string;
+  /** Changes whenever anything published or visible changes, a project being hidden included. */
+  dataVersion: string;
   projects: number;
   release: (ReleaseInfo & { notes: string }) | null;
   isDemo: boolean;
@@ -102,14 +104,15 @@ export function invalidateReleaseData(qc: QueryClient) {
 }
 
 /**
- * Keys the 5-minute public caches on the current release without making every query wait for meta first:
- * when meta reports a different release than the one already seen, release-derived data is refetched.
+ * Keys the 5-minute public caches on what's published without making every query wait for meta first: when meta
+ * reports a different release, or a change to the visible set (an editor hiding or showing a project), the
+ * release-derived data is refetched.
  */
 export function useReleaseSync() {
   const qc = useQueryClient();
   const meta = useMeta();
   // undefined until meta loads; "" when nothing is published yet.
-  const id = meta.data ? (meta.data.release?.id ?? "") : undefined;
+  const id = meta.data ? `${meta.data.release?.id ?? ""}:${meta.data.dataVersion ?? ""}` : undefined;
   const seen = useRef<string | undefined>(undefined);
   useEffect(() => {
     if (id === undefined) return;

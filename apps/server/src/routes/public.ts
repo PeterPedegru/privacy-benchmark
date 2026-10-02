@@ -14,6 +14,7 @@ import { getLogo, isProjectLogoUrl, logoUrlForSlug } from "../services/logos.ts"
 import {
   leaderboardRow,
   publicSettings,
+  publishedDataVersion,
   releaseInfo,
   resolveSnapshot,
   snapshotEtag,
@@ -27,8 +28,11 @@ export const publicRoutes = new Hono();
 
 // ---------- caching (EFF-1, EFF-2) ----------
 
-/** Public JSON can be a minute stale; the ETag makes revalidation a 304 until the next publish. */
-export const PUBLIC_CACHE_CONTROL = "public, max-age=60, stale-while-revalidate=600";
+/**
+ * Public JSON is revalidated on every use: the ETag makes that a 304 until something published or visible changes,
+ * and a change (a release, a rollback, an editor hiding a project) shows on the next load, not minutes later.
+ */
+export const PUBLIC_CACHE_CONTROL = "public, no-cache";
 
 function etagMatches(c: Context, etag: string): boolean {
   const inm = c.req.header("if-none-match");
@@ -70,6 +74,8 @@ publicRoutes.get("/meta", (c) =>
       const rel = await latestRelease(list);
       return {
         rubricVersion: rubric.version,
+        // Changes with anything published or visible (a hidden project too), so clients refetch what they hold.
+        dataVersion: await publishedDataVersion(getDb()),
         projects: new Set(list.map((s) => s.project.slug)).size,
         release: rel ? { ...releaseInfo(rel), notes: rel.notesMd } : null,
         isDemo: list.length > 0 && list.every((s) => s.release.isDemo),

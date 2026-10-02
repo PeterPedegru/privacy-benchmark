@@ -1,9 +1,11 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { GitBranch, Plus, RefreshCw } from "lucide-react";
 import { PageHeader, Status, Td, Th, useAdmin, useAdminAction } from "@/components/admin/kit";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { ProjectMark } from "@/components/ui/project-mark";
 import { api } from "@/lib/api";
+import { invalidateReleaseData } from "@/lib/queries";
 import { cn, fmtPct, fmtUsd, timeAgo } from "@/lib/utils";
 
 export type AdminProjectRow = {
@@ -27,10 +29,19 @@ export type AdminProjectRow = {
  */
 function VisibilitySwitch({ project }: { project: AdminProjectRow }) {
   const shown = project.status === "active";
-  const toggle = useAdminAction(() => api(`/api/admin/projects/${project.id}`, { method: "PATCH", json: { status: shown ? "archived" : "active" } }), {
-    success: shown ? `${project.name} is hidden from the public site` : `${project.name} is shown on the public site`,
-    invalidate: [["projects"], ["project"], ["overview"]],
-  });
+  const qc = useQueryClient();
+  const toggle = useAdminAction(
+    async () => {
+      const r = await api(`/api/admin/projects/${project.id}`, { method: "PATCH", json: { status: shown ? "archived" : "active" } });
+      // This tab's public pages show the change at once; other visitors get it on their next load.
+      void invalidateReleaseData(qc);
+      return r;
+    },
+    {
+      success: shown ? `${project.name} is hidden from the public site` : `${project.name} is shown on the public site`,
+      invalidate: [["projects"], ["project"], ["overview"]],
+    },
+  );
   return (
     <button
       type="button"

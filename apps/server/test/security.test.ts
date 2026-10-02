@@ -346,7 +346,8 @@ describe("published data", () => {
     const empty = await app.request("/api/public/leaderboard");
     const etag0 = empty.headers.get("etag")!;
     expect(etag0).toMatch(/^W\/"/);
-    expect(empty.headers.get("cache-control")).toContain("max-age=60");
+    // Revalidated on every use, so a change shows on the next load; the ETag keeps that a 304 otherwise.
+    expect(empty.headers.get("cache-control")).toBe("public, no-cache");
     expect((await app.request("/api/public/leaderboard", { headers: { "if-none-match": etag0 } })).status).toBe(304);
     const gen = await snapshotGeneration(db);
     await publishRelease(db, { evaluationIds: [gamma1, delta], label: "R1", notes: "" });

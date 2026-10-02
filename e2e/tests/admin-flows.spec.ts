@@ -95,7 +95,7 @@ test.describe("admin publishing flow", () => {
       await history.getByRole("button", { name: "Roll back" }).click();
       await expect(history.getByText("superseded")).toBeVisible();
       expect((await page.request.get(`/api/public/projects/${FIXTURE.slug}`)).status()).toBe(404);
-      // A new visitor: public JSON may be served from a browser's cache for a minute (max-age=60), by design.
+      // A new visitor sees it gone at once: public JSON is revalidated on every load.
       const visitor = await browser.newContext();
       try {
         const fresh = await visitor.newPage();
