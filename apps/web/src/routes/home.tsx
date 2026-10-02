@@ -11,7 +11,7 @@ import { LoadError, Reveal, SectionHeading, Skeleton } from "@/components/ui/mis
 import { Pct } from "@/components/ui/number";
 import { ProjectMark } from "@/components/ui/project-mark";
 import { focusIn, stagger } from "@/design/motion";
-import { useLeaderboard } from "@/lib/queries";
+import { useLeaderboard, useMeta } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 
 const CATEGORY: Record<string, string> = {
@@ -27,11 +27,20 @@ const CATEGORY: Record<string, string> = {
 
 export function HomePage() {
   const lb = useLeaderboard();
+  const meta = useMeta();
   const rows = lb.data?.rows ?? [];
+  const release = meta.data?.release;
   return (
     <>
-      {/* The leaderboard opens the page; the heading is for screen readers and search. */}
-      <h1 className="sr-only">Privacy Benchmark: crypto privacy systems ranked on a published rubric</h1>
+      {/* A title in the benchmark table's style, then the leaderboard. */}
+      <div className="mx-auto max-w-[var(--container-page)] px-4 pt-10 sm:px-6 md:pt-14">
+        <m.div variants={focusIn} initial="hidden" animate="show" className="max-w-2xl">
+          <div className="eyebrow mb-3">Leaderboard{release ? ` · Release ${release.label}` : ""}</div>
+          <h1 className="text-[34px] leading-[1.12] font-semibold tracking-[-0.02em] text-balance md:text-5xl md:leading-[1.06]">
+            Privacy systems, ranked. <span className="text-muted">Every score is a sourced, checkable calculation.</span>
+          </h1>
+        </m.div>
+      </div>
       <Leaderboard rows={rows} loading={lb.isLoading} failed={lb.isError && !lb.data} retrying={lb.isFetching} onRetry={() => void lb.refetch()} />
       <SuiteLeaders rows={rows} />
       <Explainers />

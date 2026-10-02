@@ -6,7 +6,7 @@ test.describe("public site", () => {
     const errors = watchErrors(page);
     const { rows } = await leaderboard(page);
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Privacy Benchmark");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Privacy systems, ranked");
     await expect(page.getByText(rows[0]!.name).first()).toBeVisible();
     await page.getByRole("link", { name: "All rankings" }).click();
     await expect(page).toHaveURL(/\/rankings/);
