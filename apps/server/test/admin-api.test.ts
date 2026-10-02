@@ -348,4 +348,18 @@ describe("release requests", () => {
     expect(after.headers.get("etag")).toBe(etag);
     expect(await after.json()).toEqual(snapshot);
   });
+
+  it("hides a published project from the public site until it's shown again, keeping its results", async () => {
+    const publicView = async () => ({
+      board: ((await (await app.request("/api/public/leaderboard")).json()) as { rows: { slug: string }[] }).rows.some((r) => r.slug === "beta"),
+      page: (await app.request("/api/public/projects/beta")).status,
+      compare: ((await (await app.request("/api/public/compare?p=beta")).json()) as { snapshots: unknown[] }).snapshots.length,
+    });
+    expect(await publicView()).toEqual({ board: true, page: 200, compare: 1 });
+    expect((await send("/api/admin/projects/p2", { status: "archived" }, "PATCH")).status).toBe(200);
+    expect(await publicView()).toEqual({ board: false, page: 404, compare: 0 });
+    // The published result stays, so showing the project brings it straight back.
+    expect((await send("/api/admin/projects/p2", { status: "active" }, "PATCH")).status).toBe(200);
+    expect(await publicView()).toEqual({ board: true, page: 200, compare: 1 });
+  });
 });

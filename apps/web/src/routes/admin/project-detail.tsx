@@ -797,10 +797,10 @@ function SettingsForm({ d }: { d: Detail }) {
         <Field label="Chains" hint="Comma-separated">
           <ListInput value={f.chains} onChange={(chains) => setF({ ...f, chains })} />
         </Field>
-        <Field label="Status">
+        <Field label="Public site" hint="Hidden projects drop out of every public page and download, published results included. Nothing is deleted.">
           <Select value={f.status} onChange={(e) => setF({ ...f, status: e.target.value })}>
-            <option value="active">active</option>
-            <option value="archived">archived (hidden from the public site)</option>
+            <option value="active">Shown</option>
+            <option value="archived">Hidden</option>
           </Select>
         </Field>
         <label className="flex items-center gap-2 text-sm md:col-span-2">
