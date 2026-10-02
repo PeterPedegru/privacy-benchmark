@@ -112,8 +112,9 @@ const SummaryCard = memo(function SummaryCard({ snapshots, focusIdx, shown }: { 
             const b = bestIndices(v);
             return (
               <div key={su.id} className="flex justify-between gap-2 text-muted">
-                <span className="truncate">{su.shortName}</span>
-                <span className="text-fg-2 tabular">{b.length ? snapshots[b[0]!]!.project.name : "—"}</span>
+                {/* The suite's name stays whole; a long project name gives way. */}
+                <span className="shrink-0">{su.shortName}</span>
+                <span className="min-w-0 truncate text-right text-fg-2 tabular">{b.length ? snapshots[b[0]!]!.project.name : "—"}</span>
               </div>
             );
           })}

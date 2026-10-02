@@ -2,7 +2,7 @@ import type { ProjectSnapshot } from "@pb/core";
 import { type BenchmarkDef, getCriterion, type SuiteDef, suites } from "@pb/rubric";
 import { ChevronDown, ChevronRight, Crosshair, X } from "lucide-react";
 import { LayoutGroup, m } from "motion/react";
-import { Fragment, memo, type ReactNode, useMemo, useState } from "react";
+import { Fragment, memo, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { spring } from "@/design/motion";
 import { cn, fmtPct } from "@/lib/utils";
 import { bandTone } from "../ui/badges";
@@ -95,10 +95,30 @@ export const BenchmarkTable = memo(function BenchmarkTable(p: TableProps) {
   const cols = `${GROUP_W}px minmax(${NAME_MIN}px, 1.35fr) repeat(${n}, minmax(${COL_MIN}px, 1fr))`;
   const minW = GROUP_W + NAME_MIN + n * COL_MIN;
   const overallRow = layout.summaryStart + shown.length;
+  // On wide screens the header row sticks to the page, which needs the table out of a scroll container; when the
+  // columns don't fit (many projects on a narrower desktop), the table scrolls sideways in its box instead of
+  // widening the page.
+  const box = useRef<HTMLDivElement>(null);
+  const [fits, setFits] = useState(true);
+  useEffect(() => {
+    // Measured on the parent: this box's own width changes with the mode it picks, which could flip it back and forth.
+    const parent = box.current?.parentElement;
+    if (!parent) return;
+    const check = () => setFits(parent.clientWidth >= minW);
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(parent);
+    return () => ro.disconnect();
+  }, [minW]);
 
   return (
     // A single opacity fade for the whole table; cells render without per-cell animation.
-    <div className="fade-in relative -mx-4 overflow-x-auto px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:overflow-visible lg:px-0">
+    <div
+      ref={box}
+      // data-fits: the header row sticks under the site header only when the table isn't scrolling in its box.
+      data-fits={fits}
+      className={cn("group/table fade-in relative -mx-4 overflow-x-auto px-4 sm:-mx-6 sm:px-6", fits && "lg:mx-0 lg:overflow-visible lg:px-0")}
+    >
       <LayoutGroup id="bench">
         <div role="table" className="relative grid" style={{ gridTemplateColumns: cols, minWidth: minW }}>
           {/* focus column outline */}
@@ -114,8 +134,11 @@ export const BenchmarkTable = memo(function BenchmarkTable(p: TableProps) {
           )}
 
           {/* header */}
-          <div className="sticky left-0 z-20 bg-bg lg:top-16" style={{ gridColumn: 1, gridRow: 1 }} />
-          <div className="sticky z-20 flex items-end bg-bg pb-3 text-sm font-semibold text-fg lg:top-16" style={{ gridColumn: 2, gridRow: 1, left: GROUP_W }}>
+          <div className="sticky left-0 z-20 bg-bg lg:group-data-[fits=true]/table:top-16" style={{ gridColumn: 1, gridRow: 1 }} />
+          <div
+            className="sticky z-20 flex items-end bg-bg pb-3 text-sm font-semibold text-fg lg:group-data-[fits=true]/table:top-16"
+            style={{ gridColumn: 2, gridRow: 1, left: GROUP_W }}
+          >
             Benchmark
           </div>
           {p.snapshots.map((s, i) => (
@@ -355,7 +378,7 @@ const HeaderCell = memo(function HeaderCell({
   const ref = refOf(s);
   return (
     <div
-      className="group/h sticky z-20 flex flex-col items-center justify-end gap-1 bg-bg px-2 pt-3 pb-3 text-center lg:top-16"
+      className="group/h sticky z-20 flex flex-col items-center justify-end gap-1 bg-bg px-2 pt-3 pb-3 text-center lg:group-data-[fits=true]/table:top-16"
       style={{ gridColumn: col, gridRow: 1 }}
     >
       <button

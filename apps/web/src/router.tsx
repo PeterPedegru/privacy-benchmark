@@ -7,7 +7,6 @@ import { ButtonLink } from "./components/ui/button";
 import { retryDelay, retryQuery } from "./lib/api";
 import { compareQuery, defaultRefs, leaderboardQuery, metaQuery, projectQuery, releasesQuery } from "./lib/queries";
 import { chunk } from "./lib/recovery";
-import { isMobileViewport } from "./lib/utils";
 
 // Network errors and 5xx retry with backoff; 4xx (a missing project) never does (R3-REL-14).
 export const queryClient = new QueryClient({ defaultOptions: { queries: { retry: retryQuery, retryDelay, refetchOnWindowFocus: false } } });
@@ -105,7 +104,7 @@ const bench = createRoute({
     void queryClient
       .ensureQueryData(leaderboardQuery)
       .then((lb) => {
-        const refs = defaultRefs(lb, isMobileViewport());
+        const refs = defaultRefs(lb);
         return refs.length ? queryClient.prefetchQuery(compareQuery(refs)) : undefined;
       })
       .catch(() => {});

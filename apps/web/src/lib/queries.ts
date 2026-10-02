@@ -89,8 +89,9 @@ export const useCorrectionsLog = () =>
   useQuery({ queryKey: ["corrections-log"], queryFn: () => api<CorrectionsLog>("/api/public/corrections"), staleTime: MINUTE });
 
 /** The benchmark table's columns when none are picked: the top of the leaderboard, fewer on phones. */
-export function defaultRefs(lb: LeaderboardResponse | undefined, mobile: boolean): string[] {
-  return (lb?.rows ?? []).slice(0, mobile ? 3 : 4).map((r) => r.slug);
+/** The benchmark table's default columns: every project in the latest release, in leaderboard order. */
+export function defaultRefs(lb: LeaderboardResponse | undefined): string[] {
+  return (lb?.rows ?? []).map((r) => r.slug);
 }
 
 const RELEASE_KEYS = new Set(["leaderboard", "compare", "project", "releases"]);

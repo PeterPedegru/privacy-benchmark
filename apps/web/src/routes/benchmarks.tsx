@@ -79,7 +79,7 @@ export function BenchmarksPage() {
   const mobile = useIsMobile();
 
   // Same default columns as the route loader, so the compare request it started is the one used here.
-  const refsKey = search.p ?? defaultRefs(lb.data, mobile).join(",");
+  const refsKey = search.p ?? defaultRefs(lb.data).join(",");
   const refs = useMemo(() => refsKey.split(",").filter(Boolean), [refsKey]);
   const cmp = useCompare(refs);
   const snaps = useMemo(() => cmp.data?.snapshots ?? [], [cmp.data]);
@@ -200,7 +200,14 @@ export function BenchmarksPage() {
           <Button size="sm" variant="ghost" icon={<Link2 className="size-3.5" />} onClick={copyLink}>
             Link
           </Button>
-          <ButtonLink size="sm" variant="primary" to="/cards" search={{ p: refs.join(","), focus: focus ?? undefined }} icon={<Image className="size-3.5" />}>
+          <ButtonLink
+            size="sm"
+            variant="primary"
+            to="/cards"
+            // A card holds five projects: the focused one, then the rest in table order.
+            search={{ p: (focus ? [focus, ...refs.filter((r) => r !== focus)] : refs).slice(0, 5).join(","), focus: focus ?? undefined }}
+            icon={<Image className="size-3.5" />}
+          >
             Make a card
           </ButtonLink>
         </div>

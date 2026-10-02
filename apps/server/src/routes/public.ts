@@ -196,7 +196,8 @@ publicRoutes.get("/compare", async (c) => {
     if (!s || seen.has(id)) continue;
     seen.add(id);
     snapshots.push(s);
-    if (snapshots.length === 8) break;
+    // The benchmark table opens on every project in the latest release.
+    if (snapshots.length === 16) break;
   }
   const etag = await snapshotEtag(db);
   c.header("etag", etag);
