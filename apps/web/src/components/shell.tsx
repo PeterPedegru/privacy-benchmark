@@ -17,14 +17,15 @@ const MobileNav = lazy(() => loadMobileNav().then((x) => ({ default: x.MobileNav
 // A failed prefetch is retried (and reported) by lazy() when the component is actually needed.
 const prefetch = (load: () => Promise<unknown>) => () => void load().catch(() => {});
 
+// The benchmark table is the landing page, so "Benchmarks" is home.
 const NAV = [
-  { to: "/benchmarks", label: "Benchmarks" },
+  { to: "/", label: "Benchmarks" },
   { to: "/rankings", label: "Rankings" },
   { to: "/projects", label: "Projects" },
   { to: "/cards", label: "Cards" },
   { to: "/methodology", label: "Methodology" },
 ] as const;
-const MOBILE_NAV = [{ to: "/", label: "Home" }, ...NAV] as const;
+const MOBILE_NAV = NAV;
 
 export function Logo({ className }: { className?: string }) {
   return (
@@ -77,7 +78,7 @@ function Header({ onCommand }: { onCommand: () => void }) {
         <Logo />
         <nav className="hidden items-center gap-0.5 md:flex">
           {NAV.map((n) => {
-            const active = path.startsWith(n.to);
+            const active = n.to === "/" ? path === "/" || path === "/benchmarks" : path.startsWith(n.to);
             return (
               <Link
                 key={n.to}
@@ -159,7 +160,7 @@ function Footer() {
         </div>
         <div className="flex flex-col gap-2 text-sm">
           <div className="eyebrow mb-1">Benchmark</div>
-          <Link to="/benchmarks" className="text-fg-3 hover:text-fg">
+          <Link to="/" className="text-fg-3 hover:text-fg">
             Benchmark table
           </Link>
           <Link to="/rankings" className="text-fg-3 hover:text-fg">

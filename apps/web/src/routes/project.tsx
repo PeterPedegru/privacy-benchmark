@@ -165,7 +165,7 @@ export function ProjectPage() {
               <ButtonLink
                 size="sm"
                 variant="primary"
-                to="/benchmarks"
+                to="/"
                 search={{ p: [s.version ? `${slug}@${s.version.version}` : slug, ...others].join(","), focus: slug }}
                 icon={<Scale className="size-3.5" />}
               >

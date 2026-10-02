@@ -1,6 +1,6 @@
 import { expect, type Page, test } from "@playwright/test";
 
-const PAGES = ["/", "/benchmarks", "/rankings", "/projects", "/methodology", "/cards", "/releases"];
+const PAGES = ["/", "/rankings", "/projects", "/methodology", "/cards", "/releases"];
 
 async function check(page: Page, path: string) {
   await page.goto(path);
