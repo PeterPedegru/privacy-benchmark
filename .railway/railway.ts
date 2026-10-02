@@ -31,7 +31,7 @@ export default defineRailway(() => {
   });
 
   const web = service("web", {
-    source: github("rolldavid/bench", { branch: "main", checkSuites: false }),
+    source: github("rolldavid/privacy-benchmark", { branch: "main", checkSuites: false }),
     build: {
       builder: "RAILPACK",
       buildEnvironment: "V3",
