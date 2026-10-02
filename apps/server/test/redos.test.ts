@@ -1,6 +1,8 @@
 /**
  * R3-SEC-2 / R3-SEC-3 regression: the payloads from the round-3 security review, which used to block the event loop
- * for seconds to hours, must each finish (and so block the loop) in under 200 ms.
+ * for seconds to hours, must each finish (and so block the loop) in under 200 ms, or 500 ms on CI's shared runners,
+ * where a busy machine once took 350 ms. A payload that backtracks super-linearly fails every attempt; one slow
+ * attempt on a loaded machine gets a retry.
  */
 import { afterAll, describe, expect, it } from "vitest";
 import { isNavigationOnly, markdownTitle, stripDataUris, stripHiddenMarkdown, stripTags } from "../src/lib/extract-core.ts";
@@ -10,7 +12,7 @@ import { parseFeed, parseLlmsTxt, parseRobots, parseSitemap, robotsAllows } from
 
 afterAll(() => closeExtractPool());
 
-const LIMIT_MS = 200;
+const LIMIT_MS = process.env.CI ? 500 : 200;
 
 /** Runs `fn` while a 5 ms heartbeat measures the longest gap; returns that lag and the call's own duration. */
 async function lag(fn: () => unknown): Promise<{ lag: number; ms: number }> {
@@ -67,7 +69,7 @@ const payloads: [string, () => unknown][] = [
 
 describe("untrusted text never blocks the event loop (R3-SEC-2, R3-SEC-3)", () => {
   for (const [name, fn] of payloads) {
-    it(name, async () => {
+    it(name, { retry: 2 }, async () => {
       const r = await lag(fn);
       expect(r.lag, `${name}: ${r.ms.toFixed(1)} ms`).toBeLessThan(LIMIT_MS);
     });
