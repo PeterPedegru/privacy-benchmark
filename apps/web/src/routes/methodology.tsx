@@ -117,13 +117,14 @@ export function MethodologyPage() {
               and the best result per row highlighted. Behind every percentage is a short list of multiple-choice criteria, an answer chosen from published
               options, a rationale, and verbatim evidence from cited sources.
             </p>
-            <p>Four principles keep it credible:</p>
+            <p>Five principles keep it credible:</p>
             <ul className="mt-3 flex flex-col gap-2">
               {[
                 "Same rules for everyone. There are no project-specific criteria or weights, and an automated check fails the build if the rubric names any evaluated project.",
                 "Every number is traceable: cell → benchmark → criteria → chosen option → rationale → quotes → sources.",
                 "Unknown is visible. Answers the evidence can't settle score as the riskiest option and are marked unverified, but never become a badge or a warning.",
                 "Dated and versioned. Every result is pinned to a protocol version, a rubric version and a release date.",
+                "Open source. The rubric, the evaluator's prompts and pipeline, the scoring code and this site are MIT-licensed on GitHub, so anyone can rerun or audit them.",
               ].map((t) => (
                 <li key={t} className="flex gap-2.5">
                   <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-accent" />

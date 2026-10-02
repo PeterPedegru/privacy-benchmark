@@ -153,7 +153,8 @@ function Footer() {
         <div className="col-span-2 md:col-span-1">
           <Logo />
           <p className="mt-3 max-w-sm text-sm text-muted">
-            An independent benchmark of crypto privacy systems. Published rubric, cited evidence, human-reviewed releases. Not financial or legal advice.
+            An independent, open-source benchmark of crypto privacy systems. Published rubric, cited evidence, human-reviewed releases. Not financial or legal
+            advice.
           </p>
         </div>
         <div className="flex flex-col gap-2 text-sm">
@@ -185,6 +186,9 @@ function Footer() {
           <Link to="/releases" className="text-fg-3 hover:text-fg">
             Releases & data
           </Link>
+          <a href="https://github.com/rolldavid/privacy-benchmark" target="_blank" rel="noreferrer" className="text-fg-3 hover:text-fg">
+            Source code (MIT)
+          </a>
         </div>
         <div className="flex flex-col gap-2 text-sm">
           <div className="eyebrow mb-1">Current release</div>

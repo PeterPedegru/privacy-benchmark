@@ -1,6 +1,6 @@
 # Privacy Benchmark
 
-Crypto privacy systems, measured on a published rubric. Thirty-one benchmarks in seven suites (privacy coverage, trust model, custody & control, programmability, governance, decentralization, security), a percentage for every project on every row, and every number traceable to a published rubric and verbatim, cited evidence.
+Crypto privacy systems, measured on a published rubric. Open source under the [MIT license](LICENSE). Thirty-one benchmarks in seven suites (privacy coverage, trust model, custody & control, programmability, governance, decentralization, security), a percentage for every project on every row, and every number traceable to a published rubric and verbatim, cited evidence.
 
 - **Public site:** benchmark table (best-in-row highlighting, focus column, expandable criteria, "how this number was calculated" drawer), rankings with weighting presets, project pages (score ring, suite rosette, adversary matrix, who holds power, versions), shareable comparison cards, and a full methodology page with published evaluator prompts and downloadable data.
 - **Admin dashboard:** add projects by URL, build a searchable knowledge base for each one, track protocol versions (GitHub releases triaged by Claude Sonnet 5.5, or manual), run evaluations judged by Claude Opus 5.5, review flags and override with public reasons, publish immutable releases.
