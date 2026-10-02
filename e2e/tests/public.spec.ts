@@ -2,33 +2,21 @@ import { expect, test } from "@playwright/test";
 import { leaderboard, watchErrors } from "./helpers";
 
 test.describe("public site", () => {
-  test("home is the benchmark table, with the suite leaders, method and cards under it", async ({ page }, info) => {
+  test("home opens on the leaderboard and links to the full rankings", async ({ page }) => {
     const errors = watchErrors(page);
     const { rows } = await leaderboard(page);
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Compare privacy systems");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Privacy Benchmark");
     await expect(page.getByText(rows[0]!.name).first()).toBeVisible();
-    // "Benchmarks" is the highlighted menu item (desktop menu; phones use the drawer).
-    if (info.project.name !== "mobile")
-      await expect(page.locator("header nav").getByRole("link", { name: "Benchmarks" }).locator(".bg-surface")).toHaveCount(1);
-    await expect(page.getByRole("heading", { name: /Seven suites/ })).toBeVisible();
-    await expect(page.getByRole("heading", { name: /Models gather and judge/ })).toBeVisible();
-    await expect(page.getByRole("heading", { name: /Share a comparison/ })).toBeVisible();
+    await page.getByRole("link", { name: "All rankings" }).click();
+    await expect(page).toHaveURL(/\/rankings/);
     expect(errors).toEqual([]);
-  });
-
-  test("the table's old address keeps its columns and focus", async ({ page }) => {
-    const { rows } = await leaderboard(page);
-    const [a, b] = rows;
-    await page.goto(`/benchmarks?p=${a!.slug},${b!.slug}&focus=${b!.slug}`);
-    await expect(page).toHaveURL(new RegExp(`/\\?p=${a!.slug}(%2C|,)${b!.slug}&focus=${b!.slug}`));
-    await expect(page.getByText(`Focus · ${b!.name}`)).toBeVisible();
   });
 
   test("benchmark table shows projects and explains a cell", async ({ page }, info) => {
     const errors = watchErrors(page);
     const { rows } = await leaderboard(page);
-    await page.goto("/");
+    await page.goto("/benchmarks");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Compare privacy systems");
     // Phones get the pivot view (one project per column is too narrow); desktop gets the grid table.
     if (info.project.name !== "mobile") await expect(page.getByRole("table")).toBeVisible();

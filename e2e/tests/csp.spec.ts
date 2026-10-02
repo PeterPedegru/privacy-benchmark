@@ -35,7 +35,7 @@ test.describe("content security policy", () => {
     page.on("response", (r) => {
       if (r.url().includes("/api/public/logo")) logos.push(`${r.status()} ${r.url()}`);
     });
-    for (const path of ["/", "/rankings", "/projects", `/projects/${rows[0].slug}`, "/methodology", "/cards", "/releases"]) {
+    for (const path of ["/", "/benchmarks", "/rankings", "/projects", `/projects/${rows[0].slug}`, "/methodology", "/cards", "/releases"]) {
       await page.goto(path);
       await page.waitForLoadState("networkidle");
       expect(await policy.violations(), path).toEqual([]);

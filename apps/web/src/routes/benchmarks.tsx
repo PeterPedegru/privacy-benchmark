@@ -8,7 +8,6 @@ import { useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { BenchmarkTable, TableLegend } from "@/components/bench/benchmark-table";
 import { CalcBreakdown } from "@/components/bench/calc-breakdown";
-import { CardCta, HowItWorks, SuiteLeaders } from "@/components/bench/landing-sections";
 import { matchesRef, refOf } from "@/components/bench/model";
 import { BenchmarkPivot } from "@/components/bench/pivot";
 import { ProjectPicker } from "@/components/bench/project-picker";
@@ -73,8 +72,8 @@ function SuiteFilter({ value, onChange }: { value?: string[]; onChange: (next: s
 }
 
 export function BenchmarksPage() {
-  const search = useSearch({ from: "/public/" });
-  const navigate = useNavigate({ from: "/" });
+  const search = useSearch({ from: "/public/benchmarks" });
+  const navigate = useNavigate({ from: "/benchmarks" });
   const lb = useLeaderboard();
   const meta = useMeta();
   const mobile = useIsMobile();
@@ -101,10 +100,7 @@ export function BenchmarksPage() {
     return out;
   }, [lb.data]);
 
-  const set = useCallback(
-    (patch: Partial<BenchSearch>) => navigate({ search: (s: BenchSearch) => ({ ...s, ...patch }), replace: true, resetScroll: false }),
-    [navigate],
-  );
+  const set = useCallback((patch: Partial<BenchSearch>) => navigate({ search: (s) => ({ ...s, ...patch }), replace: true, resetScroll: false }), [navigate]);
   const setRefs = useCallback(
     (next: string[]) =>
       set({ p: next.join(",") || undefined, focus: next.some((r) => r === focus || r.split("@")[0] === focus) ? (focus ?? undefined) : next[0] }),
@@ -113,7 +109,7 @@ export function BenchmarksPage() {
   const toggleRow = useCallback(
     (id: string) =>
       navigate({
-        search: (s: BenchSearch) => {
+        search: (s) => {
           const n = new Set((s.open ?? "").split(",").filter(Boolean));
           n.has(id) ? n.delete(id) : n.add(id);
           return { ...s, open: [...n].join(",") || undefined };
@@ -148,137 +144,131 @@ export function BenchmarksPage() {
   const focusSnap = snaps.find((s) => matchesRef(s, focus));
 
   return (
-    <>
-      <div className="mx-auto max-w-[var(--container-wide)] px-4 pt-10 sm:px-6 md:pt-14">
-        <m.div variants={focusIn} initial="hidden" animate="show" className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-2xl">
-            <div className="eyebrow mb-3">Benchmark table{meta.data?.release ? ` · Release ${meta.data.release.label}` : ""}</div>
-            <h1 className="text-[34px] leading-[1.12] font-semibold tracking-[-0.02em] text-balance md:text-5xl md:leading-[1.06]">
-              Compare privacy systems. <span className="text-muted">Every cell is a sourced, checkable calculation.</span>
-            </h1>
-          </div>
-          {focusSnap && (
-            <div className="flex items-center gap-4 rounded-2xl border border-line bg-bg-2 px-4 py-3">
-              <div>
-                <div className="text-xs text-muted">Focus · {focusSnap.project.name}</div>
-                <div className="text-2xl font-semibold tracking-[-0.02em] tabular">
-                  <Pct value={focusSnap.scores.overall} />
-                </div>
-              </div>
-              <div className="h-10 w-px bg-line" />
-              <div className="text-xs leading-5 text-muted">
-                Level <span className="font-semibold text-fg">{focusSnap.scores.level ?? "—"}</span>
-                <br />
-                Tier <span className="font-semibold text-fg">{focusSnap.scores.trustTier ?? "—"}</span> · Walkaway{" "}
-                <span className="font-semibold text-fg">
-                  {focusSnap.scores.walkaway.passed === null ? "—" : focusSnap.scores.walkaway.passed ? "pass" : "fail"}
-                </span>
+    <div className="mx-auto max-w-[var(--container-wide)] px-4 pt-10 sm:px-6 md:pt-14">
+      <m.div variants={focusIn} initial="hidden" animate="show" className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div className="max-w-2xl">
+          <div className="eyebrow mb-3">Benchmark table{meta.data?.release ? ` · Release ${meta.data.release.label}` : ""}</div>
+          <h1 className="text-[34px] leading-[1.12] font-semibold tracking-[-0.02em] text-balance md:text-5xl md:leading-[1.06]">
+            Compare privacy systems. <span className="text-muted">Every cell is a sourced, checkable calculation.</span>
+          </h1>
+        </div>
+        {focusSnap && (
+          <div className="flex items-center gap-4 rounded-2xl border border-line bg-bg-2 px-4 py-3">
+            <div>
+              <div className="text-xs text-muted">Focus · {focusSnap.project.name}</div>
+              <div className="text-2xl font-semibold tracking-[-0.02em] tabular">
+                <Pct value={focusSnap.scores.overall} />
               </div>
             </div>
-          )}
-        </m.div>
-
-        <div className="sticky top-16 z-20 -mx-4 mt-8 flex flex-col gap-3 border-y border-line bg-bg/95 px-4 py-3 backdrop-blur-sm sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:border-x-0 lg:bg-transparent lg:px-0 lg:backdrop-blur-none md:flex-row md:items-center md:justify-between">
-          <ProjectPicker rows={lb.data?.rows ?? []} selected={refs} onChange={setRefs} />
-          <div className="flex flex-wrap items-center gap-1.5">
-            <SuiteFilter value={suiteFilter} onChange={(next) => set({ suites: next.length === suites.length || !next.length ? undefined : next.join(",") })} />
-            {!mobile && (
-              <>
-                <Button
-                  size="sm"
-                  variant={search.heat ? "accent" : "ghost"}
-                  icon={<Flame className="size-3.5" />}
-                  onClick={() => set({ heat: search.heat ? undefined : true })}
-                >
-                  Heatmap
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  icon={allOpen ? <ChevronsDownUp className="size-3.5" /> : <ChevronsUpDown className="size-3.5" />}
-                  onClick={() => set({ open: allOpen ? undefined : suites.flatMap((s) => s.benchmarks.map((b) => b.id)).join(",") })}
-                >
-                  {allOpen ? "Collapse" : "Criteria"}
-                </Button>
-              </>
-            )}
-            <Button size="sm" variant="ghost" icon={<Link2 className="size-3.5" />} onClick={copyLink}>
-              Link
-            </Button>
-            <ButtonLink
-              size="sm"
-              variant="primary"
-              to="/cards"
-              // A card holds five projects: the focused one, then the rest in table order.
-              search={{ p: (focus ? [focus, ...refs.filter((r) => r !== focus)] : refs).slice(0, 5).join(","), focus: focus ?? undefined }}
-              icon={<Image className="size-3.5" />}
-            >
-              Make a card
-            </ButtonLink>
-          </div>
-        </div>
-
-        <div className="mt-6">
-          {lb.isLoading || (cmp.isLoading && !snaps.length) ? (
-            <div className="flex flex-col gap-2">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <Skeleton key={i} className="h-12 w-full" />
-              ))}
+            <div className="h-10 w-px bg-line" />
+            <div className="text-xs leading-5 text-muted">
+              Level <span className="font-semibold text-fg">{focusSnap.scores.level ?? "—"}</span>
+              <br />
+              Tier <span className="font-semibold text-fg">{focusSnap.scores.trustTier ?? "—"}</span> · Walkaway{" "}
+              <span className="font-semibold text-fg">
+                {focusSnap.scores.walkaway.passed === null ? "—" : focusSnap.scores.walkaway.passed ? "pass" : "fail"}
+              </span>
             </div>
-          ) : !snaps.length && ((lb.isError && !lb.data) || cmp.isError) ? (
-            <LoadError
-              title="Couldn't load the benchmark table."
-              busy={lb.isFetching || cmp.isFetching}
-              onRetry={() => {
-                if (lb.isError) void lb.refetch();
-                if (cmp.isError) void cmp.refetch();
-              }}
-            />
-          ) : !snaps.length ? (
-            <Empty title="Nothing to compare yet">Add projects above, or publish a release from the admin dashboard.</Empty>
-          ) : mobile ? (
-            <BenchmarkPivot snapshots={snaps} focus={focus} onCell={onCell} suiteFilter={suiteFilter} />
-          ) : (
-            <BenchmarkTable
-              snapshots={snaps}
-              focus={focus}
-              onFocus={onFocus}
-              onRemove={refs.length > 1 ? onRemove : undefined}
-              onVersionChange={onVersionChange}
-              versionsBySlug={versionsBySlug}
-              open={open}
-              onToggle={toggleRow}
-              onCell={onCell}
-              heatmap={search.heat}
-              suiteFilter={suiteFilter}
-            />
-          )}
-          <TableLegend release={cmp.data?.release ?? null} rubricVersion={meta.data?.rubricVersion ?? rubric.version} />
-        </div>
-
-        <Sheet
-          open={!!cell && !!cellSnap}
-          onOpenChange={(o) => !o && setCell(null)}
-          title={cell ? `${getBenchmark(cell.benchmarkId).name} · ${cellSnap?.project.name ?? ""}` : ""}
-          subtitle={cellSnap ? `How this number was calculated${cellSnap.version ? ` · ${cellSnap.version.label}` : ""}` : undefined}
-        >
-          {cell && cellSnap && (
-            <CellBreakdown
-              snapshot={cellSnap}
-              benchmarkId={cell.benchmarkId}
-              onSuggest={(criterionId) => setSuggest({ slug: cellSnap.project.slug, criterionId })}
-            />
-          )}
-        </Sheet>
-        {suggest && (
-          <SuggestCorrection open={!!suggest} onOpenChange={(o) => !o && setSuggest(null)} projectSlug={suggest.slug} criterionId={suggest.criterionId} />
+          </div>
         )}
+      </m.div>
+
+      <div className="sticky top-16 z-20 -mx-4 mt-8 flex flex-col gap-3 border-y border-line bg-bg/95 px-4 py-3 backdrop-blur-sm sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:border-x-0 lg:bg-transparent lg:px-0 lg:backdrop-blur-none md:flex-row md:items-center md:justify-between">
+        <ProjectPicker rows={lb.data?.rows ?? []} selected={refs} onChange={setRefs} />
+        <div className="flex flex-wrap items-center gap-1.5">
+          <SuiteFilter value={suiteFilter} onChange={(next) => set({ suites: next.length === suites.length || !next.length ? undefined : next.join(",") })} />
+          {!mobile && (
+            <>
+              <Button
+                size="sm"
+                variant={search.heat ? "accent" : "ghost"}
+                icon={<Flame className="size-3.5" />}
+                onClick={() => set({ heat: search.heat ? undefined : true })}
+              >
+                Heatmap
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                icon={allOpen ? <ChevronsDownUp className="size-3.5" /> : <ChevronsUpDown className="size-3.5" />}
+                onClick={() => set({ open: allOpen ? undefined : suites.flatMap((s) => s.benchmarks.map((b) => b.id)).join(",") })}
+              >
+                {allOpen ? "Collapse" : "Criteria"}
+              </Button>
+            </>
+          )}
+          <Button size="sm" variant="ghost" icon={<Link2 className="size-3.5" />} onClick={copyLink}>
+            Link
+          </Button>
+          <ButtonLink
+            size="sm"
+            variant="primary"
+            to="/cards"
+            // A card holds five projects: the focused one, then the rest in table order.
+            search={{ p: (focus ? [focus, ...refs.filter((r) => r !== focus)] : refs).slice(0, 5).join(","), focus: focus ?? undefined }}
+            icon={<Image className="size-3.5" />}
+          >
+            Make a card
+          </ButtonLink>
+        </div>
       </div>
-      {/* The landing page continues under the table. */}
-      <SuiteLeaders rows={lb.data?.rows ?? []} />
-      <HowItWorks />
-      <CardCta />
-    </>
+
+      <div className="mt-6">
+        {lb.isLoading || (cmp.isLoading && !snaps.length) ? (
+          <div className="flex flex-col gap-2">
+            {Array.from({ length: 10 }).map((_, i) => (
+              <Skeleton key={i} className="h-12 w-full" />
+            ))}
+          </div>
+        ) : !snaps.length && ((lb.isError && !lb.data) || cmp.isError) ? (
+          <LoadError
+            title="Couldn't load the benchmark table."
+            busy={lb.isFetching || cmp.isFetching}
+            onRetry={() => {
+              if (lb.isError) void lb.refetch();
+              if (cmp.isError) void cmp.refetch();
+            }}
+          />
+        ) : !snaps.length ? (
+          <Empty title="Nothing to compare yet">Add projects above, or publish a release from the admin dashboard.</Empty>
+        ) : mobile ? (
+          <BenchmarkPivot snapshots={snaps} focus={focus} onCell={onCell} suiteFilter={suiteFilter} />
+        ) : (
+          <BenchmarkTable
+            snapshots={snaps}
+            focus={focus}
+            onFocus={onFocus}
+            onRemove={refs.length > 1 ? onRemove : undefined}
+            onVersionChange={onVersionChange}
+            versionsBySlug={versionsBySlug}
+            open={open}
+            onToggle={toggleRow}
+            onCell={onCell}
+            heatmap={search.heat}
+            suiteFilter={suiteFilter}
+          />
+        )}
+        <TableLegend release={cmp.data?.release ?? null} rubricVersion={meta.data?.rubricVersion ?? rubric.version} />
+      </div>
+
+      <Sheet
+        open={!!cell && !!cellSnap}
+        onOpenChange={(o) => !o && setCell(null)}
+        title={cell ? `${getBenchmark(cell.benchmarkId).name} · ${cellSnap?.project.name ?? ""}` : ""}
+        subtitle={cellSnap ? `How this number was calculated${cellSnap.version ? ` · ${cellSnap.version.label}` : ""}` : undefined}
+      >
+        {cell && cellSnap && (
+          <CellBreakdown
+            snapshot={cellSnap}
+            benchmarkId={cell.benchmarkId}
+            onSuggest={(criterionId) => setSuggest({ slug: cellSnap.project.slug, criterionId })}
+          />
+        )}
+      </Sheet>
+      {suggest && (
+        <SuggestCorrection open={!!suggest} onOpenChange={(o) => !o && setSuggest(null)} projectSlug={suggest.slug} criterionId={suggest.criterionId} />
+      )}
+    </div>
   );
 }
 

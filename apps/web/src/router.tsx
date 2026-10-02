@@ -1,5 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
-import { createRootRoute, createRoute, createRouter, Link, lazyRouteComponent, redirect } from "@tanstack/react-router";
+import { createRootRoute, createRoute, createRouter, Link, lazyRouteComponent } from "@tanstack/react-router";
 import type { ComponentType } from "react";
 import { RouteError } from "./components/route-error";
 import { PublicLayout } from "./components/shell";
@@ -55,8 +55,8 @@ const rootRoute = createRootRoute({
       <ButtonLink to="/" variant="secondary" className="mt-8">
         Back home
       </ButtonLink>
-      <Link to="/rankings" className="mt-3 text-sm text-muted hover:text-fg">
-        Or see the rankings
+      <Link to="/benchmarks" className="mt-3 text-sm text-muted hover:text-fg">
+        Or open the benchmark table
       </Link>
     </div>
   ),
@@ -72,20 +72,24 @@ const publicLayout = createRoute({
 
 const str = (v: unknown) => (typeof v === "string" && v.length ? v : undefined);
 
-export type BenchSearch = { p?: string; focus?: string; open?: string; heat?: boolean; suites?: string };
-const benchSearch = (s: Record<string, unknown>): BenchSearch => ({
-  p: str(s.p),
-  focus: str(s.focus),
-  open: str(s.open),
-  heat: s.heat === true || s.heat === "1" ? true : undefined,
-  suites: str(s.suites),
-});
-
-/** The landing page is the benchmark table. */
-const bench = createRoute({
+const home = createRoute({
   getParentRoute: () => publicLayout,
   path: "/",
-  validateSearch: benchSearch,
+  loader: prefetchLeaderboard,
+  component: page(() => import("./routes/home"), "HomePage"),
+});
+
+export type BenchSearch = { p?: string; focus?: string; open?: string; heat?: boolean; suites?: string };
+const bench = createRoute({
+  getParentRoute: () => publicLayout,
+  path: "/benchmarks",
+  validateSearch: (s: Record<string, unknown>): BenchSearch => ({
+    p: str(s.p),
+    focus: str(s.focus),
+    open: str(s.open),
+    heat: s.heat === true || s.heat === "1" ? true : undefined,
+    suites: str(s.suites),
+  }),
   loaderDeps: ({ search }) => ({ p: search.p }),
   loader: ({ deps }) => {
     const picked = deps.p?.split(",").filter(Boolean) ?? [];
@@ -106,16 +110,6 @@ const bench = createRoute({
       .catch(() => {});
   },
   component: page(() => import("./routes/benchmarks"), "BenchmarksPage"),
-});
-
-/** The table's old address: shared links (with their columns and focus) land on the same view at "/". */
-const benchLegacy = createRoute({
-  getParentRoute: () => publicLayout,
-  path: "/benchmarks",
-  validateSearch: benchSearch,
-  beforeLoad: ({ search }) => {
-    throw redirect({ to: "/", search, replace: true });
-  },
 });
 
 export type RankSearch = { tab?: string; preset?: string; w?: string };
@@ -244,7 +238,7 @@ const ad12 = createRoute({
 const adminRoutes = [ad0, ad1, ad2, ad3, ad4, ad5, ad6, ad7, ad8, ad9, ad10, ad11, ad12] as const;
 
 const routeTree = rootRoute.addChildren([
-  publicLayout.addChildren([bench, benchLegacy, rankings, projects, project, cards, methodology, releases]),
+  publicLayout.addChildren([home, bench, rankings, projects, project, cards, methodology, releases]),
   admin.addChildren([...adminRoutes]),
 ]);
 

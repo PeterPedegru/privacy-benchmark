@@ -35,7 +35,7 @@ export function ReleasesPage() {
               </div>
               {r.notes && <p className="mt-3 max-w-2xl text-[15px] leading-[1.6] whitespace-pre-line text-fg-3">{r.notes}</p>}
               <div className="mt-4 flex flex-wrap gap-2">
-                <ButtonLink to="/" size="sm" variant="secondary">
+                <ButtonLink to="/benchmarks" size="sm" variant="secondary">
                   Open table
                 </ButtonLink>
                 <a

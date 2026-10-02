@@ -64,7 +64,7 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
                     </Command.Group>
                     <Command.Group heading="Pages" className="[&_[cmdk-group-heading]]:eyebrow [&_[cmdk-group-heading]]:px-2.5 [&_[cmdk-group-heading]]:py-2">
                       {[
-                        { label: "Benchmark table", icon: LayoutGrid, to: "/" },
+                        { label: "Benchmark table", icon: LayoutGrid, to: "/benchmarks" },
                         { label: "Rankings", icon: Trophy, to: "/rankings" },
                         { label: "Projects", icon: BarChart3, to: "/projects" },
                         { label: "Make a comparison card", icon: Image, to: "/cards" },
