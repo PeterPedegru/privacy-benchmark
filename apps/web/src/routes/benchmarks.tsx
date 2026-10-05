@@ -1,5 +1,5 @@
 import type { ProjectSnapshot } from "@pb/core";
-import { fromLabel, getBenchmark, hidesLabel, rubric, suites } from "@pb/rubric";
+import { getBenchmark, privacyText, rubric, suites } from "@pb/rubric";
 import * as Popover from "@radix-ui/react-popover";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Check, ChevronsDownUp, ChevronsUpDown, Flame, Image, Link2, SlidersHorizontal } from "lucide-react";
@@ -162,8 +162,7 @@ export function BenchmarksPage() {
             </div>
             <div className="h-10 w-px bg-line" />
             <div className="text-xs leading-5 text-muted">
-              <span className="font-semibold text-fg">{hidesLabel(focusSnap.scores.level)}</span>{" "}
-              {fromLabel(focusSnap.scores.trustTier, focusSnap.scores.level)}
+              <span className="font-semibold text-fg">{privacyText(focusSnap.scores.level, focusSnap.scores.trustTier)}</span>
               <br />
               Walkaway{" "}
               <span className="font-semibold text-fg">

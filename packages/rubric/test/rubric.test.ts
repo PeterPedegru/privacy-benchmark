@@ -9,16 +9,16 @@ import {
   deriveWalkaway,
   diffAnswers,
   findCriterion,
-  fromLabel,
   getCriterion,
-  hidesLabel,
   isHighScrutiny,
   levelNumber,
   lowestOption,
   matrixConflicts,
   maxPoints,
   normalizeLevel,
+  operatorNumber,
   overallFromSuites,
+  privacyText,
   RULE_CRITERIA,
   rubric,
   scoreProject,
@@ -296,14 +296,14 @@ describe("unknowns never become public claims", () => {
     expect([null, "", "L6", "Layer 1"].map(normalizeLevel)).toEqual([null, null, null, null]);
   });
 
-  it("reads as what's hidden and from whom, whatever code the level was stored under", () => {
+  it("reads as Public and Operator scores out of five, whatever code the level was stored under", () => {
     expect(["L4", "Z4", "P4", "Z0", null].map(levelNumber)).toEqual([4, 4, 4, 0, null]);
-    expect(["Z4", "Z0", null].map(hidesLabel)).toEqual(["Hides 4/5", "Hides nothing", "Hides: unrated"]);
-    expect(fromLabel("A", "Z4")).toBe("from everyone");
-    expect(fromLabel("D", "Z1")).toBe("from all but the operator");
-    expect(fromLabel(null, "Z2")).toBe("from: unrated");
-    // Nothing hidden: nothing to be hidden from.
-    expect(fromLabel(null, "Z0")).toBeNull();
+    expect((["A", "B", "C", "D"] as const).map((t) => operatorNumber(t, "Z2"))).toEqual([5, 4, 2, 0]);
+    expect(privacyText("Z4", "A")).toBe("Public 4/5 · Operator 5/5");
+    expect(privacyText("Z1", "D")).toBe("Public 1/5 · Operator 0/5");
+    expect(privacyText("Z2", null)).toBe("Public 2/5 · Operator —");
+    // Nothing hidden: nothing to protect from the operator either.
+    expect(privacyText("Z0", null)).toBe("Public 0/5 · Operator —");
   });
 
   it("unknown coverage inputs leave the privacy level unrated instead of Z0", () => {

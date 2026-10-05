@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import type { CompareResponse, LeaderboardResponse, ProjectSnapshot } from "@pb/core";
 import { cardConfigSchema, httpUrlSchema } from "@pb/core";
-import { benchmarks, diffAnswers, fmtScore, levelNumber, rubric, suites } from "@pb/rubric";
+import { benchmarks, diffAnswers, fmtScore, levelNumber, operatorNumber, rubric, suites } from "@pb/rubric";
 import { and, desc, eq, inArray, isNotNull, or, sql } from "drizzle-orm";
 import { type Context, Hono } from "hono";
 import { z } from "zod";
@@ -314,7 +314,16 @@ export function csvField(raw: string): string {
 publicRoutes.get("/releases/:id/export.csv", (c) => releaseExport(c, "csv", releaseCsv));
 
 function releaseCsv(snaps: ProjectSnapshot[]): string {
-  const header = ["project", "version", "overall", "level", "trust_tier", "walkaway", ...suites.map((s) => `suite:${s.id}`), ...benchmarks.map((b) => b.id)];
+  const header = [
+    "project",
+    "version",
+    "overall",
+    "privacy_public",
+    "privacy_operator",
+    "walkaway",
+    ...suites.map((s) => `suite:${s.id}`),
+    ...benchmarks.map((b) => b.id),
+  ];
   const lines = [header.map(csvField).join(",")];
   for (const s of snaps) {
     const bm = new Map(s.scores.suites.flatMap((x) => x.benchmarks.map((b) => [b.benchmarkId, b.score] as const)));
@@ -323,9 +332,9 @@ function releaseCsv(snaps: ProjectSnapshot[]): string {
         s.project.name,
         s.version?.label ?? "",
         fmtScore(s.scores.overall),
-        // The privacy level as a number, 0 to 5 (the badge's "Hides n/5"), whatever code the result stored.
+        // The privacy scores as numbers, 0 to 5, as the badge shows them (Public, Operator).
         levelNumber(s.scores.level) ?? "",
-        s.scores.trustTier ?? "",
+        operatorNumber(s.scores.trustTier, s.scores.level) ?? "",
         s.scores.walkaway.passed === null ? "" : s.scores.walkaway.passed ? "pass" : "fail",
         ...s.scores.suites.map((x) => fmtScore(x.score)),
         ...benchmarks.map((b) => fmtScore(bm.get(b.id) ?? null)),

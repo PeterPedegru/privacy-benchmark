@@ -1,4 +1,4 @@
-import { fromLabel, HIDDEN_FROM, hidesLabel, levelNumber, type PrivacyLevel, type TrustTier, type WalkawayResult } from "@pb/rubric";
+import { levelNumber, OPERATOR_SCORE, operatorNumber, type PrivacyLevel, type TrustTier, type WalkawayResult } from "@pb/rubric";
 import { Check, X } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -33,56 +33,74 @@ export function bandTone(v: number | null | undefined): Tone {
   return "poor";
 }
 
-/** What each number of "Hides n/5" means: what a careful user can keep from the public. */
-const LEVEL_TEXT = [
-  "Transparent: nothing hidden at protocol level",
-  "Partial: hides amounts or links, not both",
+/** What each Public score means: what a careful user keeps from everyone watching the chain. */
+const PUBLIC_TEXT = [
+  "Nothing hidden at protocol level",
+  "Hides amounts or links, not both",
   "Private transfers: sender, recipient and amount hidden",
   "Private accounts: private transfers plus anonymous access to public apps",
   "Private execution: general private state and logic",
   "Full-stack private: private execution, hidden call graph, network and read privacy",
 ] as const;
-const TIER_TEXT: Record<TrustTier, string> = {
-  A: "no third party can see private data",
-  B: "plaintext passes through trusted hardware (TEEs)",
-  C: "a designated party or committee can decrypt",
-  D: "the operator sees plaintext routinely",
+/** What each Operator score means: who, if anyone, among those running the system can still see it. */
+const OPERATOR_TEXT: Record<TrustTier, string> = {
+  A: "No third party can see private data",
+  B: "Only trusted hardware (TEEs) sees plaintext",
+  C: "A designated key-holder or committee can decrypt",
+  D: "The operator sees plaintext routinely",
 };
-const TIER_TONE: Record<TrustTier, Tone> = { A: "strong", B: "accent", C: "fair", D: "poor" };
+const OPERATOR_TONE: Record<TrustTier, Tone> = { A: "strong", B: "accent", C: "fair", D: "poor" };
+
+/** One labelled score out of five with its meter: "Public 4/5 ▮▮▮▮▯". */
+function Meter({ label, n, compact }: { label: string; n: number | null; compact?: boolean }) {
+  return (
+    <span className="flex items-center gap-1.5 px-1.5">
+      <span className="font-medium text-muted">{label}</span>
+      {n === null ? "—" : `${n}/5`}
+      {!compact && n !== null && (
+        <span className="flex gap-[2px]" aria-hidden>
+          {[1, 2, 3, 4, 5].map((i) => (
+            <span key={i} className={cn("h-2.5 w-[3px] rounded-full", i <= n ? "bg-current" : "bg-line-strong")} />
+          ))}
+        </span>
+      )}
+    </span>
+  );
+}
 
 /**
- * The privacy badge: what's hidden ("Hides 4/5", with a meter) and from whom ("from everyone"), read as one phrase.
- * Without `tier` it shows only what's hidden (a list of versions); `compact` drops the meter.
+ * The Privacy Level badge: how much is hidden from the public (the privacy level) and from the operator (the trust
+ * tier), each out of five with a meter. Without `tier` it shows only the Public part (a list of versions); `compact`
+ * drops the meters.
  */
 export function PrivacyBadge({ level, tier, compact }: { level: PrivacyLevel | string | null; tier?: TrustTier | null; compact?: boolean }) {
-  const n = levelNumber(level);
-  const from = tier === undefined ? null : fromLabel(tier, level);
+  const pub = levelNumber(level);
+  const op = tier === undefined ? undefined : operatorNumber(tier, level);
   const tip = [
-    n === null
-      ? "What's hidden: unrated. The evidence doesn't establish it (amounts, sender, recipient and history must all be answered)"
-      : `What's hidden: ${n}/5, ${LEVEL_TEXT[n]}`,
-    tier === undefined || n === 0
+    pub === null
+      ? "Public: unrated. The evidence doesn't establish what's hidden (amounts, sender, recipient and history must all be answered)"
+      : `Public ${pub}/5: ${PUBLIC_TEXT[pub]}`,
+    tier === undefined
       ? null
-      : tier
-        ? `Hidden ${HIDDEN_FROM[tier]}: ${TIER_TEXT[tier]}`
-        : "Hidden from: unrated. The evidence doesn't establish who besides you can see your data",
+      : pub === 0
+        ? "Operator: not applicable, nothing is hidden"
+        : tier
+          ? `Operator ${OPERATOR_SCORE[tier]}/5: ${OPERATOR_TEXT[tier]}`
+          : "Operator: unrated. The evidence doesn't establish who besides you can see your data",
   ]
     .filter(Boolean)
     .join(". ");
   return (
     <Tip content={tip}>
       <span className="inline-flex h-[22px] items-stretch overflow-hidden rounded-md border border-line bg-bg text-xs font-semibold whitespace-nowrap text-fg tabular">
-        <span className="flex items-center gap-1.5 px-1.5">
-          {hidesLabel(level)}
-          {!compact && n !== null && n > 0 && (
-            <span className="flex gap-[2px]" aria-hidden>
-              {[1, 2, 3, 4, 5].map((i) => (
-                <span key={i} className={cn("h-2.5 w-[3px] rounded-full", i <= n ? "bg-accent" : "bg-line-strong")} />
-              ))}
-            </span>
-          )}
+        <span className="flex items-center text-accent-fg">
+          <Meter label="Public" n={pub} compact={compact} />
         </span>
-        {from && <span className={cn("flex items-center border-l px-1.5 font-medium", tones[tier ? TIER_TONE[tier] : "neutral"])}>{from}</span>}
+        {op !== undefined && (
+          <span className={cn("flex items-center border-l", tier && pub !== 0 ? tones[OPERATOR_TONE[tier]] : "border-line text-fg-3")}>
+            <Meter label="Operator" n={op} compact={compact} />
+          </span>
+        )}
       </span>
     </Tip>
   );

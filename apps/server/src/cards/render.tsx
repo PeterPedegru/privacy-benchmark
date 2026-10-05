@@ -3,7 +3,7 @@ import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { inflateSync } from "node:zlib";
 import type { CardConfig, ProjectSnapshot } from "@pb/core";
-import { benchmarks, fmtScore, fromLabel, getBenchmark, hidesLabel, rubric, suites } from "@pb/rubric";
+import { benchmarks, fmtScore, getBenchmark, privacyText, rubric, suites } from "@pb/rubric";
 import { renderAsync } from "@resvg/resvg-js";
 import type { ReactNode } from "react";
 import satori from "satori";
@@ -368,7 +368,7 @@ function Badges({ s, t, align }: { s: ProjectSnapshot; t: Theme; align: "flex-st
   const w = s.scores.walkaway.passed;
   return (
     <div style={{ display: "flex", flexWrap: "wrap", justifyContent: align, marginTop: 10, rowGap: 6 }}>
-      {chip([hidesLabel(s.scores.level), fromLabel(s.scores.trustTier, s.scores.level)].filter(Boolean).join(" · "), t.fg)}
+      {chip(privacyText(s.scores.level, s.scores.trustTier), t.fg)}
       {chip(w === null ? "Walkaway —" : w ? "Walkaway pass" : "Walkaway fail", w ? t.good : w === false ? t.bad : t.muted)}
     </div>
   );

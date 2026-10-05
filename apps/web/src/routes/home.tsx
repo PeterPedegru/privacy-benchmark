@@ -73,7 +73,7 @@ function Leaderboard({
           <span>#</span>
           <span />
           <span>Project</span>
-          <span>Badges</span>
+          <span>Privacy Level</span>
           <span>Overall</span>
           <span className="text-right">Score</span>
         </div>
@@ -241,7 +241,7 @@ function Explainers() {
     {
       icon: KeyRound,
       title: "Who can see",
-      body: "Master viewing keys, key committees, operators that read plaintext, trusted hardware. “Hides n/5” says what's hidden; “from …” says who can still see it.",
+      body: "Master viewing keys, key committees, operators that read plaintext, trusted hardware. Public n/5 says what's hidden from everyone watching the chain; Operator n/5, what's hidden from those who run it.",
     },
     {
       icon: Snowflake,

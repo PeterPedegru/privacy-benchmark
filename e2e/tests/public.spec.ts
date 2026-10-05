@@ -8,8 +8,9 @@ test.describe("public site", () => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Privacy systems, ranked");
     await expect(page.getByText(rows[0]!.name).first()).toBeVisible();
-    // Badges say what's hidden and from whom, in words, not codes.
-    await expect(page.getByText(/^Hides (\d\/5|nothing)$/).first()).toBeVisible();
+    // The Privacy Level badge scores the public and the operator out of five, no codes.
+    await expect(page.getByText("Public", { exact: true }).first()).toBeVisible();
+    await expect(page.getByText("Operator", { exact: true }).first()).toBeVisible();
     await page.getByRole("link", { name: "All rankings" }).click();
     await expect(page).toHaveURL(/\/rankings/);
     expect(errors).toEqual([]);
