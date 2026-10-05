@@ -15,6 +15,7 @@ import {
   leaderboardRow,
   publicSettings,
   publishedDataVersion,
+  readSnapshot,
   releaseInfo,
   resolveSnapshot,
   snapshotEtag,
@@ -159,7 +160,7 @@ publicRoutes.get("/projects/:slug", async (c) => {
           .where(and(eq(schema.projects.slug, slug), eq(schema.projects.status, "active"), notWithdrawn))
           .orderBy(desc(schema.publishedResults.createdAt))
       )
-        .map((r) => r.snapshot as unknown as ProjectSnapshot)
+        .map((r) => readSnapshot(r.snapshot))
         .filter((s) => s.release.isDemo === snapshot.release.isDemo);
       return {
         snapshot,
@@ -268,7 +269,7 @@ async function releaseSnapshots(id: string): Promise<ProjectSnapshot[]> {
       .from(schema.publishedResults)
       .innerJoin(schema.projects, eq(schema.projects.id, schema.publishedResults.projectId))
       .where(and(eq(schema.publishedResults.releaseId, id), eq(schema.projects.status, "active"), notWithdrawn))
-  ).map((r) => r.snapshot as unknown as ProjectSnapshot);
+  ).map((r) => readSnapshot(r.snapshot));
 }
 
 /**

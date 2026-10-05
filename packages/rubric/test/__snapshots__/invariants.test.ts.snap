@@ -3,7 +3,7 @@
 exports[`sample dataset (pinned scores) > scores example-coprocessor.json as pinned > example-coprocessor 1`] = `
 {
   "complete": true,
-  "level": "L1",
+  "level": "Z1",
   "overall": 25.986,
   "rubricVersion": "1.3.0",
   "suites": {
@@ -222,7 +222,7 @@ exports[`sample dataset (pinned scores) > scores example-coprocessor.json as pin
 exports[`sample dataset (pinned scores) > scores example-pool.json as pinned > example-pool 1`] = `
 {
   "complete": true,
-  "level": "L1",
+  "level": "Z1",
   "overall": 52.112,
   "rubricVersion": "1.3.0",
   "suites": {
@@ -442,7 +442,7 @@ exports[`sample dataset (pinned scores) > scores example-pool.json as pinned > e
 exports[`sample dataset (pinned scores) > scores example-rollup.json as pinned > example-rollup 1`] = `
 {
   "complete": true,
-  "level": "L1",
+  "level": "Z1",
   "overall": 67.336,
   "rubricVersion": "1.3.0",
   "suites": {

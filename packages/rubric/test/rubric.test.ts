@@ -14,6 +14,7 @@ import {
   lowestOption,
   matrixConflicts,
   maxPoints,
+  normalizeLevel,
   overallFromSuites,
   RULE_CRITERIA,
   rubric,
@@ -94,18 +95,18 @@ describe("rubric integrity", () => {
 });
 
 describe("scoring", () => {
-  it("best answers score 100 everywhere with level L5, tier A, walkaway pass", () => {
+  it("best answers score 100 everywhere with level Z5, tier A, walkaway pass", () => {
     const card = scoreProject(answers());
     expect(card.overall).toBeCloseTo(100, 6);
-    expect(card.level).toBe("L5");
+    expect(card.level).toBe("Z5");
     expect(card.trustTier).toBe("A");
     expect(card.walkaway.passed).toBe(true);
   });
 
-  it("worst answers score 0 with level L0 and no trust tier", () => {
+  it("worst answers score 0 with level Z0 and no trust tier", () => {
     const card = scoreProject(answers({}, "worst"));
     expect(card.overall).toBe(0);
-    expect(card.level).toBe("L0");
+    expect(card.level).toBe("Z0");
     expect(card.trustTier).toBeNull();
     expect(card.walkaway.passed).toBe(false);
   });
@@ -171,7 +172,7 @@ describe("scoring", () => {
     expect(cs.rules).toContain("no_private_logic_gate");
   });
 
-  it("L0 zeroes the trust and programmability suites", () => {
+  it("Z0 zeroes the trust and programmability suites", () => {
     const card = scoreProject(
       answers({
         "coverage.confidentiality.amounts": "visible",
@@ -180,7 +181,7 @@ describe("scoring", () => {
         "coverage.unlinkability.history": "linkable",
       }),
     );
-    expect(card.level).toBe("L0");
+    expect(card.level).toBe("Z0");
     expect(card.suites.find((s) => s.suiteId === "trust")!.score).toBe(0);
     expect(card.suites.find((s) => s.suiteId === "programmability")!.score).toBe(0);
     expect(card.suites.find((s) => s.suiteId === "custody")!.score).toBeCloseTo(100, 6);
@@ -228,21 +229,21 @@ describe("badges", () => {
       derivePrivacyLevel(
         answers({ "coverage.unlinkability.sender": "visible", "coverage.unlinkability.recipient": "visible", "coverage.unlinkability.history": "linkable" }),
       ),
-    ).toBe("L1");
-    expect(derivePrivacyLevel(answers({ "coverage.confidentiality.amounts": "visible", "coverage.unlinkability.sender": "mixing" }))).toBe("L1");
-    expect(derivePrivacyLevel(answers({ "coverage.execution.private-state": "balances-only", "coverage.unlinkability.public-apps": "must-exit" }))).toBe("L2");
-    expect(derivePrivacyLevel(answers({ "coverage.execution.private-logic": "limited" }))).toBe("L3");
-    expect(derivePrivacyLevel(answers({ "coverage.metadata.network": "none" }))).toBe("L4");
+    ).toBe("Z1");
+    expect(derivePrivacyLevel(answers({ "coverage.confidentiality.amounts": "visible", "coverage.unlinkability.sender": "mixing" }))).toBe("Z1");
+    expect(derivePrivacyLevel(answers({ "coverage.execution.private-state": "balances-only", "coverage.unlinkability.public-apps": "must-exit" }))).toBe("Z2");
+    expect(derivePrivacyLevel(answers({ "coverage.execution.private-logic": "limited" }))).toBe("Z3");
+    expect(derivePrivacyLevel(answers({ "coverage.metadata.network": "none" }))).toBe("Z4");
     expect(derivePrivacyLevel({})).toBeNull();
   });
 
   it("derives trust tiers", () => {
-    const lvl = "L4" as const;
+    const lvl = "Z4" as const;
     expect(deriveTrustTier(answers(), lvl)).toBe("A");
     expect(deriveTrustTier(answers({ "trust.decryption.infra-visibility": "tee" }), lvl)).toBe("B");
     expect(deriveTrustTier(answers({ "trust.decryption.standing-access": "single" }), lvl)).toBe("C");
     expect(deriveTrustTier(answers({ "trust.decryption.infra-visibility": "plaintext" }), lvl)).toBe("D");
-    expect(deriveTrustTier(answers(), "L0")).toBeNull();
+    expect(deriveTrustTier(answers(), "Z0")).toBeNull();
   });
 
   it("derives the walkaway test with reasons", () => {
@@ -281,19 +282,24 @@ describe("unknowns never become public claims", () => {
 
   it("unknown visibility inputs give no trust tier and no operator cap", () => {
     const a = unknown(answers(), RULE_CRITERIA.standingAccess);
-    expect(deriveTrustTier(a, "L4")).toBeNull();
+    expect(deriveTrustTier(a, "Z4")).toBeNull();
     const card = scoreProject(a);
     expect(card.suites.flatMap((s) => s.rules)).not.toContain("operator_visibility_cap");
-    expect(deriveTrustTier(answers({ [RULE_CRITERIA.standingAccess]: "operator" }), "L4")).toBe("D");
+    expect(deriveTrustTier(answers({ [RULE_CRITERIA.standingAccess]: "operator" }), "Z4")).toBe("D");
   });
 
-  it("unknown coverage inputs leave the privacy level unrated instead of L0", () => {
+  it("reads stored levels from before the rename (L0 to L5) as Z0 to Z5", () => {
+    expect(["L0", "L4", "Z2", "Z5"].map(normalizeLevel)).toEqual(["Z0", "Z4", "Z2", "Z5"]);
+    expect([null, "", "L6", "Layer 1"].map(normalizeLevel)).toEqual([null, null, null, null]);
+  });
+
+  it("unknown coverage inputs leave the privacy level unrated instead of Z0", () => {
     const a = unknown(answers(), RULE_CRITERIA.amounts, RULE_CRITERIA.sender, RULE_CRITERIA.recipient, RULE_CRITERIA.history);
     expect(derivePrivacyLevel(a)).toBeNull();
     const card = scoreProject(a);
     expect(card.suites.flatMap((s) => s.rules)).not.toContain("l0_gate");
-    // Higher levels need their own inputs answered: unknown private state holds the level below L4.
-    expect(derivePrivacyLevel(unknown(answers(), RULE_CRITERIA.privateState))).toMatch(/^L[23]$/);
+    // Higher levels need their own inputs answered: unknown private state holds the level below Z4.
+    expect(derivePrivacyLevel(unknown(answers(), RULE_CRITERIA.privateState))).toMatch(/^Z[23]$/);
   });
 
   it("walkaway fails only on established facts, and names what's missing", () => {

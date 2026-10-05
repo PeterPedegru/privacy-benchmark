@@ -68,7 +68,7 @@ describe("public API", () => {
     expect(body.rows).toHaveLength(2);
     expect(body.rows[0].slug).toBe("alpha");
     expect(body.rows[0].overall).toBeCloseTo(100, 4);
-    expect(body.rows[0].level).toBe("L5");
+    expect(body.rows[0].level).toBe("Z5");
     expect(body.rows[1].overall).toBe(0);
     expect(body.release.isDemo).toBe(true);
     expect(body.rows[0].benchmarks["custody.pause"].score).toBeCloseTo(100, 4);

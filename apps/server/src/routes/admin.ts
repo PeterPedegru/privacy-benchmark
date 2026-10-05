@@ -1,5 +1,5 @@
 import { httpUrlSchema, INFO_FLAGS, overrideSchema, projectInputSchema, releaseRequestSchema } from "@pb/core";
-import { findCriterion, rubric, scoreProject, suites } from "@pb/rubric";
+import { findCriterion, normalizeLevel, rubric, scoreProject, suites } from "@pb/rubric";
 import { and, desc, eq, inArray, sql } from "drizzle-orm";
 import { type Context, Hono } from "hono";
 import { bodyLimit } from "hono/body-limit";
@@ -321,7 +321,7 @@ adminRoutes.get("/projects", async (c) => {
         ...p,
         versions: vs,
         latestEvaluation: latest.get(p.id) ?? null,
-        published: (published.get(p.id) ?? []).map(({ projectId: _p, ...r }) => r),
+        published: (published.get(p.id) ?? []).map(({ projectId: _p, ...r }) => ({ ...r, level: normalizeLevel(r.level) })),
         updates: vs.filter((v) => v.status === "detected").length,
       };
     }),

@@ -461,7 +461,7 @@ function Rules() {
       "A power that can be added instantly already exists",
       "If core contracts can be upgraded instantly, Blocklist/freeze scores at most the issuer-hooks option and Pause function at most the fast-path option.",
     ],
-    ["Nothing hidden, nothing to trust or build", "Privacy Level L0 sets the Trust and Programmability suites to 0."],
+    ["Nothing hidden, nothing to trust or build", "Privacy Level Z0 sets the Trust and Programmability suites to 0."],
     ["No private logic, no call stack", "If private execution is impossible, Call-stack privacy scores 0."],
     ["Operator sees everything", "If an operator reads plaintext routinely, Decryption power is capped at 15% and the Trust Tier is D."],
     [
@@ -487,12 +487,12 @@ function Rules() {
 
 function Badges() {
   const levels = [
-    ["L0", "Transparent", "Amounts visible and sender/recipient visible."],
-    ["L1", "Partial", "Hides amounts or links, not both."],
-    ["L2", "Private transfers", "Sender, recipient and amount all hidden."],
-    ["L3", "Private accounts", "L2 + anonymous access to public apps."],
-    ["L4", "Private execution", "L2 + general private state and private logic."],
-    ["L5", "Full-stack private", "L4 + call graph hidden + network-layer protection + private reads."],
+    ["Z0", "Transparent", "Amounts visible and sender/recipient visible."],
+    ["Z1", "Partial", "Hides amounts or links, not both."],
+    ["Z2", "Private transfers", "Sender, recipient and amount all hidden."],
+    ["Z3", "Private accounts", "Z2 + anonymous access to public apps."],
+    ["Z4", "Private execution", "Z2 + general private state and private logic."],
+    ["Z5", "Full-stack private", "Z4 + call graph hidden + network-layer protection + private reads."],
   ];
   const tiers = [
     ["A", "Trustless", "No standing access, and infrastructure sees nothing."],

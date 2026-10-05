@@ -149,7 +149,11 @@ export interface SuiteScore {
   benchmarks: BenchmarkScore[];
 }
 
-export type PrivacyLevel = "L0" | "L1" | "L2" | "L3" | "L4" | "L5";
+/**
+ * Privacy Level Z0 (nothing hidden) to Z5 (full-stack private). Named Z rather than L so it isn't read as a chain's
+ * layer (L1, L2). Results published before the rename stored L0 to L5; normalizeLevel reads either.
+ */
+export type PrivacyLevel = "Z0" | "Z1" | "Z2" | "Z3" | "Z4" | "Z5";
 export type TrustTier = "A" | "B" | "C" | "D";
 
 export interface WalkawayResult {

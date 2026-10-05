@@ -34,12 +34,12 @@ export function bandTone(v: number | null | undefined): Tone {
 }
 
 const LEVEL_TEXT: Record<PrivacyLevel, string> = {
-  L0: "Transparent: nothing hidden at protocol level",
-  L1: "Partial: hides amounts or links, not both",
-  L2: "Private transfers: sender, recipient and amount hidden",
-  L3: "Private accounts: private transfers plus anonymous access to public apps",
-  L4: "Private execution: general private state and logic",
-  L5: "Full-stack private: private execution, hidden call graph, network and read privacy",
+  Z0: "Transparent: nothing hidden at protocol level",
+  Z1: "Partial: hides amounts or links, not both",
+  Z2: "Private transfers: sender, recipient and amount hidden",
+  Z3: "Private accounts: private transfers plus anonymous access to public apps",
+  Z4: "Private execution: general private state and logic",
+  Z5: "Full-stack private: private execution, hidden call graph, network and read privacy",
 };
 const TIER_TEXT: Record<TrustTier, string> = {
   A: "Trustless: no third party can see private data",
@@ -79,8 +79,8 @@ export function TierBadge({ tier, level }: { tier: TrustTier | null; level?: Pri
       content={
         tier
           ? `Trust Tier ${tier} · ${TIER_TEXT[tier]}`
-          : level === "L0"
-            ? "No trust tier: nothing is private (L0)"
+          : level === "Z0"
+            ? "No trust tier: nothing is private (Z0)"
             : "Trust Tier unrated: the evidence doesn't establish who besides you can see your data"
       }
     >

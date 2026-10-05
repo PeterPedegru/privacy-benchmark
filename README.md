@@ -33,7 +33,7 @@ Rules and badges:
 - Unknown answers score as the riskiest option.
 - Favorable answers backed only by marketing are discounted.
 - Instant-upgrade powers count as existing powers.
-- **Privacy Level** (L0–L5), **Trust Tier** (A–D) and the **Walkaway test** are derived from the answers and always shown beside the score.
+- **Privacy Level** (Z0–Z5), **Trust Tier** (A–D) and the **Walkaway test** are derived from the answers and always shown beside the score.
 
 The full spec is on `/methodology`.
 

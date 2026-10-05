@@ -19,7 +19,7 @@ test.describe("public API contract", () => {
     for (const r of body.rows) {
       if (r.overall !== null) expect(r.overall).toBeGreaterThanOrEqual(0);
       if (r.overall !== null) expect(r.overall).toBeLessThanOrEqual(100);
-      expect(r.level).toMatch(/^L[0-5]$|^$/);
+      expect(r.level).toMatch(/^Z[0-5]$|^$/);
     }
   });
 

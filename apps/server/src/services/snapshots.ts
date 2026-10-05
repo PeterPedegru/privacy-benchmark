@@ -21,6 +21,7 @@ import {
   findCriterion,
   isFavorable,
   isHighScrutiny,
+  normalizeLevel,
   rubric,
   SOURCE_CLASS_RANK,
   type SourceClass,
@@ -484,13 +485,23 @@ function groupByProject(list: ProjectSnapshot[]): Map<string, ProjectSnapshot[]>
   return map;
 }
 
+/**
+ * A stored snapshot as today's code reads it: results published before the privacy levels were renamed carry L0 to
+ * L5, shown as Z0 to Z5. The stored record itself is never rewritten.
+ */
+export function readSnapshot(raw: unknown): ProjectSnapshot {
+  const s = raw as ProjectSnapshot;
+  const level = normalizeLevel(s.scores?.level ?? null);
+  return s.scores && s.scores.level !== level ? { ...s, scores: { ...s.scores, level } } : s;
+}
+
 async function loadActive(db: DB, includeArchived: boolean): Promise<ProjectSnapshot[]> {
   const rows = await db
     .select({ snapshot: schema.publishedResults.snapshot, status: schema.projects.status })
     .from(schema.publishedResults)
     .innerJoin(schema.projects, eq(schema.projects.id, schema.publishedResults.projectId))
     .where(eq(schema.publishedResults.active, true));
-  return rows.filter((r) => includeArchived || r.status === "active").map((r) => r.snapshot as unknown as ProjectSnapshot);
+  return rows.filter((r) => includeArchived || r.status === "active").map((r) => readSnapshot(r.snapshot));
 }
 
 async function snapshotCache(db: DB): Promise<SnapshotCache> {
@@ -635,7 +646,7 @@ export async function resolveSnapshot(db: DB, ref: string, opts: { visibleOnly?:
 }
 
 export async function snapshotHistory(db: DB, projectId: string) {
-  return await db
+  const rows = await db
     .select({
       snapshot: schema.publishedResults.snapshot,
       overall: schema.publishedResults.overall,
@@ -646,6 +657,7 @@ export async function snapshotHistory(db: DB, projectId: string) {
     .innerJoin(schema.releases, eq(schema.releases.id, schema.publishedResults.releaseId))
     .where(and(eq(schema.publishedResults.projectId, projectId)))
     .orderBy(desc(schema.releases.publishedAt));
+  return rows.map((r) => ({ ...r, snapshot: readSnapshot(r.snapshot), level: normalizeLevel(r.level) }));
 }
 
 export const ALL_CRITERIA_IDS = criteria.map((c) => c.id);

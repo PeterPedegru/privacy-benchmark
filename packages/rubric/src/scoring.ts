@@ -168,7 +168,7 @@ export function scoreBenchmark(b: BenchmarkDef, answers: AnswerMap, level: Priva
     score = 0;
     rules.push("no_private_logic_gate");
   }
-  if ((b.suite === "trust" || b.suite === "programmability") && level === "L0") {
+  if ((b.suite === "trust" || b.suite === "programmability") && level === "Z0") {
     score = 0;
     rules.push("l0_gate");
   }
@@ -178,8 +178,14 @@ export function scoreBenchmark(b: BenchmarkDef, answers: AnswerMap, level: Priva
 /**
  * Privacy Level from established answers only. The four base inputs (amounts, sender, recipient, history) must be
  * answered for any level; a higher level is claimed only when its own inputs are answered too. So an unknown can
- * hold a project at a lower proven level, but can never produce "L0: nothing is private".
+ * hold a project at a lower proven level, but can never produce "Z0: nothing is private".
  */
+/** A stored level in either naming (L0 to L5 before the rename, Z0 to Z5 since) as today's Z level. */
+export function normalizeLevel(level: string | null | undefined): PrivacyLevel | null {
+  const m = /^[LZ]([0-5])$/.exec(level ?? "");
+  return m ? (`Z${m[1]}` as PrivacyLevel) : null;
+}
+
 export function derivePrivacyLevel(answers: AnswerMap): PrivacyLevel | null {
   const o = (id: string) => answeredOptionId(answers, id);
   const base = [RULE_CRITERIA.amounts, RULE_CRITERIA.sender, RULE_CRITERIA.recipient, RULE_CRITERIA.history];
@@ -189,9 +195,9 @@ export function derivePrivacyLevel(answers: AnswerMap): PrivacyLevel | null {
   const recipient = o(RULE_CRITERIA.recipient);
   const linkHidden =
     sender === "hidden" || sender === "mixing" || recipient === "hidden" || recipient === "mixing" || o(RULE_CRITERIA.history) === "unlinkable";
-  if (!amountsHidden && !linkHidden) return "L0";
+  if (!amountsHidden && !linkHidden) return "Z0";
   const l2 = amountsHidden && sender === "hidden" && recipient === "hidden";
-  if (!l2) return "L1";
+  if (!l2) return "Z1";
   const l4 = o(RULE_CRITERIA.privateState) === "general" && o(RULE_CRITERIA.privateLogic) === "general-hidden";
   if (l4) {
     const l5 =
@@ -199,14 +205,14 @@ export function derivePrivacyLevel(answers: AnswerMap): PrivacyLevel | null {
       o(RULE_CRITERIA.callStructure) === "hidden" &&
       o(RULE_CRITERIA.network) === "default" &&
       o(RULE_CRITERIA.reads) === "local";
-    return l5 ? "L5" : "L4";
+    return l5 ? "Z5" : "Z4";
   }
-  return o(RULE_CRITERIA.publicApps) === "anonymous" ? "L3" : "L2";
+  return o(RULE_CRITERIA.publicApps) === "anonymous" ? "Z3" : "Z2";
 }
 
 /** Trust Tier from established answers only; null ("Unrated") when the deciding inputs aren't answered. */
 export function deriveTrustTier(answers: AnswerMap, level: PrivacyLevel | null): TrustTier | null {
-  if (level === null || level === "L0") return null;
+  if (level === null || level === "Z0") return null;
   const sa = answeredOptionId(answers, RULE_CRITERIA.standingAccess);
   const iv = answeredOptionId(answers, RULE_CRITERIA.infraVisibility);
   // Facts that decide the tier on their own.

@@ -242,7 +242,7 @@ function Explainers() {
     {
       icon: KeyRound,
       title: "Who can see",
-      body: "Master viewing keys, key committees, operators that read plaintext, trusted hardware. Level L0–L5 says what's hidden; Tier A–D says from whom.",
+      body: "Master viewing keys, key committees, operators that read plaintext, trusted hardware. Level Z0–Z5 says what's hidden; Tier A–D says from whom.",
     },
     {
       icon: Snowflake,
