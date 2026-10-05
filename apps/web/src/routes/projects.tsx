@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { m } from "motion/react";
 import { useMemo, useState } from "react";
 import { Bar } from "@/components/bench/viz";
-import { LevelBadge, TierBadge, WalkawayBadge } from "@/components/ui/badges";
+import { PrivacyBadge, WalkawayBadge } from "@/components/ui/badges";
 import { Skeleton } from "@/components/ui/misc";
 import { Pct } from "@/components/ui/number";
 import { ProjectMark } from "@/components/ui/project-mark";
@@ -85,8 +85,7 @@ export function ProjectsPage() {
               </div>
               <p className="mt-3 line-clamp-2 text-sm text-muted">{r.tagline}</p>
               <div className="mt-4 flex flex-wrap gap-1.5">
-                <LevelBadge level={r.level} />
-                <TierBadge tier={r.trustTier} level={r.level} />
+                <PrivacyBadge level={r.level} tier={r.trustTier} />
                 <WalkawayBadge walkaway={r.walkaway} />
               </div>
               <Bar value={r.overall} className="mt-auto translate-y-2" />

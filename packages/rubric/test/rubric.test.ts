@@ -9,8 +9,11 @@ import {
   deriveWalkaway,
   diffAnswers,
   findCriterion,
+  fromLabel,
   getCriterion,
+  hidesLabel,
   isHighScrutiny,
+  levelNumber,
   lowestOption,
   matrixConflicts,
   maxPoints,
@@ -291,6 +294,16 @@ describe("unknowns never become public claims", () => {
   it("reads stored levels from before the rename (L0 to L5) as Z0 to Z5", () => {
     expect(["L0", "L4", "Z2", "Z5"].map(normalizeLevel)).toEqual(["Z0", "Z4", "Z2", "Z5"]);
     expect([null, "", "L6", "Layer 1"].map(normalizeLevel)).toEqual([null, null, null, null]);
+  });
+
+  it("reads as what's hidden and from whom, whatever code the level was stored under", () => {
+    expect(["L4", "Z4", "P4", "Z0", null].map(levelNumber)).toEqual([4, 4, 4, 0, null]);
+    expect(["Z4", "Z0", null].map(hidesLabel)).toEqual(["Hides 4/5", "Hides nothing", "Hides: unrated"]);
+    expect(fromLabel("A", "Z4")).toBe("from everyone");
+    expect(fromLabel("D", "Z1")).toBe("from all but the operator");
+    expect(fromLabel(null, "Z2")).toBe("from: unrated");
+    // Nothing hidden: nothing to be hidden from.
+    expect(fromLabel(null, "Z0")).toBeNull();
   });
 
   it("unknown coverage inputs leave the privacy level unrated instead of Z0", () => {

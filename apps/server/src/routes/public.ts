@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import type { CompareResponse, LeaderboardResponse, ProjectSnapshot } from "@pb/core";
 import { cardConfigSchema, httpUrlSchema } from "@pb/core";
-import { benchmarks, diffAnswers, fmtScore, rubric, suites } from "@pb/rubric";
+import { benchmarks, diffAnswers, fmtScore, levelNumber, rubric, suites } from "@pb/rubric";
 import { and, desc, eq, inArray, isNotNull, or, sql } from "drizzle-orm";
 import { type Context, Hono } from "hono";
 import { z } from "zod";
@@ -323,7 +323,8 @@ function releaseCsv(snaps: ProjectSnapshot[]): string {
         s.project.name,
         s.version?.label ?? "",
         fmtScore(s.scores.overall),
-        s.scores.level ?? "",
+        // The privacy level as a number, 0 to 5 (the badge's "Hides n/5"), whatever code the result stored.
+        levelNumber(s.scores.level) ?? "",
         s.scores.trustTier ?? "",
         s.scores.walkaway.passed === null ? "" : s.scores.walkaway.passed ? "pass" : "fail",
         ...s.scores.suites.map((x) => fmtScore(x.score)),

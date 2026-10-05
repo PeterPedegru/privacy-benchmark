@@ -5,7 +5,7 @@ import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { Info, RotateCcw } from "lucide-react";
 import { AnimatePresence, LayoutGroup, m } from "motion/react";
 import { useMemo } from "react";
-import { LevelBadge, TierBadge, WalkawayBadge } from "@/components/ui/badges";
+import { PrivacyBadge, WalkawayBadge } from "@/components/ui/badges";
 import { Button } from "@/components/ui/button";
 import { LoadError, Skeleton } from "@/components/ui/misc";
 import { Pct } from "@/components/ui/number";
@@ -237,8 +237,7 @@ function RankRow({ r, i, value, top }: { r: LeaderboardRow; i: number; value: nu
           </span>
         </span>
         <span className="col-span-3 flex flex-wrap gap-1.5 md:col-span-1">
-          <LevelBadge level={r.level} compact />
-          <TierBadge tier={r.trustTier} level={r.level} />
+          <PrivacyBadge level={r.level} tier={r.trustTier} compact />
           <WalkawayBadge walkaway={r.walkaway} compact />
         </span>
         <span className="col-span-3 hidden md:col-span-1 md:block">

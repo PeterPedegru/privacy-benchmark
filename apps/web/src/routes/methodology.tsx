@@ -16,7 +16,7 @@ const SECTIONS = [
   ["formula", "The formula"],
   ["weights", "Weights"],
   ["rules", "Scoring rules"],
-  ["badges", "Level, Tier, Walkaway"],
+  ["badges", "Badges"],
   ["rubric", "Full rubric"],
   ["evaluation", "How evaluation works"],
   ["versions", "Versions"],
@@ -186,7 +186,7 @@ export function MethodologyPage() {
             <Rules />
           </Section>
 
-          <Section id="badges" title="Level, Tier, Walkaway." muted="Three badges an average can't hide.">
+          <Section id="badges" title="What's hidden, from whom, and Walkaway." muted="What an average can't hide.">
             <Badges />
           </Section>
 
@@ -431,7 +431,7 @@ function Rules() {
   const rules: [string, ReactNode][] = [
     [
       "Unknown = riskiest option",
-      "If the evidence can't establish an answer, the criterion scores its lowest option and is shown as unverified (dotted underline). Transparency is part of trust; opacity can't earn points. An unknown never turns into a badge or a warning: the Privacy Level, Trust Tier, Walkaway test, caps and gates read established answers only, and show as unrated otherwise.",
+      "If the evidence can't establish an answer, the criterion scores its lowest option and is shown as unverified (dotted underline). Transparency is part of trust; opacity can't earn points. An unknown never turns into a badge or a warning: what a project hides, from whom, the Walkaway test, caps and gates read established answers only, and show as unrated otherwise.",
     ],
     [
       "Not disclosed",
@@ -461,9 +461,12 @@ function Rules() {
       "A power that can be added instantly already exists",
       "If core contracts can be upgraded instantly, Blocklist/freeze scores at most the issuer-hooks option and Pause function at most the fast-path option.",
     ],
-    ["Nothing hidden, nothing to trust or build", "Privacy Level Z0 sets the Trust and Programmability suites to 0."],
+    ["Nothing hidden, nothing to trust or build", 'When nothing is hidden ("Hides nothing"), the Trust and Programmability suites score 0.'],
     ["No private logic, no call stack", "If private execution is impossible, Call-stack privacy scores 0."],
-    ["Operator sees everything", "If an operator reads plaintext routinely, Decryption power is capped at 15% and the Trust Tier is D."],
+    [
+      "Operator sees everything",
+      'If an operator reads plaintext routinely, Decryption power is capped at 15%, and the badge reads "from all but the operator".',
+    ],
     [
       "Scope",
       "Scores describe the live, deployed configuration of the pinned version. Roadmap items never count. Controls held by independent apps, bridges or stablecoin issuers are context, unless a criterion covers them (e.g. freeze hooks in a native token standard, or one blacklist freezing a pooled contract).",
@@ -487,23 +490,23 @@ function Rules() {
 
 function Badges() {
   const levels = [
-    ["Z0", "Transparent", "Amounts visible and sender/recipient visible."],
-    ["Z1", "Partial", "Hides amounts or links, not both."],
-    ["Z2", "Private transfers", "Sender, recipient and amount all hidden."],
-    ["Z3", "Private accounts", "Z2 + anonymous access to public apps."],
-    ["Z4", "Private execution", "Z2 + general private state and private logic."],
-    ["Z5", "Full-stack private", "Z4 + call graph hidden + network-layer protection + private reads."],
+    ["Hides nothing", "Transparent", "Amounts visible and sender/recipient visible."],
+    ["Hides 1/5", "Partial", "Hides amounts or links, not both."],
+    ["Hides 2/5", "Private transfers", "Sender, recipient and amount all hidden."],
+    ["Hides 3/5", "Private accounts", "2/5, plus anonymous access to public apps."],
+    ["Hides 4/5", "Private execution", "2/5, plus general private state and private logic."],
+    ["Hides 5/5", "Full-stack private", "4/5, plus a hidden call graph, network-layer protection and private reads."],
   ];
   const tiers = [
-    ["A", "Trustless", "No standing access, and infrastructure sees nothing."],
-    ["B", "Hardware-trusted", "No standing key, but plaintext passes through TEEs."],
-    ["C", "Key-holder", "A designated entity, committee or default hosted service can see."],
-    ["D", "Operator-visible", "The operator or validators see plaintext routinely."],
+    ["from everyone", "Trustless", "No standing access, and infrastructure sees nothing."],
+    ["from all but trusted hardware", "Hardware-trusted", "No standing key, but plaintext passes through TEEs."],
+    ["from all but a key-holder", "Key-holder", "A designated entity, committee or default hosted service can see."],
+    ["from all but the operator", "Operator-visible", "The operator or validators see plaintext routinely."],
   ];
   const table = (rows: string[][]) => (
     <div className="overflow-hidden rounded-xl border border-line">
       {rows.map(([k, n, d]) => (
-        <div key={k} className="grid grid-cols-[48px_150px_1fr] gap-3 border-b border-line px-4 py-2.5 text-sm last:border-0">
+        <div key={k} className="grid gap-x-3 gap-y-0.5 border-b border-line px-4 py-2.5 text-sm last:border-0 sm:grid-cols-[200px_150px_1fr]">
           <span className="font-semibold tabular">{k}</span>
           <span className="font-medium">{n}</span>
           <span className="text-muted">{d}</span>
@@ -514,12 +517,16 @@ function Badges() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <div className="mb-2 font-semibold">Privacy Level: what is hidden</div>
+        <div className="mb-2 font-semibold">What's hidden: how much a careful user keeps from the public</div>
         {table(levels)}
       </div>
       <div>
-        <div className="mb-2 font-semibold">Trust Tier: from whom</div>
+        <div className="mb-2 font-semibold">From whom: who, if anyone, can still see it</div>
         {table(tiers)}
+        <p className="mt-2 text-[13px] text-muted">
+          The two read as one badge, like "Hides 4/5 from everyone". Data downloads give them as a privacy level (0 to 5) and a trust tier (A to D, in the order
+          above).
+        </p>
       </div>
       <div>
         <div className="mb-2 font-semibold">Walkaway test: can users carry on if any single party disappears or turns hostile?</div>

@@ -5,7 +5,7 @@ import { BadgeCheck, Check, CircleHelp, ExternalLink, Eye, RefreshCw, Undo2 } fr
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
 import { Input, PageHeader, Panel, Status, useAdmin, useAdminAction } from "@/components/admin/kit";
-import { Chip, LevelBadge, TierBadge, WalkawayBadge } from "@/components/ui/badges";
+import { Chip, PrivacyBadge, WalkawayBadge } from "@/components/ui/badges";
 import { Button } from "@/components/ui/button";
 import { Pct } from "@/components/ui/number";
 import { ProjectMark } from "@/components/ui/project-mark";
@@ -242,8 +242,7 @@ export function AdminReviewDetail() {
           </div>
           <div className="flex flex-col gap-1.5">
             <div className="flex gap-1.5">
-              <LevelBadge level={d.scores.level} />
-              <TierBadge tier={d.scores.trustTier} level={d.scores.level} />
+              <PrivacyBadge level={d.scores.level} tier={d.scores.trustTier} />
             </div>
             <div className="flex gap-1.5">
               <WalkawayBadge walkaway={d.scores.walkaway} />

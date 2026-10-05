@@ -8,7 +8,7 @@ import { CalcBreakdown } from "@/components/bench/calc-breakdown";
 import { benchmarkScore, cellMarks } from "@/components/bench/model";
 import { SuggestCorrection } from "@/components/bench/suggest";
 import { AdversaryMatrixView, Bar, Rosette, ScoreRing } from "@/components/bench/viz";
-import { Chip, LevelBadge, TierBadge, WalkawayBadge } from "@/components/ui/badges";
+import { Chip, PrivacyBadge, WalkawayBadge } from "@/components/ui/badges";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Empty, LoadError, Reveal, Skeleton } from "@/components/ui/misc";
 import { Pct } from "@/components/ui/number";
@@ -108,8 +108,7 @@ export function ProjectPage() {
             </div>
           </motion.div>
           <motion.div variants={focusIn} className="mt-5 flex flex-wrap items-center gap-1.5">
-            <LevelBadge level={s.scores.level} />
-            <TierBadge tier={s.scores.trustTier} level={s.scores.level} />
+            <PrivacyBadge level={s.scores.level} tier={s.scores.trustTier} />
             <WalkawayBadge walkaway={s.scores.walkaway} />
             <span className="mx-1 h-4 w-px bg-line" />
             <Chip>{CATEGORY[s.project.category] ?? s.project.category}</Chip>
@@ -461,7 +460,7 @@ function History({ d }: { d: ProjectPageData }) {
               <span className="flex-1">
                 <span className="font-medium">{v.label}</span> <span className="text-xs text-muted">{fmtDate(v.releasedAt)}</span>
               </span>
-              <LevelBadge level={(v.level as never) ?? null} compact />
+              <PrivacyBadge level={v.level ?? null} compact />
               <span className="w-16 text-right font-semibold tabular">
                 <Pct value={v.overall} />
               </span>

@@ -5,7 +5,7 @@ import { ArrowRight, Check, Eye, Image, KeyRound, Snowflake } from "lucide-react
 import { AnimatePresence, m } from "motion/react";
 import { useMemo, useState } from "react";
 import { Bar } from "@/components/bench/viz";
-import { LevelBadge, TierBadge, WalkawayBadge } from "@/components/ui/badges";
+import { PrivacyBadge, WalkawayBadge } from "@/components/ui/badges";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { LoadError, Reveal, SectionHeading, Skeleton } from "@/components/ui/misc";
 import { Pct } from "@/components/ui/number";
@@ -126,8 +126,7 @@ function Leaderboard({
                 </span>
               </Link>
               <div className="col-span-3 flex flex-wrap items-center gap-1.5 md:col-span-1">
-                <LevelBadge level={r.level} />
-                <TierBadge tier={r.trustTier} level={r.level} />
+                <PrivacyBadge level={r.level} tier={r.trustTier} />
                 <WalkawayBadge walkaway={r.walkaway} />
               </div>
               <div className="col-span-3 hidden md:col-span-1 md:block">
@@ -242,7 +241,7 @@ function Explainers() {
     {
       icon: KeyRound,
       title: "Who can see",
-      body: "Master viewing keys, key committees, operators that read plaintext, trusted hardware. Level Z0–Z5 says what's hidden; Tier A–D says from whom.",
+      body: "Master viewing keys, key committees, operators that read plaintext, trusted hardware. “Hides n/5” says what's hidden; “from …” says who can still see it.",
     },
     {
       icon: Snowflake,

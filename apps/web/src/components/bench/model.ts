@@ -58,7 +58,7 @@ export const RULE_TEXT: Record<string, string> = {
   operator_visibility_cap: "The operator sees plaintext routinely, so Decryption power is capped at 15%.",
   critical_bug_cap: "A disclosed, unpatched critical vulnerability caps Soundness record at 30%.",
   no_private_logic_gate: "No private logic, so there's no private call stack: this benchmark scores 0.",
-  l0_gate: "Privacy Level Z0 (nothing hidden): the Trust and Programmability suites score 0.",
+  l0_gate: "Nothing is hidden: the Trust and Programmability suites score 0.",
   verifiability_multiplier:
     "Favorable answer whose strongest source is the project's docs, a news or third-party page, or its marketing: points multiplied by 0.9, 0.8 or 0.7.",
   unknown_lowest: "Unknown: the evidence couldn't settle it, so it scores as the riskiest option.",

@@ -9,6 +9,8 @@ import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 
 const api = process.env.API_URL ?? "http://localhost:8787";
+// A remote API (API_URL=https://privacybenchmark.org, to preview against live data) routes by its own host name.
+const remote = !/^http:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/.test(api);
 
 /**
  * motion/react re-exports framer-motion through a top-level `const motion = fm.motion`. While any lazy chunk
@@ -61,9 +63,9 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      "/api": { target: api, changeOrigin: false },
-      "/og": { target: api, changeOrigin: false },
-      "/c/": { target: api, changeOrigin: false },
+      "/api": { target: api, changeOrigin: remote },
+      "/og": { target: api, changeOrigin: remote },
+      "/c/": { target: api, changeOrigin: remote },
     },
   },
   build: { target: "es2022", sourcemap: true },
