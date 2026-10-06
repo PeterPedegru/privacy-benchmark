@@ -1,9 +1,10 @@
+import type { WeightingSummary } from "@pb/core";
 import { suites } from "@pb/rubric";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Check, Play } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { KeyBanner } from "@/components/admin/key-banner";
-import { Field, Input, PageHeader, Panel, useAdmin, useAdminAction } from "@/components/admin/kit";
+import { Field, Input, PageHeader, Panel, Select, useAdmin, useAdminAction } from "@/components/admin/kit";
 import { Button } from "@/components/ui/button";
 import { ProjectMark } from "@/components/ui/project-mark";
 import { Segmented } from "@/components/ui/segmented";
@@ -33,6 +34,11 @@ export function AdminRunNew() {
   const [mode, setMode] = useState<Mode>("deep");
   const [suiteSel, setSuiteSel] = useState<string[]>(suites.map((s) => s.id));
   const [label, setLabel] = useState("");
+  // The weighting the run is scored with: the current one (the latest poll's) unless picked.
+  const weightings = useAdmin<WeightingSummary[]>(["weightings"], "/api/admin/weightings");
+  const [weightingId, setWeightingId] = useState("");
+  const usableWeightings = (weightings.data ?? []).filter((w) => !w.retired);
+  const current = usableWeightings.find((w) => w.current);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -53,6 +59,7 @@ export function AdminRunNew() {
           mode,
           suites: suiteSel.length === suites.length ? undefined : suiteSel,
           label: label || undefined,
+          weightingId: weightingId || undefined,
         },
       }),
     { success: "Run queued", invalidate: [["runs"], ["overview"], ["project"]] },
@@ -145,6 +152,19 @@ export function AdminRunNew() {
                     );
                   })}
                 </div>
+              </Field>
+              <Field
+                label="Weighting"
+                hint="What the scores are computed with. Published results name it; a release uses one weighting. An unpublished evaluation can be re-scored in review."
+              >
+                <Select value={weightingId} onChange={(e) => setWeightingId(e.target.value)} aria-label="Weighting">
+                  <option value="">Current{current ? `: ${current.label} · ${current.title}` : ""}</option>
+                  {usableWeightings.map((w) => (
+                    <option key={w.id} value={w.id}>
+                      {w.label} · {w.title}
+                    </option>
+                  ))}
+                </Select>
               </Field>
               <Field label="Label (optional)">
                 <Input value={label} onChange={(e) => setLabel(e.target.value)} placeholder="October release" />

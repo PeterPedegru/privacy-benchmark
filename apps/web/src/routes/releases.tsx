@@ -1,15 +1,19 @@
 import { findCriterion } from "@pb/rubric";
+import { Link } from "@tanstack/react-router";
 import { Download } from "lucide-react";
 import { m } from "motion/react";
 import { Chip } from "@/components/ui/badges";
 import { ButtonLink } from "@/components/ui/button";
 import { Empty, Skeleton } from "@/components/ui/misc";
 import { focusIn, stagger } from "@/design/motion";
-import { type CorrectionsLog, useCorrectionsLog, useReleases } from "@/lib/queries";
+import { type CorrectionsLog, useCorrectionsLog, useReleases, useWeightings } from "@/lib/queries";
 import { fmtDate } from "@/lib/utils";
 
 export function ReleasesPage() {
   const q = useReleases();
+  const weightings = useWeightings();
+  // Releases from an older rubric than weightings name none: they were scored with that rubric's built-in numbers.
+  const weightingOf = (id: string | null | undefined) => (id ? (weightings.data?.find((w) => w.id === id) ?? null) : null);
   return (
     <div className="mx-auto max-w-[var(--container-page)] px-4 pt-10 sm:px-6 md:pt-14">
       <m.div variants={focusIn} initial="hidden" animate="show" className="max-w-3xl">
@@ -31,6 +35,11 @@ export function ReleasesPage() {
                 <h2 className="text-2xl font-semibold tracking-[-0.015em]">Release {r.label}</h2>
                 {r.isDemo && <Chip tone="fair">Demo data</Chip>}
                 <Chip>Rubric v{r.rubricVersion}</Chip>
+                {weightingOf(r.weightingId) && (
+                  <Link to="/weighting/$ref" params={{ ref: weightingOf(r.weightingId)!.label }} title={weightingOf(r.weightingId)!.title}>
+                    <Chip className="hover:border-line-strong">Weighting {weightingOf(r.weightingId)!.label}</Chip>
+                  </Link>
+                )}
                 <Chip>{r.projects} projects</Chip>
               </div>
               {r.notes && <p className="mt-3 max-w-2xl text-[15px] leading-[1.6] whitespace-pre-line text-fg-3">{r.notes}</p>}

@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { easeInOut } from "@/design/motion";
 import { cn, fmtPct } from "@/lib/utils";
+import { fmtWeight, sharesFor, useWeightingConfig } from "@/lib/weighting";
 import { Chip } from "../ui/badges";
 import { EvidenceItem } from "./evidence";
 import { benchmarkScore, RULE_TEXT } from "./model";
@@ -25,12 +26,17 @@ export function CalcBreakdown({
   const suite = getSuite(b.suite);
   const score = benchmarkScore(snapshot, benchmarkId);
   const [open, setOpen] = useState<string | null>(null);
+  // The weights and points this result was scored with.
+  const weighting = useWeightingConfig(snapshot.weighting);
+  const shares = weighting ? sharesFor(weighting) : null;
   if (!score) return <div className="text-sm text-muted">Not evaluated.</div>;
   const counted = score.criteria.filter((c) => c.status !== "missing" && c.status !== "not_applicable" && c.status !== "not_researched");
   const sum = counted.reduce((s, c) => s + c.points, 0);
   const max = counted.reduce((s, c) => s + c.maxPoints, 0);
   const suiteScore = snapshot.scores.suites.find((s) => s.suiteId === b.suite)?.score ?? null;
-  const contribution = score.score !== null ? (score.score * b.weight) / 100 : null;
+  const benchmarkWeight = shares?.benchmarks[b.id] ?? null;
+  const suiteWeight = shares?.suites[suite.id] ?? null;
+  const contribution = score.score !== null && benchmarkWeight !== null ? (score.score * benchmarkWeight) / 100 : null;
 
   return (
     <div className="flex flex-col gap-5">
@@ -78,7 +84,7 @@ export function CalcBreakdown({
                   </span>
                 </span>
                 <span className="pt-0.5 text-right font-mono text-[13px] text-fg tabular">
-                  {cs.status === "not_applicable" || cs.status === "not_researched" ? "—" : `${fmt(cs.points)} / ${cs.maxPoints}`}
+                  {cs.status === "not_applicable" || cs.status === "not_researched" ? "—" : `${fmt(cs.points)} / ${fmt(cs.maxPoints)}`}
                   {cs.multiplier < 1 && <span className="block text-[11px] text-muted">×{cs.multiplier.toFixed(2)} verifiability</span>}
                   {cs.rules.includes("instant_upgrade_power") && (
                     <span className="block text-[11px] text-muted">
@@ -113,7 +119,9 @@ export function CalcBreakdown({
                             ` (the evaluator chose “${def.options.find((o) => o.id === snap.override?.originalOptionId)?.label ?? snap.override.originalOptionId}”)`}
                         </div>
                       )}
-                      <div className="text-xs text-muted">Options: {def.options.map((o) => `${o.label} (${o.points})`).join(" · ")}</div>
+                      <div className="text-xs text-muted">
+                        Options: {def.options.map((o) => `${o.label} (${weighting ? fmt(weighting.points[def.id]?.[o.id] ?? o.points) : "…"})`).join(" · ")}
+                      </div>
                       {snap.searchLog?.searched.length ? (
                         <div className="rounded-lg border border-line bg-bg-2 px-3 py-2 text-[13px]">
                           <div className="font-medium">Not disclosed{snap.searchLog.codeChecked ? " · code checked" : ""}</div>
@@ -152,7 +160,7 @@ export function CalcBreakdown({
         <div className="flex justify-between">
           <span>Sum of points</span>
           <span className="tabular">
-            {fmt(sum)} / {max}
+            {fmt(sum)} / {fmt(max)}
           </span>
         </div>
         <div className="flex justify-between">
@@ -169,12 +177,12 @@ export function CalcBreakdown({
           <span>
             {b.name} weight in {suite.name}
           </span>
-          <span className="tabular">{b.weight}%</span>
+          <span className="tabular">{fmtWeight(benchmarkWeight)}</span>
         </div>
         <div className="flex justify-between">
           <span>Contribution to suite</span>
           <span className="tabular">
-            {fmtPct(score.score)} × {b.weight}% = {contribution === null ? "—" : contribution.toFixed(1)}
+            {fmtPct(score.score)} × {fmtWeight(benchmarkWeight)} = {contribution === null ? "—" : contribution.toFixed(1)}
           </span>
         </div>
         <div className="flex justify-between">
@@ -183,12 +191,22 @@ export function CalcBreakdown({
         </div>
         <div className="flex justify-between font-semibold text-fg">
           <span>Suite weight in overall</span>
-          <span className="tabular">{suite.weight}%</span>
+          <span className="tabular">{fmtWeight(suiteWeight)}</span>
         </div>
       </div>
-      <a href={`/methodology#${b.id}`} className="text-[13px] text-muted underline decoration-line-strong underline-offset-4 hover:text-fg">
-        See this benchmark in the methodology →
-      </a>
+      <div className="flex flex-wrap gap-x-4 gap-y-1 text-[13px] text-muted">
+        <a href={`/methodology#${b.id}`} className="underline decoration-line-strong underline-offset-4 hover:text-fg">
+          See this benchmark in the methodology →
+        </a>
+        {snapshot.weighting && (
+          <a
+            href={snapshot.weighting.number ? `/weighting/${snapshot.weighting.label}` : "/weighting"}
+            className="underline decoration-line-strong underline-offset-4 hover:text-fg"
+          >
+            Scored with weighting {snapshot.weighting.label} →
+          </a>
+        )}
+      </div>
     </div>
   );
 }

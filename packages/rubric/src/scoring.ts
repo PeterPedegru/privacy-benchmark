@@ -1,6 +1,7 @@
 import { benchmarks, findCriterion, getCriterion, isFavorable, lowestOption, maxPoints, rubric, suites } from "./rubric.ts";
 import type {
   AnswerMap,
+  AnswerStatus,
   AppliedRule,
   BenchmarkDef,
   BenchmarkScore,
@@ -14,6 +15,7 @@ import type {
   TrustTier,
   WalkawayResult,
 } from "./types.ts";
+import { DEFAULT_WEIGHTING, type Weighting } from "./weighting.ts";
 
 // Criterion ids referenced by rules. Kept in one place so tests can assert they exist.
 export const RULE_CRITERIA = {
@@ -86,13 +88,20 @@ export function answeredOptionId(answers: AnswerMap, criterionId: string): strin
   return a.optionId && c?.options.some((o) => o.id === a.optionId) ? a.optionId : null;
 }
 
-function optionPoints(c: CriterionDef, optionId: string): number {
-  return c.options.find((o) => o.id === optionId)?.points ?? 0;
+/** What an answer earns under a weighting (the rubric's points when the weighting doesn't name it). */
+function optionPoints(c: CriterionDef, optionId: string, w: Weighting): number {
+  return w.points[c.id]?.[optionId] ?? c.options.find((o) => o.id === optionId)?.points ?? 0;
 }
 
-function scoreCriterion(c: CriterionDef, answers: AnswerMap): CriterionScore {
+/** A criterion's weight under a weighting: what its best answer earns. */
+function criterionMax(c: CriterionDef, w: Weighting): number {
+  const p = w.points[c.id];
+  return p ? Math.max(...c.options.map((o) => p[o.id] ?? 0)) : maxPoints(c);
+}
+
+function scoreCriterion(c: CriterionDef, answers: AnswerMap, w: Weighting): CriterionScore {
   const a = answers[c.id];
-  const max = maxPoints(c);
+  const max = criterionMax(c, w);
   if (!a) {
     return { criterionId: c.id, status: "missing", optionId: null, rawPoints: 0, points: 0, maxPoints: max, multiplier: 1, rules: [] };
   }
@@ -105,15 +114,15 @@ function scoreCriterion(c: CriterionDef, answers: AnswerMap): CriterionScore {
   const rules: AppliedRule[] = [];
   const optionId = effectiveOptionId(answers, c.id) ?? lowestOption(c).id;
   if (a.status !== "answered") rules.push("unknown_lowest");
-  const raw = optionPoints(c, optionId);
+  const raw = optionPoints(c, optionId, w);
   let points = raw;
 
   // Rule 1: a power that can be added instantly already exists (only when instant upgrades are established).
   let cappedTo: string | null = null;
   if (answeredOptionId(answers, RULE_CRITERIA.upgradeability) === "instant") {
     const capOption = c.id === RULE_CRITERIA.blocklist ? "issuer-hooks" : c.id === RULE_CRITERIA.pauseFn ? "fast-path" : null;
-    if (capOption && points > optionPoints(c, capOption)) {
-      points = optionPoints(c, capOption);
+    if (capOption && points > optionPoints(c, capOption, w)) {
+      points = optionPoints(c, capOption, w);
       cappedTo = capOption;
       rules.push("instant_upgrade_power");
     }
@@ -142,18 +151,19 @@ function scoreCriterion(c: CriterionDef, answers: AnswerMap): CriterionScore {
   };
 }
 
-export function scoreBenchmark(b: BenchmarkDef, answers: AnswerMap, level: PrivacyLevel | null): BenchmarkScore {
-  const criteria = b.criteria.map((c) => scoreCriterion(c, answers));
+export function scoreBenchmark(b: BenchmarkDef, answers: AnswerMap, level: PrivacyLevel | null, w: Weighting = DEFAULT_WEIGHTING): BenchmarkScore {
+  const criteria = b.criteria.map((c) => scoreCriterion(c, answers, w));
   const counted = criteria.filter((c) => c.status !== "missing" && c.status !== "not_applicable" && c.status !== "not_researched");
   const complete = criteria.every((c) => c.status !== "missing" && c.status !== "not_researched");
   const unknownCount = criteria.filter((c) => c.rules.includes("unknown_lowest")).length;
   const notResearchedCount = criteria.filter((c) => c.status === "not_researched").length;
   const rules: AppliedRule[] = [];
 
-  if (counted.length === 0) {
+  const max = counted.reduce((s, c) => s + c.maxPoints, 0);
+  // Nothing counted, or (under a weighting) nothing counted carries weight: the benchmark has no score.
+  if (counted.length === 0 || max <= 0) {
     return { benchmarkId: b.id, score: null, uncapped: null, complete, unknownCount, notResearchedCount, rules, criteria };
   }
-  const max = counted.reduce((s, c) => s + c.maxPoints, 0);
   const sum = counted.reduce((s, c) => s + c.points, 0);
   const uncapped = max > 0 ? (sum / max) * 100 : 0;
   let score = uncapped;
@@ -267,7 +277,7 @@ export function deriveWalkaway(answers: AnswerMap): WalkawayResult {
   return { passed: true, reasons: [], ...notes };
 }
 
-export function scoreSuite(suiteId: SuiteId, benchmarkScores: BenchmarkScore[]): SuiteScore {
+export function scoreSuite(suiteId: SuiteId, benchmarkScores: BenchmarkScore[], w: Weighting = DEFAULT_WEIGHTING): SuiteScore {
   const suite = suites.find((s) => s.id === suiteId);
   if (!suite) throw new Error(`Unknown suite ${suiteId}`);
   const mine = suite.benchmarks.map((b) => benchmarkScores.find((s) => s.benchmarkId === b.id)!);
@@ -276,8 +286,9 @@ export function scoreSuite(suiteId: SuiteId, benchmarkScores: BenchmarkScore[]):
   suite.benchmarks.forEach((b, i) => {
     const s = mine[i]?.score;
     if (s === null || s === undefined) return;
-    wSum += b.weight;
-    total += b.weight * s;
+    const weight = w.benchmarks[b.id] ?? b.weight;
+    wSum += weight;
+    total += weight * s;
   });
   const rules = [...new Set(mine.flatMap((m) => m.rules))];
   return {
@@ -306,19 +317,58 @@ export function overallFromSuites(suiteScores: { suiteId: SuiteId; score: number
   return wSum > 0 ? total / wSum : null;
 }
 
-export function scoreProject(answers: AnswerMap, weights: SuiteWeights = OFFICIAL_WEIGHTS): ScoreCard {
+/**
+ * Scores a project's answers under a weighting (the rubric's own by default). The weighting decides what answers
+ * earn and how benchmarks and suites add up; badges, caps and gates come from the answers alone.
+ */
+export function scoreProject(answers: AnswerMap, weighting: Weighting = DEFAULT_WEIGHTING): ScoreCard {
   const level = derivePrivacyLevel(answers);
-  const benchmarkScores = benchmarks.map((b) => scoreBenchmark(b, answers, level));
-  const suiteScores = suites.map((s) => scoreSuite(s.id, benchmarkScores));
+  const benchmarkScores = benchmarks.map((b) => scoreBenchmark(b, answers, level, weighting));
+  const suiteScores = suites.map((s) => scoreSuite(s.id, benchmarkScores, weighting));
   return {
     rubricVersion: rubric.version,
-    overall: overallFromSuites(suiteScores, weights),
+    overall: overallFromSuites(suiteScores, weighting.suites),
     complete: suiteScores.every((s) => s.complete),
     level,
     trustTier: deriveTrustTier(answers, level),
     walkaway: deriveWalkaway(answers),
     suites: suiteScores,
   };
+}
+
+/** The verifiability class a criterion's multiplier stands for (1: not discounted, or not assessed). */
+const CLASS_BY_MULTIPLIER = new Map<number, SourceClass>([
+  [VERIFIABILITY_MULTIPLIER.official_docs, "official_docs"],
+  [VERIFIABILITY_MULTIPLIER.third_party, "third_party"],
+  [VERIFIABILITY_MULTIPLIER.marketing, "marketing"],
+]);
+
+/**
+ * The answers behind a score card, as far as scoring needs them: status, option and the evidence class that
+ * discounted a favorable answer. Lets a published card be scored under another weighting (the vote page's preview)
+ * without its evidence. Exact except where an instant-upgrade cap moves to another answer under the new weighting.
+ */
+export function answersFromCard(card: ScoreCard): AnswerMap {
+  const out: AnswerMap = {};
+  for (const s of card.suites)
+    for (const b of s.benchmarks)
+      for (const c of b.criteria) {
+        if (c.status === "missing") continue;
+        const status: AnswerStatus = c.status;
+        const verifiability = c.rules.includes("unsupported_favorable") ? null : CLASS_BY_MULTIPLIER.get(c.multiplier);
+        out[c.criterionId] = {
+          criterionId: c.criterionId,
+          status,
+          optionId: status === "answered" ? c.optionId : null,
+          ...(verifiability !== undefined ? { verifiability } : {}),
+        };
+      }
+  return out;
+}
+
+/** A score card scored again under another weighting. */
+export function rescoreCard(card: ScoreCard, weighting: Weighting): ScoreCard {
+  return scoreProject(answersFromCard(card), weighting);
 }
 
 /** Round for display the same way everywhere: one decimal. */

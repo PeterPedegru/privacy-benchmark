@@ -5,6 +5,7 @@ import { LayoutGroup, m } from "motion/react";
 import { Fragment, memo, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { spring } from "@/design/motion";
 import { cn, fmtPct } from "@/lib/utils";
+import { fmtWeight, useWeightingShares } from "@/lib/weighting";
 import { bandTone } from "../ui/badges";
 import { ProjectMark } from "../ui/project-mark";
 import { Tip } from "../ui/tooltip";
@@ -66,6 +67,8 @@ export const BenchmarkTable = memo(function BenchmarkTable(p: TableProps) {
   const focusIdx = p.snapshots.findIndex((s) => matchesRef(s, p.focus));
   const refs = useMemo(() => p.snapshots.map(refOf), [p.snapshots]);
   const scores = useScores(p.snapshots);
+  // The suite weights the columns were scored with (a release uses one weighting).
+  const suiteShares = useWeightingShares(p.snapshots[0]?.weighting)?.suites;
   // Keyed on the filter's contents: the array itself is new on every parent render.
   const filterKey = p.suiteFilter?.join(",") ?? "";
   const shown = useMemo(() => {
@@ -210,7 +213,7 @@ export const BenchmarkTable = memo(function BenchmarkTable(p: TableProps) {
                   style={{ gridColumn: 2, gridRow: row, left: GROUP_W, minHeight: 48 }}
                 >
                   {su.name}
-                  <span className="ml-2 text-xs font-normal text-faint tabular">{su.weight}%</span>
+                  <span className="ml-2 text-xs font-normal text-faint tabular">{fmtWeight(suiteShares?.[su.id])}</span>
                 </div>
                 {p.snapshots.map((s, i) => (
                   <ValueCell
@@ -352,7 +355,7 @@ const CriteriaRows = memo(function CriteriaRows({
               {getOptionLabel(c.id, cs?.optionId ?? null)}
             </span>
             <span className="text-[11px] text-faint tabular">
-              {cs ? (cs.status === "not_applicable" ? "N/A" : `${fmtPts(cs.points)} / ${cs.maxPoints}`) : "—"}
+              {cs ? (cs.status === "not_applicable" ? "N/A" : `${fmtPts(cs.points)} / ${fmtPts(cs.maxPoints)}`) : "—"}
             </span>
           </button>
         );

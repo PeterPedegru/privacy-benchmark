@@ -30,6 +30,19 @@ export function AdminOverview() {
         }
       />
       <KeyBanner context="Evaluations and update triage" />
+      {d?.poll && (
+        <Link
+          to="/admin/weighting"
+          className="mb-4 flex flex-wrap items-center gap-2 rounded-2xl border border-accent-line bg-accent-soft px-4 py-3 text-sm text-accent-fg hover:brightness-[0.98]"
+        >
+          <span className="pulse-dot size-1.5 rounded-full bg-accent" />
+          <span className="font-medium">{d.poll.title}</span>
+          <span>
+            is open until {fmtDate(d.poll.closesAt, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })} · {d.poll.ballots} ballot
+            {d.poll.ballots === 1 ? "" : "s"} · base {d.poll.base.label}
+          </span>
+        </Link>
+      )}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat label="Projects" value={d?.projects ?? "—"} />
         <Stat

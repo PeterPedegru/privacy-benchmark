@@ -16,6 +16,7 @@ import { invalidateOffchainAttestations, syncEvidenceClasses } from "./services/
 import { loadGoldenFiles } from "./services/golden.ts";
 import { runKbBootMaintenance } from "./services/kb-maintenance.ts";
 import { startVersionScheduler, stopVersionScheduler } from "./services/versions.ts";
+import { baselineDrift, defaultWeighting, ensureBaselineWeighting, linkUnweighted, startPollScheduler, stopPollScheduler } from "./services/weighting.ts";
 
 if (!checkSecretsAtBoot()) process.exit(1);
 
@@ -63,6 +64,14 @@ await withAdvisoryLock(db, "boot-maintenance", async () => {
       }
     }
   }
+  // The rubric's own weighting exists, and everything from before weightings is linked to it (plans/11).
+  const base = await ensureBaselineWeighting(db);
+  const linked = await linkUnweighted(db);
+  if (linked) console.log(`[weighting] linked ${linked} run(s), evaluation(s), release(s) and result(s) to W${base.number} (${base.title})`);
+  const drift = await baselineDrift(db);
+  if (drift) console.error(`[weighting] ${drift}`);
+  const current = await defaultWeighting(db);
+  if (current && current.id !== base.id) console.log(`[weighting] new runs are scored with W${current.number} (${current.title})`);
   // Before the worker starts: refreshes nobody is running are reset (R3-REL-10), and pre-lane rows get today's classes (R3-SRC-2).
   await runKbBootMaintenance(db);
   // Evidence in unpublished evaluations takes its source's current class (R4-8).
@@ -74,6 +83,7 @@ await withAdvisoryLock(db, "boot-maintenance", async () => {
 startDailyBackups(db);
 await startWorker(db);
 await startVersionScheduler(db);
+startPollScheduler(db);
 void verifyApiKey().then((k) => {
   if (k.state === "ok") console.log("[anthropic] API key accepted");
   else if (k.state === "rejected") console.log(`[anthropic] API key rejected: ${k.message}`);
@@ -111,6 +121,7 @@ async function shutdown(signal: string, exitCode = 0) {
   force.unref();
   try {
     stopVersionScheduler();
+    stopPollScheduler();
     server.close();
     const http = server as unknown as { closeIdleConnections?: () => void; closeAllConnections?: () => void };
     http.closeIdleConnections?.();

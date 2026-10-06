@@ -19,6 +19,7 @@ import { focusIn, stagger } from "@/design/motion";
 import { isNotFound } from "@/lib/api";
 import { type ProjectPage as ProjectPageData, useLeaderboard, useProject } from "@/lib/queries";
 import { cn, fmtDate, hostOf, safeHref, sourceLink } from "@/lib/utils";
+import { fmtWeight, useWeightingShares } from "@/lib/weighting";
 
 const CATEGORY: Record<string, string> = {
   l1: "L1",
@@ -60,6 +61,8 @@ export function ProjectPage() {
   const [cell, setCell] = useState<string | null>(null);
   const [suggest, setSuggest] = useState<string | null | undefined>(undefined);
   const tab = (search.tab as Tab) ?? "benchmarks";
+  // The weights this result was scored with (the rubric's own until a poll's weighting is used).
+  const weightingShares = useWeightingShares(q.data?.snapshot.weighting);
 
   if (q.isLoading) {
     return (
@@ -160,6 +163,24 @@ export function ProjectPage() {
             <span className="text-muted">
               {s.release.isDemo ? "Demo" : "Release"} {s.release.label} · Rubric v{s.release.rubricVersion}
             </span>
+            {s.weighting && (
+              <span className="text-muted">
+                Weighting{" "}
+                {s.weighting.number ? (
+                  <Link
+                    to="/weighting/$ref"
+                    params={{ ref: s.weighting.label }}
+                    className="text-fg-3 underline decoration-line-strong underline-offset-4 hover:text-fg"
+                    title={s.weighting.hash ? `sha256 ${s.weighting.hash.slice(0, 16)}…` : undefined}
+                  >
+                    {s.weighting.label}
+                  </Link>
+                ) : (
+                  s.weighting.label
+                )}{" "}
+                · {s.weighting.title}
+              </span>
+            )}
             <div className="mt-2 flex flex-wrap gap-1.5">
               <ButtonLink
                 size="sm"
@@ -205,7 +226,7 @@ export function ProjectPage() {
                 <div key={su.suiteId}>
                   <div className="flex items-baseline justify-between text-sm">
                     <span>
-                      {def.name} <span className="text-xs text-faint">{def.weight}%</span>
+                      {def.name} <span className="text-xs text-faint">{fmtWeight(weightingShares?.suites[def.id])}</span>
                     </span>
                     <span className="font-semibold tabular">
                       <Pct value={su.score} />

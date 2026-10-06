@@ -13,6 +13,7 @@ import { ProjectMark } from "@/components/ui/project-mark";
 import { focusIn, stagger } from "@/design/motion";
 import { useLeaderboard, useMeta } from "@/lib/queries";
 import { cn } from "@/lib/utils";
+import { fmtWeight, usePublishedWeighting } from "@/lib/weighting";
 
 const CATEGORY: Record<string, string> = {
   l1: "L1",
@@ -174,6 +175,7 @@ function Leaderboard({
 }
 
 function SuiteLeaders({ rows }: { rows: LeaderboardRow[] }) {
+  const published = usePublishedWeighting().suites;
   const leaders = useMemo(
     () =>
       suites.map((s) => {
@@ -197,7 +199,7 @@ function SuiteLeaders({ rows }: { rows: LeaderboardRow[] }) {
             <Link to="/rankings" search={{ tab: s.id }} className="group flex h-full flex-col">
               <div className="flex items-baseline justify-between">
                 <span className="text-[17px] font-semibold tracking-[-0.01em]">{s.name}</span>
-                <span className="text-xs text-faint tabular">{s.weight}%</span>
+                <span className="text-xs text-faint tabular">{fmtWeight(published?.[s.id])}</span>
               </div>
               <span className="mt-0.5 text-sm text-muted">{s.tagline}</span>
               <div className="mt-5 flex flex-col gap-2.5">

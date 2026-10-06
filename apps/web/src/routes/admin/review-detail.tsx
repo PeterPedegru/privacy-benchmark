@@ -1,4 +1,4 @@
-import { INFO_FLAGS } from "@pb/core";
+import { INFO_FLAGS, type WeightingRef, type WeightingSummary } from "@pb/core";
 import { getCriterion, type ScoreCard, suites } from "@pb/rubric";
 import { Link, useParams } from "@tanstack/react-router";
 import { BadgeCheck, Check, CircleHelp, ExternalLink, Eye, RefreshCw, Undo2 } from "lucide-react";
@@ -102,6 +102,8 @@ type Data = {
   evidence: Evidence[];
   sources: { id: string; url: string; title: string; sourceClass: string }[];
   scores: ScoreCard;
+  /** What the scores are computed with; switchable until the evaluation is published. */
+  weighting: WeightingRef;
   publishedOverall: number | null;
   publishedCriteria: Record<string, { optionId: string | null; status: string }> | null;
   coverage: {
@@ -247,6 +249,7 @@ export function AdminReviewDetail() {
             <div className="flex gap-1.5">
               <WalkawayBadge walkaway={d.scores.walkaway} />
             </div>
+            <Rescore id={id} current={d.weighting} status={d.evaluation.status} />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
@@ -634,5 +637,49 @@ function CodeMapPanel({ map }: { map: CodeMap }) {
         </div>
       )}
     </Panel>
+  );
+}
+
+/** RERUNNABLE on the server: finished, unpublished evaluations can be re-scored. */
+const RESCORABLE = ["review", "reviewed", "failed", "cancelled"];
+
+/**
+ * The weighting the scores are computed with. Re-scoring an unpublished evaluation with another one changes only the
+ * numbers (answers and review stay), so a run can follow a poll that closed after it started.
+ */
+function Rescore({ id, current, status }: { id: string; current: WeightingRef; status: string }) {
+  const list = useAdmin<WeightingSummary[]>(["weightings"], "/api/admin/weightings");
+  const change = useAdminAction(
+    (weightingId: string) => api<{ weighting: WeightingRef }>(`/api/admin/evaluations/${id}/weighting`, { method: "PATCH", json: { weightingId } }),
+    { success: (r) => `Re-scored with ${r.weighting.label}`, invalidate: [["evaluation", id], ["evaluations"]] },
+  );
+  const editable = RESCORABLE.includes(status);
+  return (
+    <label className="flex items-center gap-1.5 text-xs text-muted">
+      Weighting
+      {editable ? (
+        <select
+          value={current.id}
+          disabled={change.isPending}
+          onChange={(e) => change.mutate(e.target.value)}
+          className="h-6 rounded-md border border-line bg-bg px-1 text-xs text-fg"
+          aria-label="Re-score with weighting"
+        >
+          {!list.data?.some((w) => w.id === current.id) && <option value={current.id}>{current.label}</option>}
+          {(list.data ?? [])
+            .filter((w) => !w.retired || w.id === current.id)
+            .map((w) => (
+              <option key={w.id} value={w.id}>
+                {w.label} · {w.title}
+                {w.current ? " (current)" : ""}
+              </option>
+            ))}
+        </select>
+      ) : (
+        <span className="font-medium text-fg-3" title={current.title}>
+          {current.label}
+        </span>
+      )}
+    </label>
   );
 }

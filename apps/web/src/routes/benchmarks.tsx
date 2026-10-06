@@ -19,9 +19,11 @@ import { Sheet, useIsMobile } from "@/components/ui/sheet";
 import { focusIn } from "@/design/motion";
 import { defaultRefs, useCompare, useLeaderboard, useMeta, useProject } from "@/lib/queries";
 import { cn } from "@/lib/utils";
+import { fmtWeight, usePublishedWeighting } from "@/lib/weighting";
 import type { BenchSearch } from "@/router";
 
 function SuiteFilter({ value, onChange }: { value?: string[]; onChange: (next: string[]) => void }) {
+  const published = usePublishedWeighting().suites;
   const on = (id: string) => !value?.length || value.includes(id);
   const count = value?.length ? value.length : suites.length;
   return (
@@ -55,7 +57,7 @@ function SuiteFilter({ value, onChange }: { value?: string[]; onChange: (next: s
                 {on(s.id) && <Check className="size-3" strokeWidth={3} />}
               </span>
               <span className="flex-1">{s.name}</span>
-              <span className="text-xs text-faint tabular">{s.weight}%</span>
+              <span className="text-xs text-faint tabular">{fmtWeight(published?.[s.id])}</span>
             </button>
           ))}
           <button

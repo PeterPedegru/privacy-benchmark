@@ -45,6 +45,14 @@ export const env = {
   exaKey: process.env.EXA_API_KEY ?? "",
   newsApiKey: process.env.NEWSAPI_AI_KEY ?? "",
   xBearer: process.env.X_BEARER_TOKEN ?? "",
+  /**
+   * "Sign in with X" for the community weighting poll (OAuth 2.0 with PKCE). The app's callback URL is
+   * `${PUBLIC_URL}/api/public/auth/x/callback`. The secret is for a confidential ("Web App") client.
+   */
+  xOAuthClientId: process.env.X_OAUTH_CLIENT_ID ?? "",
+  xOAuthClientSecret: process.env.X_OAUTH_CLIENT_SECRET ?? "",
+  /** X accounts younger than this can't vote. */
+  xMinAccountDays: num(process.env.X_MIN_ACCOUNT_DAYS, 30),
   /** Knowledge-base limits per project. */
   kb: {
     // Sized for exhaustive weekly builds on the editor's machine (the database has room: tens of GB).

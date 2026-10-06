@@ -12,6 +12,7 @@ import type {
   SnapshotEvidence,
   SnapshotSource,
   VersionInfo,
+  WeightingRef,
 } from "@pb/core";
 import {
   type AdversaryMatrix,
@@ -26,6 +27,7 @@ import {
   SOURCE_CLASS_RANK,
   type SourceClass,
   scoreProject,
+  type Weighting,
 } from "@pb/rubric";
 import { and, desc, eq, inArray, isNull, sql } from "drizzle-orm";
 import type { DB } from "../db/index.ts";
@@ -33,6 +35,7 @@ import { query, schema } from "../db/index.ts";
 import { newId } from "../lib/ids.ts";
 import { LruCache } from "../lib/lru.ts";
 import { coverageFrom } from "./coverage.ts";
+import { refFor, weightingFor, weightingRefs } from "./weighting.ts";
 
 const CLASS_RANK = SOURCE_CLASS_RANK;
 
@@ -113,6 +116,8 @@ export interface EvaluationBundle {
   results: ResultRow[];
   evidence: EvidenceRow[];
   sources: SourceMeta[];
+  /** The weighting its scores are computed with (the rubric's own for evaluations from before weightings). */
+  weighting: { ref: WeightingRef; config: Weighting };
 }
 
 /**
@@ -132,7 +137,8 @@ export async function loadEvaluation(db: DB, evaluationId: string): Promise<Eval
   const evidence = await db.select().from(schema.evidence).where(eq(schema.evidence.evaluationId, evaluationId));
   const sourceIds = [...new Set(evidence.map((e) => e.sourceId).filter((x): x is string => !!x))];
   const sources = sourceIds.length ? await db.select(sourceMetaColumns).from(schema.sources).where(inArray(schema.sources.id, sourceIds)) : [];
-  return { evaluation, project, version, results, evidence, sources };
+  const w = await weightingFor(db, evaluation.weightingId);
+  return { evaluation, project, version, results, evidence, sources, weighting: { ref: w.ref, config: w.weighting } };
 }
 
 export function answerMapFor(bundle: Pick<EvaluationBundle, "results" | "evidence"> & { evaluation?: { isDemo: boolean } }): AnswerMap {
@@ -190,7 +196,7 @@ export function criterionFlags(r: ResultRow, cited: EvidenceRow[], verifiability
 
 export function buildSnapshot(bundle: EvaluationBundle, release: ReleaseInfo): ProjectSnapshot {
   const answers = answerMapFor(bundle);
-  const scores = scoreProject(answers);
+  const scores = scoreProject(answers, bundle.weighting.config);
   const evidenceById = new Map(bundle.evidence.map((e) => [e.id, e]));
   const usedSources = new Set<string>();
   const crit: Record<string, SnapshotCriterion> = {};
@@ -267,6 +273,7 @@ export function buildSnapshot(bundle: EvaluationBundle, release: ReleaseInfo): P
           coverageFrom(bundle.results, bundle.evidence, null, { requireCodeCheck: !!(bundle.evaluation.settings as { codeCheck?: boolean }).codeCheck }),
         ),
     matrix: bundle.evaluation.adversaryMatrix as AdversaryMatrix,
+    weighting: bundle.weighting.ref,
   };
 }
 
@@ -303,11 +310,12 @@ export function leaderboardRow(s: ProjectSnapshot): LeaderboardRow {
     suites: Object.fromEntries(s.scores.suites.map((x) => [x.suiteId, x.score])),
     benchmarks: cells,
     evaluatedAt: s.evaluatedAt,
+    weighting: s.weighting ?? null,
   };
 }
 
 export function releaseInfo(r: typeof schema.releases.$inferSelect): ReleaseInfo {
-  return { id: r.id, label: r.label, publishedAt: r.publishedAt, isDemo: r.isDemo, rubricVersion: r.rubricVersion };
+  return { id: r.id, label: r.label, publishedAt: r.publishedAt, isDemo: r.isDemo, rubricVersion: r.rubricVersion, weightingId: r.weightingId };
 }
 
 export interface PublishInput {
@@ -318,7 +326,10 @@ export interface PublishInput {
   settings?: EvalSettings | null;
 }
 
-/** Freezes the given evaluations into an immutable release. Demo and real results never mix. */
+/**
+ * Freezes the given evaluations into an immutable release. Demo and real results never mix, and a release is scored
+ * with one weighting: the one its evaluations were run (or re-scored) with.
+ */
 export async function publishRelease(db: DB, input: PublishInput): Promise<string> {
   const releaseId = newId();
   const publishedAt = new Date().toISOString();
@@ -329,6 +340,15 @@ export async function publishRelease(db: DB, input: PublishInput): Promise<strin
     if (!!b.evaluation.isDemo !== !!input.isDemo) throw new Error("Demo and real evaluations can't be published together");
     bundles.push(b);
   }
+  const weightingIds = [...new Set(bundles.map((b) => b.weighting.ref.id))];
+  if (weightingIds.length > 1)
+    throw new Error(
+      `A release is scored with one weighting; these evaluations use ${bundles
+        .map((b) => b.weighting.ref.label)
+        .filter((v, i, a) => a.indexOf(v) === i)
+        .join(" and ")}`,
+    );
+  const weightingId = weightingIds[0] ?? null;
   // Only the documented, public settings: the evaluation row also holds pipeline working state (unreviewed
   // scout and code-audit notes, stage progress) that must never be published (SEC-5).
   const settings = publicSettings(input.settings ?? bundles[0]?.evaluation.settings);
@@ -348,9 +368,10 @@ export async function publishRelease(db: DB, input: PublishInput): Promise<strin
       notesMd: notes,
       isDemo: !!input.isDemo,
       evalSettings: settings as never,
+      weightingId,
       publishedAt,
     });
-    const release: ReleaseInfo = { id: releaseId, label: input.label, publishedAt, isDemo: !!input.isDemo, rubricVersion: rubric.version };
+    const release: ReleaseInfo = { id: releaseId, label: input.label, publishedAt, isDemo: !!input.isDemo, rubricVersion: rubric.version, weightingId };
     for (const b of bundles) {
       const snap = buildSnapshot(b, release);
       // A newer release supersedes the earlier published result for the same project version.
@@ -373,6 +394,7 @@ export async function publishRelease(db: DB, input: PublishInput): Promise<strin
         level: snap.scores.level,
         trustTier: snap.scores.trustTier,
         walkaway: snap.scores.walkaway.passed,
+        weightingId: b.weighting.ref.id,
         active: true,
         snapshot: snap as never,
       });
@@ -487,12 +509,21 @@ function groupByProject(list: ProjectSnapshot[]): Map<string, ProjectSnapshot[]>
 
 /**
  * A stored snapshot as today's code reads it: results published before the privacy levels were renamed carry L0 to
- * L5, shown as Z0 to Z5. The stored record itself is never rewritten.
+ * L5, shown as Z0 to Z5, and results from before weightings name their rubric's own weighting (`refs`: the
+ * database's weightings, for its version number). The stored record itself is never rewritten.
  */
-export function readSnapshot(raw: unknown): ProjectSnapshot {
-  const s = raw as ProjectSnapshot;
+export function readSnapshot(raw: unknown, refs?: Map<string, WeightingRef>): ProjectSnapshot {
+  let s = raw as ProjectSnapshot;
   const level = normalizeLevel(s.scores?.level ?? null);
-  return s.scores && s.scores.level !== level ? { ...s, scores: { ...s.scores, level } } : s;
+  if (s.scores && s.scores.level !== level) s = { ...s, scores: { ...s.scores, level } };
+  if (refs && s.release) s = { ...s, weighting: refFor(refs, s.weighting, s.release.rubricVersion) };
+  return s;
+}
+
+/** Reads stored snapshots with today's normalization, weighting references included. */
+export async function readSnapshots(db: DB, raws: unknown[]): Promise<ProjectSnapshot[]> {
+  const refs = await weightingRefs(db);
+  return raws.map((r) => readSnapshot(r, refs));
 }
 
 async function loadActive(db: DB, includeArchived: boolean): Promise<ProjectSnapshot[]> {
@@ -501,7 +532,10 @@ async function loadActive(db: DB, includeArchived: boolean): Promise<ProjectSnap
     .from(schema.publishedResults)
     .innerJoin(schema.projects, eq(schema.projects.id, schema.publishedResults.projectId))
     .where(eq(schema.publishedResults.active, true));
-  return rows.filter((r) => includeArchived || r.status === "active").map((r) => readSnapshot(r.snapshot));
+  return readSnapshots(
+    db,
+    rows.filter((r) => includeArchived || r.status === "active").map((r) => r.snapshot),
+  );
 }
 
 async function snapshotCache(db: DB): Promise<SnapshotCache> {
@@ -657,7 +691,8 @@ export async function snapshotHistory(db: DB, projectId: string) {
     .innerJoin(schema.releases, eq(schema.releases.id, schema.publishedResults.releaseId))
     .where(and(eq(schema.publishedResults.projectId, projectId)))
     .orderBy(desc(schema.releases.publishedAt));
-  return rows.map((r) => ({ ...r, snapshot: readSnapshot(r.snapshot), level: normalizeLevel(r.level) }));
+  const refs = await weightingRefs(db);
+  return rows.map((r) => ({ ...r, snapshot: readSnapshot(r.snapshot, refs), level: normalizeLevel(r.level) }));
 }
 
 export const ALL_CRITERIA_IDS = criteria.map((c) => c.id);

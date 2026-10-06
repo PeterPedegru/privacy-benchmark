@@ -4,14 +4,17 @@
  *   BENCH_DB_PASSWORD=<hex> SETUP_DATABASE_URL=<superuser URL> PGSSL_CA=<pem> tsx src/scripts/setup-bench-role.ts
  *
  * The role can read everything and write what knowledge-base builds and evaluations write, but not the published
- * record (releases, published results, cards, corrections), and it isn't a superuser: a leaked CLI URL can't
- * change the public site or reach the database's host. Tables created later by migrations (as the owner) get the
- * same grants through default privileges; the publish tables are re-revoked each time this runs.
+ * record (releases, published results, cards, corrections, weightings), and it isn't a superuser: a leaked CLI URL
+ * can't change the public site or reach the database's host. Poll tables (their salts and ballots) it can't read
+ * at all. Tables created later by migrations (as the owner) get the same grants through default privileges; the
+ * publish and poll tables are re-revoked each time this runs.
  */
 import pg from "pg";
 import { sslFor } from "../db/index.ts";
 
-const PUBLISHED = ["releases", "published_results", "cards", "corrections"];
+const PUBLISHED = ["releases", "published_results", "cards", "corrections", "weightings"];
+/** Server-only: a poll's salt keys its voters' hashes, and ballots hold network hashes. */
+const PRIVATE = ["weighting_polls", "weighting_ballots"];
 
 const url = process.env.SETUP_DATABASE_URL;
 const password = process.env.BENCH_DB_PASSWORD;
@@ -48,8 +51,12 @@ try {
     const exists = (await client.query<{ t: string | null }>("SELECT to_regclass($1)::text AS t", [`public.${t}`])).rows[0]?.t;
     if (exists) await client.query(`REVOKE INSERT, UPDATE, DELETE, TRUNCATE ON ${ident(t)} FROM bench_cli`);
   }
+  for (const t of PRIVATE) {
+    const exists = (await client.query<{ t: string | null }>("SELECT to_regclass($1)::text AS t", [`public.${t}`])).rows[0]?.t;
+    if (exists) await client.query(`REVOKE ALL ON ${ident(t)} FROM bench_cli`);
+  }
   await client.query("COMMIT");
-  console.log(`bench_cli is set up on ${db}: reads everything, writes all but ${PUBLISHED.join(", ")}.`);
+  console.log(`bench_cli is set up on ${db}: reads all but ${PRIVATE.join(", ")}, writes all but ${PUBLISHED.join(", ")} and those.`);
 } catch (e) {
   await client.query("ROLLBACK").catch(() => {});
   console.error((e as Error).message);

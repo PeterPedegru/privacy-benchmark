@@ -17,6 +17,8 @@ export const MIN_ADMIN_PASSWORD_LENGTH = 12;
 export const MIN_SESSION_SECRET_LENGTH = 32;
 
 const secret = env.sessionSecret || randomBytes(32).toString("hex");
+/** The key signed cookies use (SESSION_SECRET, or a random per-boot key): the voter cookie signs with it too. */
+export const cookieSecret = () => secret;
 const salt = randomBytes(16);
 
 function scryptAsync(password: string): Promise<Buffer> {

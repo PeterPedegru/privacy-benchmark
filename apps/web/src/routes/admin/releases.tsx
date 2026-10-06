@@ -1,3 +1,4 @@
+import type { WeightingRef } from "@pb/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { Check, Copy, Rocket, Undo2 } from "lucide-react";
 import { useState } from "react";
@@ -21,6 +22,8 @@ type Ev = {
   isDemo: boolean;
   /** Whether the summary can be published as it is; an override after it was written makes it stale. */
   summary: "current" | "stale" | "missing" | null;
+  /** The weighting its scores are computed with; a release takes one. */
+  weighting: WeightingRef;
 };
 
 /**
@@ -63,6 +66,7 @@ type Release = {
   publishedAt: string;
   isDemo: boolean;
   notesMd: string;
+  weighting: WeightingRef | null;
   results: { projectId: string; name: string; overall: number | null; active: boolean; versionId: string | null }[];
 };
 
@@ -72,6 +76,8 @@ export function AdminReleases() {
   const rels = useAdmin<Release[]>(["releases"], "/api/admin/releases");
   const ready = (evs.data ?? []).filter((e) => ["review", "reviewed"].includes(e.status) && !e.isDemo);
   const [picked, setPicked] = useState<string[]>([]);
+  // A release is scored with one weighting: once one evaluation is picked, the others must share its weighting.
+  const releaseWeighting = ready.find((e) => picked.includes(e.id))?.weighting ?? null;
   const [label, setLabel] = useState(() => {
     const d = new Date();
     return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}`;
@@ -128,12 +134,22 @@ export function AdminReleases() {
           {ready.length ? (
             ready.map((e) => {
               const on = picked.includes(e.id);
+              const otherWeighting = !on && !!releaseWeighting && releaseWeighting.id !== e.weighting.id;
               return (
                 <button
                   type="button"
                   key={e.id}
+                  disabled={otherWeighting}
+                  title={
+                    otherWeighting
+                      ? `Scored with ${e.weighting.label}; this release uses ${releaseWeighting?.label}. Re-score it in review, or publish it separately.`
+                      : undefined
+                  }
                   onClick={() => setPicked(on ? picked.filter((x) => x !== e.id) : [...picked, e.id])}
-                  className={cn("flex w-full items-center gap-3 border-b border-line-weak px-4 py-2.5 text-left last:border-0", on && "bg-accent-soft/40")}
+                  className={cn(
+                    "flex w-full items-center gap-3 border-b border-line-weak px-4 py-2.5 text-left last:border-0 disabled:opacity-45",
+                    on && "bg-accent-soft/40",
+                  )}
                 >
                   <span
                     className={cn(
@@ -147,6 +163,7 @@ export function AdminReleases() {
                   <span className="flex-1 text-sm font-medium">
                     {e.projectName} {e.versionLabel && <span className="font-normal text-muted">· {e.versionLabel}</span>}
                   </span>
+                  <Chip title={e.weighting.title}>{e.weighting.label}</Chip>
                   {e.summary === "stale" && <Chip tone="fair">summary stale</Chip>}
                   {e.summary === "missing" && <Chip tone="poor">no summary</Chip>}
                   {e.flagged ? <Chip tone="fair">{e.flagged} flags</Chip> : <Chip tone="strong">clear</Chip>}
@@ -182,6 +199,11 @@ export function AdminReleases() {
                 Publish anyway
               </Button>
             )}
+            {releaseWeighting && (
+              <div className="text-xs text-muted">
+                Scored with weighting {releaseWeighting.label} ({releaseWeighting.title}). Every result in this release names it.
+              </div>
+            )}
             <Button variant="primary" disabled={!picked.length || !label || publish.isPending} icon={<Rocket className="size-4" />} onClick={() => go(false)}>
               Publish {picked.length || ""} evaluation{picked.length === 1 ? "" : "s"}
             </Button>
@@ -195,7 +217,9 @@ export function AdminReleases() {
             key={r.id}
             title={
               <span className="flex items-center gap-2">
-                {r.label} {r.isDemo && <Chip tone="fair">demo</Chip>} <span className="font-normal text-muted">· {fmtDate(r.publishedAt)}</span>
+                {r.label} {r.isDemo && <Chip tone="fair">demo</Chip>}
+                {r.weighting && <Chip title={r.weighting.title}>{r.weighting.label}</Chip>}
+                <span className="font-normal text-muted">· {fmtDate(r.publishedAt)}</span>
               </span>
             }
           >

@@ -12,12 +12,15 @@ test.describe("production smoke", () => {
     const body = await lb.json();
     expect(Array.isArray(body.rows)).toBeTruthy();
     expect((await request.get("/api/public/rubric")).ok()).toBeTruthy();
+    // Every published result is scored with a weighting version; the rubric's own always exists.
+    const weightings = await (await request.get("/api/public/weightings")).json();
+    expect(weightings.some((w: { source: string }) => w.source === "rubric")).toBeTruthy();
   });
 
   test("pages render without errors", async ({ page }) => {
     const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(e.message));
-    for (const path of ["/", "/benchmarks", "/rankings", "/methodology"]) {
+    for (const path of ["/", "/benchmarks", "/rankings", "/methodology", "/weighting"]) {
       const res = await page.goto(path);
       expect(res?.status(), path).toBe(200);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();

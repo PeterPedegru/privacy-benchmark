@@ -1,5 +1,19 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { ArrowUpRight, Boxes, FileCheck2, GitBranch, Inbox, LayoutDashboard, LogOut, Menu, MessageSquareWarning, Play, Rocket, Settings } from "lucide-react";
+import {
+  ArrowUpRight,
+  Boxes,
+  FileCheck2,
+  GitBranch,
+  Inbox,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  MessageSquareWarning,
+  Play,
+  Rocket,
+  Scale,
+  Settings,
+} from "lucide-react";
 import { m } from "motion/react";
 import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
@@ -17,6 +31,7 @@ const NAV = [
   { to: "/admin/runs", label: "Runs", icon: Play, badge: "running" },
   { to: "/admin/review", label: "Review", icon: FileCheck2, badge: "awaitingReview" },
   { to: "/admin/releases", label: "Releases", icon: Rocket },
+  { to: "/admin/weighting", label: "Weighting", icon: Scale },
   { to: "/admin/corrections", label: "Corrections", icon: MessageSquareWarning, badge: "corrections" },
   { to: "/admin/settings", label: "Settings", icon: Settings },
 ] as const;

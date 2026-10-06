@@ -26,6 +26,14 @@ export const PRE_MIGRATION_KEEP = 3;
 export const SPACE_FACTOR = 1.2;
 export class BackupSpaceError extends Error {}
 
+/**
+ * What an export leaves out: ballots' network hashes (a /24 can be brute-forced from one with its poll's salt, and
+ * they're erased when a poll closes anyway; a restore just starts an open poll's network cap afresh).
+ */
+export function redactForExport(table: string, row: Record<string, unknown>): Record<string, unknown> {
+  return table === "weighting_ballots" ? { ...row, network_hash: null } : row;
+}
+
 /** Every table, parents first (the order a restore inserts them in). */
 export const EXPORT_TABLES: PgTable[] = [
   schema.appMeta,
@@ -33,6 +41,9 @@ export const EXPORT_TABLES: PgTable[] = [
   schema.projectVersions,
   schema.versionChecks,
   schema.sources,
+  schema.weightings,
+  schema.weightingPolls,
+  schema.weightingBallots,
   schema.runs,
   schema.evaluations,
   schema.evidence,
@@ -116,7 +127,7 @@ export async function exportDatabase(db: DB, file: string): Promise<number> {
           sql`SELECT * FROM ${sql.identifier(name)} ${after === null ? sql`` : sql`WHERE ${sql.identifier(key)} > ${after}`} ORDER BY ${sql.identifier(key)} LIMIT 500`,
         );
         if (!page.length) break;
-        for (const r of page) await write({ r });
+        for (const r of page) await write({ r: redactForExport(name, r) });
         rows += page.length;
         after = page[page.length - 1]![key];
       }

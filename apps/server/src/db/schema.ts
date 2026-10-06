@@ -144,6 +144,8 @@ export const runs = pgTable("runs", {
   status: text("status").notNull().default("queued"),
   costUsd: doublePrecision("cost_usd").notNull().default(0),
   usage: json<Record<string, number>>("usage").notNull().default(sql`'{}'::jsonb`),
+  /** The weighting the run's evaluations are scored with (each evaluation keeps its own link). */
+  weightingId: text("weighting_id").references(() => weightings.id),
   createdAt: text("created_at").notNull().default(now),
   finishedAt: text("finished_at"),
 });
@@ -180,6 +182,11 @@ export const evaluations = pgTable(
     /** The process running it (host:pid:boot), and when that process last reported. Another replica takes over a stale one. */
     runnerId: text("runner_id"),
     heartbeatAt: text("heartbeat_at"),
+    /**
+     * The weighting its scores are computed with, chosen when the run starts (null: the rubric's own weighting).
+     * Scoring is deterministic from the answers, so an unpublished evaluation can be re-scored with another one.
+     */
+    weightingId: text("weighting_id").references(() => weightings.id),
   },
   (t) => [
     // One running evaluation per project, enforced by the database across replicas (R3-REL-3).
@@ -188,6 +195,7 @@ export const evaluations = pgTable(
     index("evaluations_status_idx").on(t.status),
     index("evaluations_run_idx").on(t.runId),
     index("evaluations_version_idx").on(t.versionId),
+    index("evaluations_weighting_idx").on(t.weightingId),
   ],
 );
 
@@ -329,6 +337,8 @@ export const releases = pgTable("releases", {
   notesMd: text("notes_md").notNull().default(""),
   isDemo: boolean("is_demo").notNull().default(false),
   evalSettings: json<Record<string, unknown>>("eval_settings"),
+  /** Every result in a release is scored with this one weighting. */
+  weightingId: text("weighting_id").references(() => weightings.id),
   publishedAt: text("published_at").notNull().default(now),
 });
 
@@ -348,6 +358,7 @@ export const publishedResults = pgTable(
     level: text("level"),
     trustTier: text("trust_tier"),
     walkaway: boolean("walkaway"),
+    weightingId: text("weighting_id").references(() => weightings.id),
     active: boolean("active").notNull().default(true),
     snapshot: json<Record<string, unknown>>("snapshot").notNull(),
     createdAt: text("created_at").notNull().default(now),
@@ -359,6 +370,7 @@ export const publishedResults = pgTable(
     index("published_project_created_idx").on(t.projectId, t.createdAt),
     index("published_evaluation_idx").on(t.evaluationId),
     index("published_version_idx").on(t.versionId),
+    index("published_weighting_idx").on(t.weightingId),
   ],
 );
 
@@ -393,3 +405,93 @@ export const appMeta = pgTable("app_meta", {
   value: json<Record<string, unknown>>("value").notNull(),
   updatedAt: text("updated_at").notNull().default(now),
 });
+
+// ---------- community weighting ----------
+
+/**
+ * A weighting version: the suite and benchmark weights and every answer's points, frozen. The rubric's own is
+ * created at boot (`rubric-<version>`); each closed poll adds one. Never edited or deleted once created: runs,
+ * releases and published results link to it. Retired ones are no longer offered for new runs.
+ */
+export const weightings = pgTable(
+  "weightings",
+  {
+    id: text("id").primaryKey(),
+    /** W1, W2…: sequential per database. */
+    number: integer("number").notNull(),
+    title: text("title").notNull(),
+    /** "rubric": the rubric's own numbers; "poll": a poll's result. */
+    source: text("source").notNull(),
+    rubricVersion: text("rubric_version").notNull(),
+    /** A `Weighting` (packages/rubric/src/weighting.ts). */
+    config: json<Record<string, unknown>>("config").notNull(),
+    /** sha256 of the rubric version and the config (stable JSON), so a published result pins exact numbers. */
+    hash: text("hash").notNull(),
+    baseId: text("base_id"),
+    pollId: text("poll_id"),
+    notes: text("notes").notNull().default(""),
+    retiredAt: text("retired_at"),
+    createdAt: text("created_at").notNull().default(now),
+  },
+  (t) => [uniqueIndex("weightings_number_idx").on(t.number)],
+);
+
+/** A five-day public poll on a base weighting. One is open at a time. */
+export const weightingPolls = pgTable(
+  "weighting_polls",
+  {
+    id: text("id").primaryKey(),
+    title: text("title").notNull(),
+    description: text("description").notNull().default(""),
+    baseId: text("base_id")
+      .notNull()
+      .references(() => weightings.id),
+    opensAt: text("opens_at").notNull(),
+    closesAt: text("closes_at").notNull(),
+    /** open, closed (finalized) or cancelled. */
+    status: text("status").notNull().default("open"),
+    /** Voting needs an X sign-in (one ballot per account); otherwise one per browser. */
+    requireX: boolean("require_x").notNull().default(true),
+    /** Fewer ballots than this at close and the poll changes nothing. */
+    minBallots: integer("min_ballots").notNull().default(10),
+    /** Random per poll: keys voter and network hashes, so they can't be linked across polls. Never published. */
+    salt: text("salt").notNull(),
+    /** The final count, set at close. */
+    ballots: integer("ballots").notNull().default(0),
+    /** adopted (a new weighting), no_quorum, or null while open or after a cancel. */
+    outcome: text("outcome"),
+    resultId: text("result_id").references(() => weightings.id),
+    /** At close: ballots per day, the share that changed nothing, and how many changed each weight (no voter data). */
+    stats: json<Record<string, unknown> | null>("stats"),
+    closedAt: text("closed_at"),
+    createdAt: text("created_at").notNull().default(now),
+  },
+  (t) => [uniqueIndex("weighting_polls_one_open").on(t.status).where(sql`status = 'open'`), index("weighting_polls_closes_idx").on(t.closesAt)],
+);
+
+/**
+ * One voter's ballot in one poll (a `Ballot`, packages/rubric/src/weighting.ts). The voter is an HMAC of their X
+ * account or browser id under the poll's salt; the network an HMAC of their /24 (IPv6 /48), erased at close.
+ */
+export const weightingBallots = pgTable(
+  "weighting_ballots",
+  {
+    id: text("id").primaryKey(),
+    pollId: text("poll_id")
+      .notNull()
+      .references(() => weightingPolls.id, { onDelete: "cascade" }),
+    voterHash: text("voter_hash").notNull(),
+    voterKind: text("voter_kind").notNull(),
+    networkHash: text("network_hash"),
+    ballot: json<Record<string, unknown>>("ballot").notNull(),
+    /** How many weights the ballot changes (0: a vote for the current weights). */
+    changes: integer("changes").notNull().default(0),
+    /** Times it was changed after it was first cast; kept through a withdrawal, so withdrawing doesn't reset the cap. */
+    revisions: integer("revisions").notNull().default(0),
+    /** Withdrawn by the voter: not counted, but kept so their revisions and network slot stay used. */
+    withdrawnAt: text("withdrawn_at"),
+    createdAt: text("created_at").notNull().default(now),
+    updatedAt: text("updated_at").notNull().default(now),
+  },
+  (t) => [uniqueIndex("weighting_ballots_voter_idx").on(t.pollId, t.voterHash), index("weighting_ballots_network_idx").on(t.pollId, t.networkHash)],
+);

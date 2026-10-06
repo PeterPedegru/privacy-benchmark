@@ -29,12 +29,27 @@ import { fetchPage } from "../lib/extract.ts";
 import { newId } from "../lib/ids.ts";
 import { emptyUsage, getKeyStatus, hasApiKey, verifyApiKey } from "../lib/llm.ts";
 import { stableJson } from "../lib/stable-json.ts";
+import { xAuthEnabled } from "../lib/voter.ts";
 import { evidenceCoverage } from "../services/coverage.ts";
 import { invalidateOffchainAttestations, syncEvidenceClasses } from "../services/evidence-classes.ts";
 import { intake, slugify } from "../services/intake.ts";
 import { isKbRefreshing, type KbMeta, refreshKnowledgeBase, searchSources } from "../services/kb.ts";
 import { answerMapFor, buildSnapshot, bumpSnapshots, loadEvaluation, publishRelease, unpublishProject } from "../services/snapshots.ts";
 import { checkAllVersions, checkProjectVersions, normalizeVersion, summarizeAnnouncement, summarizeChecks } from "../services/versions.ts";
+import {
+  cancelPoll,
+  listWeightings,
+  openPoll,
+  openPollRow,
+  PollError,
+  pollById,
+  pollInfo,
+  pollPreview,
+  setRetired,
+  usableWeighting,
+  weightingFor,
+  weightingRef,
+} from "../services/weighting.ts";
 
 /** INFO_FLAGS as an SQL list, for counting the flags that still need review. */
 const INFO_FLAG_SQL = `(${[...INFO_FLAGS].map((f) => `'${f}'`).join(", ")})`;
@@ -109,7 +124,9 @@ adminRoutes.get("/overview", async (c) => {
   const corrections = (await db.select({ n: sql<number>`count(*)` }).from(schema.corrections).where(eq(schema.corrections.status, "open")))[0]?.n ?? 0;
   const lastRelease = (await db.select().from(schema.releases).orderBy(desc(schema.releases.publishedAt)))[0] ?? null;
   const recentRuns = await db.select().from(schema.runs).orderBy(desc(schema.runs.createdAt)).limit(5);
+  const poll = await openPollRow(db);
   return c.json({
+    poll: poll ? await pollInfo(db, poll) : null,
     projects: await count(schema.projects),
     releases: await count(schema.releases),
     spendThisMonth: spend,
@@ -236,6 +253,7 @@ const evaluationListColumns = {
   createdAt: schema.evaluations.createdAt,
   startedAt: schema.evaluations.startedAt,
   finishedAt: schema.evaluations.finishedAt,
+  weightingId: schema.evaluations.weightingId,
 };
 
 /**
@@ -959,6 +977,8 @@ const runSchema = z.object({
   mode: z.enum(["quick", "standard", "deep"]).default("deep"),
   suites: z.array(z.string()).optional(),
   label: z.string().max(120).optional(),
+  /** The weighting to score with (id or "W2"); the current one when omitted. */
+  weightingId: z.string().max(64).optional(),
 });
 
 adminRoutes.post("/runs", async (c) => {
@@ -971,7 +991,8 @@ adminRoutes.post("/runs", async (c) => {
   const unknown = parsed.data.projectIds.filter((id) => !known.has(id));
   if (unknown.length) return c.json({ error: "unknown_projects", message: `Unknown project id(s): ${unknown.slice(0, 5).join(", ")}` }, 422);
   try {
-    return c.json({ id: await enqueueRun(db, parsed.data) });
+    const weighting = await usableWeighting(db, parsed.data.weightingId);
+    return c.json({ id: await enqueueRun(db, { ...parsed.data, weightingId: weighting.id }) });
   } catch (e) {
     return c.json({ error: "enqueue_failed", message: (e as Error).message }, 422);
   }
@@ -1081,7 +1102,8 @@ adminRoutes.get("/evaluations/:id", async (c) => {
   const bundle = await loadEvaluation(db, c.req.param("id"));
   if (!bundle) return c.json({ error: "not_found" }, 404);
   const answers = answerMapFor(bundle);
-  const scores = scoreProject(answers);
+  // Scored with the evaluation's own weighting: the numbers its release would publish.
+  const scores = scoreProject(answers, bundle.weighting.config);
   const allSources = await db
     .select({
       id: schema.sources.id,
@@ -1111,6 +1133,7 @@ adminRoutes.get("/evaluations/:id", async (c) => {
     evidence: bundle.evidence,
     sources: allSources,
     scores,
+    weighting: bundle.weighting.ref,
     publishedOverall: published?.overall ?? null,
     publishedCriteria: (published?.snapshot as { criteria?: unknown } | undefined)?.criteria ?? null,
     coverage: bundle.evaluation.isDemo ? null : await evidenceCoverage(db, bundle.evaluation.id),
@@ -1160,6 +1183,8 @@ adminRoutes.get("/evaluations", async (c) => {
     db,
     rows.filter((r) => ["review", "reviewed"].includes(r.e.status)).map((r) => r.e.id),
   );
+  const labels = new Map((await db.select().from(schema.weightings)).map((w) => [w.id, weightingRef(w)]));
+  const base = await weightingFor(db, null);
   return c.json(
     rows.map((r) => ({
       ...r.e,
@@ -1167,6 +1192,7 @@ adminRoutes.get("/evaluations", async (c) => {
       projectSlug: r.slug,
       logoUrl: r.logoUrl,
       versionLabel: r.version,
+      weighting: (r.e.weightingId ? labels.get(r.e.weightingId) : null) ?? base.ref,
       flagged: flagged.get(r.e.id) ?? 0,
       // For evaluations that can be published: whether their summary can go out as it is.
       summary: summaries.get(r.e.id) ?? null,
@@ -1405,8 +1431,137 @@ adminRoutes.get("/evaluations/:id/preview", async (c) => {
       publishedAt: new Date().toISOString(),
       isDemo: bundle.evaluation.isDemo,
       rubricVersion: rubric.version,
+      weightingId: bundle.weighting.ref.id,
     }),
   );
+});
+
+/**
+ * Re-scores an unpublished evaluation with another weighting. Only the scoring changes: answers, evidence, review
+ * and summary stay as they are, so nothing needs reviewing again. Recorded in the evaluation's log.
+ */
+adminRoutes.patch("/evaluations/:id/weighting", async (c) => {
+  const parsed = z.object({ weightingId: z.string().min(1).max(64) }).safeParse(await c.req.json().catch(() => null));
+  if (!parsed.success) return c.json({ error: "invalid" }, 400);
+  const db = getDb();
+  const ev = (
+    await db
+      .select()
+      .from(schema.evaluations)
+      .where(eq(schema.evaluations.id, c.req.param("id")))
+  )[0];
+  if (!ev) return c.json({ error: "not_found" }, 404);
+  if (!RERUNNABLE.includes(ev.status))
+    return c.json({ error: "not_rescorable", message: `Only an unpublished, finished evaluation can be re-scored (this one is ${ev.status}).` }, 409);
+  let to: Awaited<ReturnType<typeof usableWeighting>>;
+  try {
+    to = await usableWeighting(db, parsed.data.weightingId);
+  } catch (e) {
+    if (e instanceof PollError) return c.json({ error: e.code, message: e.message }, e.code === "not_found" ? 404 : 409);
+    throw e;
+  }
+  const from = await weightingFor(db, ev.weightingId);
+  if (from.row.id === to.id) return c.json({ ok: true, weighting: weightingRef(to) });
+  // Re-checked in the write: a publish or rerun that commits meanwhile must not end up with another weighting.
+  const [done] = await db
+    .update(schema.evaluations)
+    .set({ weightingId: to.id })
+    .where(and(eq(schema.evaluations.id, ev.id), inArray(schema.evaluations.status, RERUNNABLE)))
+    .returning({ id: schema.evaluations.id });
+  if (!done) return c.json({ error: "not_rescorable", message: "The evaluation changed state meanwhile; reload and try again." }, 409);
+  await db.insert(schema.runEvents).values({
+    evaluationId: ev.id,
+    runId: ev.runId,
+    level: "info",
+    stage: "score",
+    message: `Re-scored with weighting W${to.number} (was ${from.ref.label})`,
+    data: { from: from.row.id, to: to.id },
+  });
+  return c.json({ ok: true, weighting: weightingRef(to) });
+});
+
+// ---------- community weighting ----------
+
+function pollErrorResponse(c: Context, e: unknown) {
+  if (!(e instanceof PollError)) throw e;
+  const status = e.code === "not_found" ? 404 : e.code === "invalid" || e.code === "x_unavailable" ? 422 : 409;
+  return c.json({ error: e.code, message: e.message }, status);
+}
+
+adminRoutes.get("/weightings", async (c) => {
+  const db = getDb();
+  const list = await listWeightings(db);
+  const evals = new Map(
+    (
+      await query<{ id: string; n: number }>(db, sql`SELECT weighting_id AS id, count(*)::int AS n FROM evaluations WHERE weighting_id IS NOT NULL GROUP BY 1`)
+    ).map((r) => [r.id, Number(r.n)]),
+  );
+  return c.json(list.map((w) => ({ ...w, evaluations: evals.get(w.id) ?? 0 })));
+});
+
+adminRoutes.patch("/weightings/:id", async (c) => {
+  const parsed = z.object({ retired: z.boolean() }).safeParse(await c.req.json().catch(() => null));
+  if (!parsed.success) return c.json({ error: "invalid" }, 400);
+  try {
+    const row = await setRetired(getDb(), c.req.param("id"), parsed.data.retired);
+    return c.json({ ok: true, retired: !!row.retiredAt });
+  } catch (e) {
+    return pollErrorResponse(c, e);
+  }
+});
+
+const pollSchema = z.object({
+  baseId: z.string().max(64).optional(),
+  title: z.string().trim().max(120).optional(),
+  description: z.string().trim().max(2000).optional(),
+  /** One ballot per X account. Off only where X sign-in isn't configured (development). */
+  requireX: z.boolean().optional(),
+  minBallots: z.number().int().min(1).max(100_000).optional(),
+});
+
+adminRoutes.get("/polls", async (c) => {
+  const db = getDb();
+  const rows = await db.select().from(schema.weightingPolls).orderBy(desc(schema.weightingPolls.createdAt)).limit(50);
+  return c.json({ xEnabled: xAuthEnabled(), polls: await Promise.all(rows.map((p) => pollInfo(db, p))) });
+});
+
+adminRoutes.post("/polls", async (c) => {
+  const parsed = pollSchema.safeParse(await c.req.json().catch(() => null));
+  if (!parsed.success) return invalid(c, parsed.error);
+  const requireX = parsed.data.requireX ?? xAuthEnabled();
+  if (requireX && !xAuthEnabled())
+    return c.json({ error: "x_unavailable", message: "Sign in with X isn't configured: set X_OAUTH_CLIENT_ID (and its secret) on the server." }, 422);
+  try {
+    const poll = await openPoll(getDb(), { ...parsed.data, requireX });
+    return c.json(await pollInfo(getDb(), poll));
+  } catch (e) {
+    return pollErrorResponse(c, e);
+  }
+});
+
+adminRoutes.get("/polls/:id", async (c) => {
+  const db = getDb();
+  const poll = await pollById(db, c.req.param("id"));
+  if (!poll) return c.json({ error: "not_found" }, 404);
+  const info = await pollInfo(db, poll);
+  // A closed poll's turnout is stored; an open one's is computed now, with the result it would have.
+  const preview = poll.status === "open" ? await pollPreview(db, poll) : null;
+  return c.json({
+    ...info,
+    stats: preview?.stats ?? poll.stats,
+    networks: preview?.networks ?? null,
+    quorum: preview?.quorum ?? null,
+    changes: preview?.changes ?? null,
+  });
+});
+
+adminRoutes.post("/polls/:id/cancel", async (c) => {
+  try {
+    await cancelPoll(getDb(), c.req.param("id"));
+    return c.json({ ok: true });
+  } catch (e) {
+    return pollErrorResponse(c, e);
+  }
 });
 
 // ---------- releases ----------
@@ -1428,7 +1583,14 @@ adminRoutes.get("/releases", async (c) => {
       .innerJoin(schema.projects, eq(schema.projects.id, schema.publishedResults.projectId)),
     (x) => x.releaseId,
   );
-  return c.json(rows.map(({ evalSettings: _settings, ...r }) => ({ ...r, results: results.get(r.id) ?? [] })));
+  const refs = new Map((await db.select().from(schema.weightings)).map((w) => [w.id, weightingRef(w)]));
+  return c.json(
+    rows.map(({ evalSettings: _settings, ...r }) => ({
+      ...r,
+      weighting: r.weightingId ? (refs.get(r.weightingId) ?? null) : null,
+      results: results.get(r.id) ?? [],
+    })),
+  );
 });
 
 adminRoutes.post("/releases", async (c) => {
@@ -1447,6 +1609,16 @@ adminRoutes.post("/releases", async (c) => {
     return c.json({ error: "same_project_version", message: "Two of these evaluations are of the same project version. Pick one of them." }, 409);
   const notReady = evs.filter((e) => !["review", "reviewed", "published"].includes(e.status));
   if (notReady.length) return c.json({ error: "not_ready", message: `${notReady.length} evaluation(s) haven't finished.` }, 409);
+  // A release is scored with one weighting: the leaderboard compares its results with each other.
+  const weightingIds = new Set(await Promise.all(evs.map(async (e) => (await weightingFor(db, e.weightingId)).ref.label)));
+  if (weightingIds.size > 1)
+    return c.json(
+      {
+        error: "mixed_weightings",
+        message: `These evaluations are scored with different weightings (${[...weightingIds].join(", ")}). Re-score them with one in review, or publish them separately.`,
+      },
+      409,
+    );
   // Evidence takes its source's current class, and stored attestations on off-chain powers stop counting; answers
   // affected get flagged and block below (R4-8, R5-1, R5-14).
   await invalidateOffchainAttestations(db);

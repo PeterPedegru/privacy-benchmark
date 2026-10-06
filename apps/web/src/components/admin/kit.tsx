@@ -33,6 +33,8 @@ export function useAdminAction<V = void, R = unknown>(
 }
 
 export type OverviewData = {
+  /** The open community weighting poll, if any. */
+  poll: { id: string; title: string; closesAt: string; ballots: number; base: { label: string } } | null;
   projects: number;
   releases: number;
   spendThisMonth: number;

@@ -1,9 +1,9 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Command, Menu, Moon, Sun } from "lucide-react";
+import { Command, Menu, Moon, Sun, Vote, X } from "lucide-react";
 import { m } from "motion/react";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { spring } from "@/design/motion";
-import { useMeta, useReleaseSync } from "@/lib/queries";
+import { useMeta, usePollSummary, useReleaseSync } from "@/lib/queries";
 import { useTheme } from "@/lib/theme";
 import { cn, fmtDate } from "@/lib/utils";
 import { Kbd } from "./ui/misc";
@@ -23,6 +23,8 @@ const NAV = [
   { to: "/projects", label: "Projects" },
   { to: "/cards", label: "Cards" },
   { to: "/methodology", label: "Methodology" },
+  // From lg up only: at tablet width the header has no room for a sixth item (the poll banner links it there).
+  { to: "/weighting", label: "Weighting", wideOnly: true },
 ] as const;
 const MOBILE_NAV = [{ to: "/", label: "Home" }, ...NAV] as const;
 
@@ -86,6 +88,7 @@ function Header({ onCommand }: { onCommand: () => void }) {
                 className={cn(
                   "relative rounded-lg px-2.5 py-1.5 text-sm transition-colors duration-200 lg:px-3",
                   active ? "text-fg" : "text-muted hover:text-fg",
+                  "wideOnly" in n && "hidden lg:block",
                 )}
               >
                 {active && <m.span layoutId="nav-active" transition={spring} className="absolute inset-0 -z-10 rounded-lg bg-surface" />}
@@ -148,6 +151,62 @@ function DemoBanner() {
   );
 }
 
+/**
+ * While a community weighting poll is open: a slim invitation to vote on every public page but the poll's own,
+ * dismissible for that poll.
+ */
+function PollBanner() {
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  const poll = usePollSummary();
+  const open = poll.data?.poll;
+  const key = open ? `pb:poll-banner:${open.id}` : "";
+  const [hidden, setHidden] = useState(() => {
+    try {
+      return !!key && localStorage.getItem(key) === "1";
+    } catch {
+      return false;
+    }
+  });
+  useEffect(() => {
+    try {
+      setHidden(!!key && localStorage.getItem(key) === "1");
+    } catch {
+      setHidden(false);
+    }
+  }, [key]);
+  if (!open || hidden || path.startsWith("/weighting")) return null;
+  const days = Math.max(0, Math.ceil((Date.parse(open.closesAt) - Date.now()) / 86_400_000));
+  return (
+    <div className="border-b border-accent-line bg-accent-soft text-accent-fg">
+      <div className="mx-auto flex max-w-[var(--container-wide)] items-center gap-3 px-4 py-2 text-[13px] sm:px-6">
+        <Vote className="size-4 shrink-0" />
+        <Link to="/weighting" className="min-w-0 flex-1 truncate">
+          <span className="font-medium">Vote on the weights.</span>{" "}
+          <span className="hidden sm:inline">
+            The community weighting poll is open for {days <= 1 ? "less than a day" : `${days} more days`}; the result scores the next run.
+          </span>
+          <span className="ml-1 underline underline-offset-4">Vote</span>
+        </Link>
+        <button
+          type="button"
+          aria-label="Dismiss"
+          onClick={() => {
+            try {
+              localStorage.setItem(key, "1");
+            } catch {
+              // storage blocked: hidden for this page view only
+            }
+            setHidden(true);
+          }}
+          className="rounded p-1 hover:bg-accent/10"
+        >
+          <X className="size-3.5" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function Footer() {
   const meta = useMeta();
   const rel = meta.data?.release;
@@ -189,6 +248,9 @@ function Footer() {
           </Link>
           <Link to="/releases" className="text-fg-3 hover:text-fg">
             Releases & data
+          </Link>
+          <Link to="/weighting" className="text-fg-3 hover:text-fg">
+            Community weighting
           </Link>
           <a href="https://github.com/rolldavid/privacy-benchmark" target="_blank" rel="noreferrer" className="text-fg-3 hover:text-fg">
             Source code (MIT)
@@ -235,6 +297,7 @@ export function PublicLayout() {
       <ReleaseSync />
       <DemoBanner />
       <Header onCommand={openCmd} />
+      <PollBanner />
       <main className="flex-1">
         <Outlet />
       </main>

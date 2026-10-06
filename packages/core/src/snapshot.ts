@@ -155,6 +155,24 @@ export interface ReleaseInfo {
   publishedAt: string;
   isDemo: boolean;
   rubricVersion: string;
+  /** The weighting every result in the release is scored with (absent on releases from before weightings). */
+  weightingId?: string | null;
+}
+
+/**
+ * The weighting a result was scored with: which version (W1, W2…), where it came from, and a hash of its numbers.
+ * The full numbers are at /api/public/weightings/<id>.
+ */
+export interface WeightingRef {
+  id: string;
+  /** Sequential per database; null for weights this database never stored (an older rubric's built-in ones). */
+  number: number | null;
+  /** "W2" */
+  label: string;
+  /** "Community poll #1", "Rubric 1.3.0 weights" */
+  title: string;
+  source: "rubric" | "poll";
+  hash: string | null;
 }
 
 export interface EvalSettings {
@@ -207,6 +225,8 @@ export interface ProjectSnapshot {
   /** Absent on results published before coverage was disclosed. */
   coverage?: CoverageInfo | null;
   matrix: AdversaryMatrix;
+  /** The weighting the scores were computed with. Older results read as their rubric's own weighting. */
+  weighting?: WeightingRef | null;
 }
 
 /** Compact per-project row for leaderboards and the benchmark table. */
@@ -227,6 +247,7 @@ export interface LeaderboardRow {
   suites: Record<string, number | null>;
   benchmarks: Record<string, BenchmarkCell>;
   evaluatedAt: string;
+  weighting?: WeightingRef | null;
 }
 
 export interface BenchmarkCell {

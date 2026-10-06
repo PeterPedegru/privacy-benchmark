@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
-import type { CompareResponse, LeaderboardResponse, ProjectSnapshot } from "@pb/core";
+import type { CompareResponse, LeaderboardResponse, LeaderboardWeighting, ProjectSnapshot } from "@pb/core";
 import { cardConfigSchema, httpUrlSchema } from "@pb/core";
-import { benchmarks, diffAnswers, fmtScore, levelNumber, operatorNumber, rubric, suites } from "@pb/rubric";
+import { benchmarks, DEFAULT_WEIGHTING, diffAnswers, fmtScore, levelNumber, operatorNumber, rubric, suites } from "@pb/rubric";
 import { and, desc, eq, inArray, isNotNull, or, sql } from "drizzle-orm";
 import { type Context, Hono } from "hono";
 import { z } from "zod";
@@ -15,7 +15,7 @@ import {
   leaderboardRow,
   publicSettings,
   publishedDataVersion,
-  readSnapshot,
+  readSnapshots,
   releaseInfo,
   resolveSnapshot,
   snapshotEtag,
@@ -24,6 +24,7 @@ import {
   visibleByProject,
   visibleSnapshots,
 } from "../services/snapshots.ts";
+import { weightingFor } from "../services/weighting.ts";
 
 export const publicRoutes = new Hono();
 
@@ -107,12 +108,32 @@ publicRoutes.get("/leaderboard", (c) =>
           ? { ...releaseInfo(rel), notes: rel.notesMd, settings: publicSettings(rel.evalSettings) }
           : { id: "", label: "", publishedAt: "", isDemo: false, rubricVersion: rubric.version, notes: "", settings: null },
         rows,
+        weightings: await leaderboardWeightings(rows),
       };
       return body;
     },
     "leaderboard",
   ),
 );
+
+/** The weightings the rows are scored with, most used first, with their suite weights (for headers and re-ranking). */
+async function leaderboardWeightings(rows: LeaderboardResponse["rows"]): Promise<LeaderboardWeighting[]> {
+  const byId = new Map<string, LeaderboardWeighting>();
+  for (const r of rows) {
+    if (!r.weighting) continue;
+    const have = byId.get(r.weighting.id);
+    if (have) {
+      have.projects++;
+      continue;
+    }
+    // Weights this database never stored (an older rubric's) read as the rubric's.
+    const suitesOf = await weightingFor(getDb(), r.weighting.id)
+      .then((w) => w.weighting.suites)
+      .catch(() => DEFAULT_WEIGHTING.suites);
+    byId.set(r.weighting.id, { ...r.weighting, suites: suitesOf, projects: 1 });
+  }
+  return [...byId.values()].sort((a, b) => b.projects - a.projects || (b.number ?? 0) - (a.number ?? 0));
+}
 
 publicRoutes.get("/projects", (c) =>
   publishedJson(
@@ -153,19 +174,28 @@ publicRoutes.get("/projects/:slug", async (c) => {
         Object.fromEntries(Object.entries(s.criteria).map(([id, cr]) => [id, { criterionId: id, status: cr.status, optionId: cr.optionId }]));
       // History across published results for this project (all releases), newest first. Withdrawn results are excluded.
       const hist = (
-        await db
-          .select({ snapshot: schema.publishedResults.snapshot })
-          .from(schema.publishedResults)
-          .innerJoin(schema.projects, eq(schema.projects.id, schema.publishedResults.projectId))
-          .where(and(eq(schema.projects.slug, slug), eq(schema.projects.status, "active"), notWithdrawn))
-          .orderBy(desc(schema.publishedResults.createdAt))
-      )
-        .map((r) => readSnapshot(r.snapshot))
-        .filter((s) => s.release.isDemo === snapshot.release.isDemo);
+        await readSnapshots(
+          db,
+          (
+            await db
+              .select({ snapshot: schema.publishedResults.snapshot })
+              .from(schema.publishedResults)
+              .innerJoin(schema.projects, eq(schema.projects.id, schema.publishedResults.projectId))
+              .where(and(eq(schema.projects.slug, slug), eq(schema.projects.status, "active"), notWithdrawn))
+              .orderBy(desc(schema.publishedResults.createdAt))
+          ).map((r) => r.snapshot),
+        )
+      ).filter((s) => s.release.isDemo === snapshot.release.isDemo);
       return {
         snapshot,
         versions: arr.map((s) => ({ ...s.version, overall: s.scores.overall, level: s.scores.level })),
-        history: hist.map((s) => ({ release: s.release, version: s.version, overall: s.scores.overall, level: s.scores.level })),
+        history: hist.map((s) => ({
+          release: s.release,
+          version: s.version,
+          overall: s.scores.overall,
+          level: s.scores.level,
+          weighting: s.weighting ?? null,
+        })),
         changes: prev ? diffAnswers(toMap(prev), toMap(snapshot)) : [],
         comparedTo: prev ? { version: prev.version, overall: prev.scores.overall } : null,
       };
@@ -263,13 +293,17 @@ publicRoutes.get("/releases/:id/settings", async (c) => {
 
 /** A release's results that are still published: not withdrawn, and the project isn't archived (SEC-10). */
 async function releaseSnapshots(id: string): Promise<ProjectSnapshot[]> {
-  return (
-    await getDb()
-      .select({ snapshot: schema.publishedResults.snapshot })
-      .from(schema.publishedResults)
-      .innerJoin(schema.projects, eq(schema.projects.id, schema.publishedResults.projectId))
-      .where(and(eq(schema.publishedResults.releaseId, id), eq(schema.projects.status, "active"), notWithdrawn))
-  ).map((r) => readSnapshot(r.snapshot));
+  const db = getDb();
+  return readSnapshots(
+    db,
+    (
+      await db
+        .select({ snapshot: schema.publishedResults.snapshot })
+        .from(schema.publishedResults)
+        .innerJoin(schema.projects, eq(schema.projects.id, schema.publishedResults.projectId))
+        .where(and(eq(schema.publishedResults.releaseId, id), eq(schema.projects.status, "active"), notWithdrawn))
+    ).map((r) => r.snapshot),
+  );
 }
 
 /**
@@ -277,7 +311,7 @@ async function releaseSnapshots(id: string): Promise<ProjectSnapshot[]> {
  * snapshots, and the body is built once per publish generation. Only releases that exist get a memo entry, so random
  * ids can't fill it. Withdrawing a result or archiving a project changes the generation, hence the ETag.
  */
-async function releaseExport(c: Context, kind: "json" | "csv", build: (snaps: ProjectSnapshot[]) => string) {
+async function releaseExport(c: Context, kind: "json" | "csv", build: (snaps: ProjectSnapshot[]) => string | Promise<string>) {
   const db = getDb();
   const id = c.req.param("id") ?? "";
   const etag = await snapshotEtag(db);
@@ -298,7 +332,20 @@ async function releaseExport(c: Context, kind: "json" | "csv", build: (snaps: Pr
   });
 }
 
-publicRoutes.get("/releases/:id/export.json", (c) => releaseExport(c, "json", (snapshots) => JSON.stringify({ rubric, snapshots })));
+/** The snapshots, the rubric and every weighting they were scored with: enough to recompute each score. */
+async function releaseJson(snapshots: ProjectSnapshot[]): Promise<string> {
+  const weightings: Record<string, unknown> = {};
+  for (const s of snapshots) {
+    const id = s.weighting?.id;
+    if (id && !(id in weightings))
+      weightings[id] = await weightingFor(getDb(), id)
+        .then((w) => ({ ...w.ref, config: w.weighting }))
+        .catch(() => null);
+  }
+  return JSON.stringify({ rubric, weightings, snapshots });
+}
+
+publicRoutes.get("/releases/:id/export.json", (c) => releaseExport(c, "json", releaseJson));
 
 /**
  * One CSV field. Values starting with a formula trigger (= + - @, tab, CR) are prefixed with a quote so spreadsheets
@@ -321,6 +368,7 @@ function releaseCsv(snaps: ProjectSnapshot[]): string {
     "privacy_public",
     "privacy_operator",
     "walkaway",
+    "weighting",
     ...suites.map((s) => `suite:${s.id}`),
     ...benchmarks.map((b) => b.id),
   ];
@@ -336,6 +384,7 @@ function releaseCsv(snaps: ProjectSnapshot[]): string {
         levelNumber(s.scores.level) ?? "",
         operatorNumber(s.scores.trustTier, s.scores.level) ?? "",
         s.scores.walkaway.passed === null ? "" : s.scores.walkaway.passed ? "pass" : "fail",
+        s.weighting?.label ?? "",
         ...s.scores.suites.map((x) => fmtScore(x.score)),
         ...benchmarks.map((b) => fmtScore(bm.get(b.id) ?? null)),
       ]

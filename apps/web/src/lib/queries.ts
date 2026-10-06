@@ -1,4 +1,14 @@
-import type { CompareResponse, LeaderboardResponse, ProjectSnapshot, ReleaseInfo, VersionInfo } from "@pb/core";
+import type {
+  CompareResponse,
+  LeaderboardResponse,
+  PollResponse,
+  ProjectSnapshot,
+  ReleaseInfo,
+  VersionInfo,
+  WeightingDetail,
+  WeightingRef,
+  WeightingSummary,
+} from "@pb/core";
 import type { Rubric } from "@pb/rubric";
 import { keepPreviousData, type QueryClient, queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
@@ -16,7 +26,7 @@ export interface Meta {
 export interface ProjectPage {
   snapshot: ProjectSnapshot;
   versions: (VersionInfo & { overall: number | null; level: string | null })[];
-  history: { release: ReleaseInfo; version: VersionInfo | null; overall: number | null; level: string | null }[];
+  history: { release: ReleaseInfo; version: VersionInfo | null; overall: number | null; level: string | null; weighting?: WeightingRef | null }[];
   changes: { criterionId: string; from: string | null; to: string | null }[];
   comparedTo: { version: VersionInfo | null; overall: number | null } | null;
 }
@@ -71,6 +81,33 @@ export const usePrompts = () =>
     staleTime: Number.POSITIVE_INFINITY,
   });
 export const useReleases = () => useQuery(releasesQuery);
+
+// ---------- community weighting ----------
+
+/** The open poll and this visitor's ballot. Per visitor and live (ballot counts), so short-lived. */
+export const pollQuery = queryOptions({ queryKey: ["poll"], queryFn: () => api<PollResponse>("/api/public/poll"), staleTime: 30_000 });
+export const weightingsQuery = queryOptions({
+  queryKey: ["weightings"],
+  queryFn: () => api<WeightingSummary[]>("/api/public/weightings"),
+  staleTime: MINUTE,
+});
+/** A weighting's numbers never change once it exists; its retired flag and usage counts can. */
+export const weightingQuery = (ref: string) =>
+  queryOptions({
+    queryKey: ["weighting", ref],
+    queryFn: () => api<WeightingDetail>(`/api/public/weightings/${encodeURIComponent(ref)}`),
+    staleTime: 5 * MINUTE,
+  });
+export const usePoll = () => useQuery(pollQuery);
+/** The open poll in brief, the same for everyone (cached by the server): what the site-wide banner needs. */
+export const usePollSummary = () =>
+  useQuery({
+    queryKey: ["poll-summary"],
+    queryFn: () => api<{ poll: { id: string; title: string; closesAt: string } | null }>("/api/public/poll/summary"),
+    staleTime: 5 * MINUTE,
+  });
+export const useWeightings = () => useQuery(weightingsQuery);
+export const useWeighting = (ref: string, opts: { enabled?: boolean } = {}) => useQuery({ ...weightingQuery(ref), enabled: (opts.enabled ?? true) && !!ref });
 
 export interface CorrectionsLog {
   open: number;

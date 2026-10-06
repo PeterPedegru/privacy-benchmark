@@ -2,7 +2,7 @@
 
 Crypto privacy systems, measured on a published rubric. Open source under the [MIT license](LICENSE). Thirty-one benchmarks in seven suites (privacy coverage, trust model, custody & control, programmability, governance, decentralization, security), a percentage for every project on every row, and every number traceable to a published rubric and verbatim, cited evidence.
 
-- **Public site:** benchmark table (best-in-row highlighting, focus column, expandable criteria, "how this number was calculated" drawer), rankings with weighting presets, project pages (score ring, suite rosette, adversary matrix, who holds power, versions), shareable comparison cards, and a full methodology page with published evaluator prompts and downloadable data.
+- **Public site:** benchmark table (best-in-row highlighting, focus column, expandable criteria, "how this number was calculated" drawer), rankings with weighting presets, a community weighting poll, project pages (score ring, suite rosette, adversary matrix, who holds power, versions), shareable comparison cards, and a full methodology page with published evaluator prompts and downloadable data.
 - **Admin dashboard:** add projects by URL, build a searchable knowledge base for each one, track protocol versions (GitHub releases triaged by Claude Sonnet 5.5, or manual), run evaluations judged by Claude Opus 5.5, review flags and override with public reasons, publish immutable releases.
 
 ## Quick start
@@ -37,6 +37,12 @@ Rules and badges:
 
 The full spec is on `/methodology`.
 
+### Community weighting
+
+The suite, benchmark and criterion weights, and the credit for answers between a criterion's best and riskiest, are set by a public poll (`/weighting`; admin: Weighting). A poll runs five days on a base weighting; each weight's result is the median of all ballots, where a ballot that leaves a weight alone counts as a vote for its current value, and each group is renormalized. With a quorum, the result is frozen as the next numbered, hashed weighting version (W1 is the rubric's own) and becomes the default for new runs. Every run is linked to one weighting (chosen on Run benchmark, or `pnpm bench run … --weighting W2`), a release is scored with one, and every published result and export names it. Scoring is deterministic from the answers, so an unpublished evaluation can be re-scored with another weighting in review. Badges, caps, gates, and the best and riskiest answers' credit never change.
+
+Voting needs Sign in with X (one ballot per account, accounts 30+ days old): set `X_OAUTH_CLIENT_ID` and `X_OAUTH_CLIENT_SECRET` from an X developer app (OAuth 2.0, "Web App", callback `<PUBLIC_URL>/api/public/auth/x/callback`). The server keeps only an HMAC of the account id under each poll's own salt, revokes the X token straight away, caps voters per network (a salted /24 hash, erased at close) and edits per ballot, and rate-limits writes. Without X configured, polls can run in browser mode (one ballot per browser) for development.
+
 ## Evaluations (needs `ANTHROPIC_API_KEY`)
 
 Admin → **Run benchmark** → pick projects, a pinned version for each, and a mode. **Deep** is the default and the mode for published results: evaluations run about weekly, so each one is exhaustive. Quick and standard are cheaper first looks. The pipeline runs these stages:
@@ -67,6 +73,7 @@ railway run --service bench-cli -- pnpm bench status [slug]                # ver
 railway run --service bench-cli -- pnpm bench kb <slug> [--version <tag>]  # rebuild a knowledge base, every lane
 railway run --service bench-cli -- pnpm bench run <slug…>|--all [--parallel N] [--mode deep|standard|quick] [--version <tag>]
                                    [--suites a,b] [--skip-kb] [--model <id>|tiered] [--effort low|…|max] [--backend claude-code|api] [--cap <usd>]
+                                   [--weighting W2]
 railway run --service bench-cli -- pnpm bench resume <evaluationId…>|--failed [--parallel N] [--cap <usd>]  # continue stopped evaluations
 railway run --service bench-cli -- pnpm bench rerun <evaluationId> --suites a,b [--cap <usd>]             # research and judge suites again
 railway run --service bench-cli -- pnpm bench summarize <evaluationId>                                    # rewrite the summary after overrides

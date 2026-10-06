@@ -13,6 +13,7 @@ import { env, REPO_ROOT } from "./env.ts";
 import { adminRoutes } from "./routes/admin.ts";
 import { cardRoutes } from "./routes/cards.ts";
 import { publicRoutes } from "./routes/public.ts";
+import { weightingRoutes } from "./routes/weighting.ts";
 import { healthReport } from "./services/health.ts";
 import { resolveSnapshot } from "./services/snapshots.ts";
 
@@ -141,6 +142,7 @@ export function createApp(opts: { analytics?: string | null } = {}) {
     const report = await healthReport(getDb);
     return c.json(report, report.ok ? 200 : 503, { "cache-control": "no-store" });
   });
+  app.route("/api/public", weightingRoutes);
   app.route("/api/public", publicRoutes);
   app.route("/api/admin", adminRoutes);
   app.route("/", cardRoutes);

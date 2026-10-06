@@ -64,6 +64,22 @@ test.describe("public API contract", () => {
     expect(proj.headers()["content-type"]).toBe("image/png");
   });
 
+  test("weightings and the poll", async ({ request }) => {
+    const list = await (await request.get("/api/public/weightings")).json();
+    expect(list[list.length - 1]).toMatchObject({ label: "W1", source: "rubric" });
+    const w1 = await (await request.get("/api/public/weightings/W1")).json();
+    expect(Object.keys(w1.config.suites)).toHaveLength(7);
+    // Every published result names the weighting it was scored with.
+    const { rows } = await (await request.get("/api/public/leaderboard")).json();
+    for (const r of rows) expect(r.weighting?.label, r.slug).toMatch(/^W\d+$/);
+    const poll = await request.get("/api/public/poll");
+    expect(poll.headers()["cache-control"]).toBe("no-store");
+    expect(await poll.json()).toMatchObject({ xEnabled: false });
+    // Ballots are same-origin JSON only.
+    const text = await request.post("/api/public/polls/none/ballot", { headers: { "content-type": "text/plain" }, data: "{}" });
+    expect(text.status()).toBe(415);
+  });
+
   test("security headers are set", async ({ request }) => {
     const res = await request.get("/");
     const h = res.headers();

@@ -8,6 +8,7 @@ import { redact } from "../lib/redact.ts";
 import { RUNNER_ID } from "../lib/runner.ts";
 import { isUniqueViolation } from "../services/kb-store.ts";
 import { latestTrackedVersion } from "../services/versions.ts";
+import { usableWeighting } from "../services/weighting.ts";
 import { makeEmitter } from "./events.ts";
 import { evalSettings, type Mode, runEvaluation } from "./pipeline.ts";
 
@@ -18,6 +19,8 @@ export interface EnqueueInput {
   mode: Mode;
   suites?: string[];
   label?: string;
+  /** The weighting the run's evaluations are scored with; the current one when omitted. */
+  weightingId?: string;
 }
 
 export async function enqueueRun(db: DB, input: EnqueueInput): Promise<string> {
@@ -30,6 +33,7 @@ export async function enqueueRun(db: DB, input: EnqueueInput): Promise<string> {
     const explicit = input.versions?.[projectId];
     versionOf.set(projectId, explicit === undefined ? ((await latestTrackedVersion(db, projectId))?.id ?? null) : explicit);
   }
+  const weightingId = (await usableWeighting(db, input.weightingId)).id;
   await db.transaction(async (tx) => {
     await tx.insert(schema.runs).values({
       id: runId,
@@ -38,6 +42,7 @@ export async function enqueueRun(db: DB, input: EnqueueInput): Promise<string> {
       mode: input.mode,
       suiteFilter: suiteFilter?.length ? suiteFilter : null,
       status: "queued",
+      weightingId,
     });
     for (const projectId of input.projectIds) {
       const versionId = versionOf.get(projectId) ?? null;
@@ -51,6 +56,7 @@ export async function enqueueRun(db: DB, input: EnqueueInput): Promise<string> {
         status: "queued",
         stage: "scout",
         settings: evalSettings(input.mode) as never,
+        weightingId,
       });
     }
   });

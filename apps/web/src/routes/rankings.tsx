@@ -13,9 +13,9 @@ import { ProjectMark } from "@/components/ui/project-mark";
 import { focusIn, spring } from "@/design/motion";
 import { useLeaderboard } from "@/lib/queries";
 import { cn } from "@/lib/utils";
+import { usePublishedWeighting } from "@/lib/weighting";
 
 type Weights = Record<SuiteId, number>;
-const official = rubric.presets.find((p) => p.official)!.weights as Weights;
 
 function parseWeights(w?: string): Weights | null {
   if (!w) return null;
@@ -28,17 +28,29 @@ export function RankingsPage() {
   const search = useSearch({ from: "/public/rankings" });
   const navigate = useNavigate({ from: "/rankings" });
   const lb = useLeaderboard();
+  // The official view uses the weighting the published results were scored with (set by the community poll).
+  const published = usePublishedWeighting();
+  const official = (published.suites ?? (rubric.presets.find((p) => p.official)!.weights as Weights)) as Weights;
   const tab = search.tab ?? "overall";
   const preset = search.preset ?? (search.w ? "custom" : "balanced");
   const weights: Weights =
-    preset === "custom" ? (parseWeights(search.w) ?? official) : ((rubric.presets.find((p) => p.id === preset)?.weights as Weights) ?? official);
+    preset === "custom"
+      ? (parseWeights(search.w) ?? official)
+      : preset === "balanced"
+        ? official
+        : ((rubric.presets.find((p) => p.id === preset)?.weights as Weights) ?? official);
+  // For the URL: a weight as people would type it.
+  const wParam = (w: Weights) => suites.map((x) => Math.round(w[x.id] * 10) / 10).join(",");
   const isOfficial = preset === "balanced";
   const set = (patch: Partial<typeof search>) => navigate({ search: (s) => ({ ...s, ...patch }), replace: true, resetScroll: false });
 
   const rows = useMemo(() => {
     const list = (lb.data?.rows ?? []).map((r) => {
       let value: number | null;
-      if (tab === "overall")
+      // The official view is each result's own published score (scored with its own weighting); other views re-weight
+      // the suite scores.
+      if (tab === "overall" && isOfficial) value = r.overall;
+      else if (tab === "overall")
         value = overallFromSuites(
           suites.map((s) => ({ suiteId: s.id, score: r.suites[s.id] ?? null })),
           weights,
@@ -48,7 +60,7 @@ export function RankingsPage() {
       return { r, value };
     });
     return list.sort((a, b) => (b.value ?? -1) - (a.value ?? -1));
-  }, [lb.data, tab, weights]);
+  }, [lb.data, tab, weights, isOfficial]);
 
   const title =
     tab === "overall" ? "Overall" : (suites.find((s) => s.id === tab)?.name ?? (benchmarks.some((b) => b.id === tab) ? getBenchmark(tab).name : "Overall"));
@@ -110,7 +122,8 @@ export function RankingsPage() {
           </div>
           {tab === "overall" && !isOfficial && (
             <div className="mb-3 flex items-center gap-2 rounded-xl border border-fair-bd bg-fair-bg px-3 py-2 text-[13px] text-fair-fg">
-              <Info className="size-4 shrink-0" /> Custom view, not the official score. The official ranking uses the Balanced weights.
+              <Info className="size-4 shrink-0" /> Custom view, not the official score. The official ranking uses the published weighting
+              {published.ref ? ` (${published.ref.label})` : ""}.
             </div>
           )}
           <div className="overflow-hidden rounded-2xl border border-line">
@@ -147,7 +160,7 @@ export function RankingsPage() {
                   onClick={() =>
                     set({
                       preset: p.id === "balanced" ? undefined : p.id,
-                      w: p.id === "custom" ? suites.map((s) => weights[s.id]).join(",") : undefined,
+                      w: p.id === "custom" ? wParam(weights) : undefined,
                       tab: undefined,
                     })
                   }
@@ -156,8 +169,7 @@ export function RankingsPage() {
                     preset === p.id ? "border-accent bg-accent-soft text-accent-fg" : "border-line bg-bg text-fg-3 hover:border-line-strong",
                   )}
                 >
-                  {p.name}
-                  {p.id === "balanced" && " · official"}
+                  {p.id === "balanced" ? `Official${published.ref ? ` · ${published.ref.label}` : ""}` : p.name}
                 </button>
               ))}
             </div>
@@ -175,7 +187,7 @@ export function RankingsPage() {
                       min={0}
                       max={50}
                       step={1}
-                      onValueChange={([v]) => set({ preset: "custom", tab: undefined, w: suites.map((x) => (x.id === s.id ? v : weights[x.id])).join(",") })}
+                      onValueChange={([v]) => set({ preset: "custom", tab: undefined, w: wParam({ ...weights, [s.id]: v ?? 0 }) })}
                       className="relative flex h-4 touch-none items-center select-none"
                       aria-label={`${s.name} weight`}
                     >
@@ -201,9 +213,9 @@ export function RankingsPage() {
             )}
           </div>
           <p className="mt-3 px-1 text-xs leading-5 text-muted">
-            Weights are a judgment call. The official ranking uses the published Balanced weights; see the{" "}
-            <Link to="/methodology" hash="weights" className="underline decoration-line-strong underline-offset-4">
-              methodology
+            Weights are a judgment call. The official ranking uses the published weighting, which a public poll sets before each run;{" "}
+            <Link to="/weighting" className="underline decoration-line-strong underline-offset-4">
+              vote on the next one
             </Link>
             .
           </p>

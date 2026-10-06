@@ -5,7 +5,7 @@ import { RouteError } from "./components/route-error";
 import { PublicLayout } from "./components/shell";
 import { ButtonLink } from "./components/ui/button";
 import { retryDelay, retryQuery } from "./lib/api";
-import { compareQuery, defaultRefs, leaderboardQuery, metaQuery, projectQuery, releasesQuery } from "./lib/queries";
+import { compareQuery, defaultRefs, leaderboardQuery, metaQuery, pollQuery, projectQuery, releasesQuery, weightingQuery, weightingsQuery } from "./lib/queries";
 import { chunk } from "./lib/recovery";
 
 // Network errors and 5xx retry with backoff; 4xx (a missing project) never does (R3-REL-14).
@@ -172,6 +172,26 @@ const releases = createRoute({
   component: page(() => import("./routes/releases"), "ReleasesPage"),
 });
 
+export type WeightingSearch = { x?: string };
+const weighting = createRoute({
+  getParentRoute: () => publicLayout,
+  path: "/weighting",
+  // ?x= is where Sign in with X sends the voter back: ok, denied, young, expired, limited, unavailable or error.
+  validateSearch: (s: Record<string, unknown>): WeightingSearch => ({ x: str(s.x) }),
+  loader: () => {
+    void queryClient.prefetchQuery(pollQuery);
+    void queryClient.prefetchQuery(weightingsQuery);
+    prefetchLeaderboard();
+  },
+  component: page(() => import("./routes/weighting"), "WeightingPage"),
+});
+const weightingVersion = createRoute({
+  getParentRoute: () => publicLayout,
+  path: "/weighting/$ref",
+  loader: ({ params }) => void queryClient.prefetchQuery(weightingQuery(params.ref)),
+  component: page(() => import("./routes/weighting-version"), "WeightingVersionPage"),
+});
+
 // ---------- admin (separate lazy chunk) ----------
 const admin = createRoute({
   getParentRoute: () => rootRoute,
@@ -235,10 +255,15 @@ const ad12 = createRoute({
   path: "/settings",
   component: adminPage(() => import("./routes/admin/settings"), "AdminSettings"),
 });
-const adminRoutes = [ad0, ad1, ad2, ad3, ad4, ad5, ad6, ad7, ad8, ad9, ad10, ad11, ad12] as const;
+const ad13 = createRoute({
+  getParentRoute: () => admin,
+  path: "/weighting",
+  component: adminPage(() => import("./routes/admin/weighting"), "AdminWeighting"),
+});
+const adminRoutes = [ad0, ad1, ad2, ad3, ad4, ad5, ad6, ad7, ad8, ad9, ad10, ad11, ad12, ad13] as const;
 
 const routeTree = rootRoute.addChildren([
-  publicLayout.addChildren([home, bench, rankings, projects, project, cards, methodology, releases]),
+  publicLayout.addChildren([home, bench, rankings, projects, project, cards, methodology, releases, weighting, weightingVersion]),
   admin.addChildren([...adminRoutes]),
 ]);
 

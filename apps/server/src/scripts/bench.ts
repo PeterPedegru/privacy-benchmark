@@ -7,6 +7,7 @@
  *   railway run --service bench-cli -- pnpm bench kb <slug> [--version <tag>]
  *   railway run --service bench-cli -- pnpm bench run <slug> [--mode deep|standard|quick] [--version <tag>] [--suites a,b] [--skip-kb]
  *                                                     [--model <id>|tiered] [--effort low|medium|high|xhigh|max] [--cap <usd>]
+ *                                                     [--weighting W2]
  *   railway run --service bench-cli -- pnpm bench resume <evaluationId> [--cap <usd>]
  *   railway run --service bench-cli -- pnpm bench rerun <evaluationId> --suites a,b
  *   railway run --service bench-cli -- pnpm bench summarize <evaluationId…>
@@ -36,6 +37,7 @@ import { describeStats, refreshKnowledgeBase } from "../services/kb.ts";
 import { REFRESH_HEARTBEAT_STALE_MS } from "../services/kb-maintenance.ts";
 import { isUniqueViolation } from "../services/kb-store.ts";
 import { latestTrackedVersion } from "../services/versions.ts";
+import { defaultWeighting, findWeighting, type WeightingRow } from "../services/weighting.ts";
 
 /** Parses `command positional... --flag value --switch`. */
 export function parseArgs(argv: string[], switches: string[] = ["skip-kb"]) {
@@ -61,10 +63,11 @@ const USAGE = `Usage:
   pnpm bench status [slug]
   pnpm bench kb <slug> [--version <tag>]
   pnpm bench run <slug> [--mode deep|standard|quick] [--version <tag>] [--suites a,b] [--skip-kb]
-                        [--model <id>|tiered] [--effort low|medium|high|xhigh|max] [--cap <usd>]
+                        [--model <id>|tiered] [--effort low|medium|high|xhigh|max] [--cap <usd>] [--weighting W2]
       Rebuilds the knowledge base first (--skip-kb reuses it while it's fresh). Every stage runs on the reasoning
       model (MODEL_REASON, Opus 5.5) unless --model says otherwise ("tiered": each stage's configured model);
       deep mode thinks at xhigh effort. A local deep run's cap is $300 (BENCH_DEEP_CAP_USD); --cap sets another.
+      Scores use the current weighting (the latest community poll's) unless --weighting picks another.
   pnpm bench resume <evaluationId> [--cap <usd>]
   pnpm bench rerun <evaluationId> --suites a,b [--cap <usd>]
       Researches, code-checks and judges those suites again, then re-runs the checks and the summary after them
@@ -130,6 +133,8 @@ const day = (iso: string) => `${iso.slice(0, 16).replace("T", " ")} UTC`;
 
 async function status(db: DB, slug?: string) {
   const projects = slug ? [await findProject(db, slug)] : await db.select().from(schema.projects).orderBy(schema.projects.slug);
+  const w = await defaultWeighting(db, { readOnly: true });
+  console.log(`new runs are scored with ${w ? `W${w.number} · ${w.title}` : "the rubric's own weighting"} (--weighting picks another)`);
   for (const p of projects) {
     const v = await latestTrackedVersion(db, p.id);
     const evs = await db
@@ -357,10 +362,25 @@ export function cliSettings(mode: Mode, flags: Record<string, string | true>) {
   return { ...evalSettings(mode, { model, effort: effort as Effort | undefined, costCapUsd, backend }), local: true };
 }
 
+/**
+ * The weighting a CLI run is scored with: --weighting (W2, 2 or an id), else the current one. Read-only: the CLI's
+ * database role can't create weightings, so on a database the server hasn't set up yet the run is linked to none
+ * (the rubric's own weighting), and the server links it at its next start.
+ */
+export async function cliWeighting(db: DB, flags: Record<string, string | true>): Promise<WeightingRow | null> {
+  if (flags.weighting === undefined) return defaultWeighting(db, { readOnly: true });
+  if (typeof flags.weighting !== "string") throw new Error("--weighting needs a value, e.g. --weighting W2");
+  const row = await findWeighting(db, flags.weighting);
+  if (!row) throw new Error(`No weighting "${flags.weighting}". The admin's Weighting page lists them.`);
+  if (row.retiredAt) throw new Error(`Weighting W${row.number} is retired; pick another, or restore it in the admin first.`);
+  return row;
+}
+
 async function run(db: DB, slug: string, flags: Record<string, string | true>, tag = ""): Promise<Outcome> {
   const mode = (typeof flags.mode === "string" ? flags.mode : "deep") as Mode;
   if (!(mode in MODES)) throw new Error(`Unknown mode "${mode}" (deep, standard or quick)`);
   const settings = cliSettings(mode, flags);
+  const weighting = await cliWeighting(db, flags);
   const asked = suitesFlag(flags);
   const suiteFilter = asked.length ? asked : null;
   const p = await findProject(db, slug);
@@ -372,7 +392,9 @@ async function run(db: DB, slug: string, flags: Record<string, string | true>, t
   const now = new Date().toISOString();
   try {
     await db.transaction(async (tx) => {
-      await tx.insert(schema.runs).values({ id: runId, label: "Local run", rubricVersion: rubric.version, mode, suiteFilter, status: "running" });
+      await tx
+        .insert(schema.runs)
+        .values({ id: runId, label: "Local run", rubricVersion: rubric.version, mode, suiteFilter, status: "running", weightingId: weighting?.id ?? null });
       await tx.insert(schema.evaluations).values({
         id,
         runId,
@@ -386,6 +408,7 @@ async function run(db: DB, slug: string, flags: Record<string, string | true>, t
         startedAt: now,
         runnerId: RUNNER_ID,
         heartbeatAt: now,
+        weightingId: weighting?.id ?? null,
       });
     });
   } catch (e) {
@@ -397,7 +420,7 @@ async function run(db: DB, slug: string, flags: Record<string, string | true>, t
   const where =
     settings.backend === "claude-code" ? "Claude Code on this machine (no API)" : `the Anthropic API, cap $${settings.costCapUsd ?? costCapFor(mode)}`;
   say(
-    `${tag}evaluation ${id}: ${p.name}${v ? ` · ${v.label}` : ""}, ${mode} mode${suiteFilter ? `, suites ${suiteFilter.join(", ")}` : ""} · ${models} at ${efforts} effort · via ${where}`,
+    `${tag}evaluation ${id}: ${p.name}${v ? ` · ${v.label}` : ""}, ${mode} mode${suiteFilter ? `, suites ${suiteFilter.join(", ")}` : ""} · ${models} at ${efforts} effort · via ${where} · scored with ${weighting ? `W${weighting.number} (${weighting.title})` : "the rubric's own weighting"}`,
   );
   return drive(db, id, runId, slug, tag);
 }

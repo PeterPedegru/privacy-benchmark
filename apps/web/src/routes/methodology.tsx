@@ -10,6 +10,7 @@ import { ProjectMark } from "@/components/ui/project-mark";
 import { easeInOut, focusIn } from "@/design/motion";
 import { useLeaderboard, useMeta, usePrompts } from "@/lib/queries";
 import { cn, fmtDate } from "@/lib/utils";
+import { fmtWeight, usePublishedWeighting, useWeightingShares } from "@/lib/weighting";
 
 const SECTIONS = [
   ["overview", "Overview"],
@@ -148,31 +149,22 @@ export function MethodologyPage() {
             <WorkedExample />
           </Section>
 
-          <Section id="weights" title="Weights." muted="A judgment call, published in full.">
+          <Section id="weights" title="Weights." muted="A judgment call, set in public.">
             <p>
-              The two privacy suites (40%) measure how private a system is. Custody, governance and decentralization (38%) measure how sovereign.
-              Programmability (12%) measures how much you can build privately, and security (10%) whether the design holds up in practice. The Rankings page
+              The rubric's own weights put the two privacy suites (40%) on how private a system is; custody, governance and decentralization (38%) on how
+              sovereign; programmability (12%) on how much you can build privately; and security (10%) on whether the design holds up in practice.
+            </p>
+            <p>
+              The weights, and the credit for answers between a criterion's best and riskiest, are then set by a{" "}
+              <a href="/weighting" className="underline decoration-line-strong underline-offset-4 hover:text-fg">
+                public poll
+              </a>{" "}
+              before each run: five days, one ballot per X account, and each weight's result is the median ballot (a ballot that leaves a weight alone votes for
+              its current value). The result is frozen as a numbered, hashed weighting version (W1 is the rubric's own), every run is scored with one, and every
+              published result names it. The best answer always earns full credit and the riskiest none, and badges never depend on weights. The Rankings page
               lets you try other presets, labelled as custom views.
             </p>
-            <div className="mt-5 overflow-hidden rounded-xl border border-line">
-              {suites.map((s) => (
-                <div key={s.id} className="border-b border-line px-4 py-3 last:border-0">
-                  <div className="flex items-baseline justify-between">
-                    <span className="font-semibold">
-                      {s.name} <span className="font-normal text-muted">· {s.tagline}</span>
-                    </span>
-                    <span className="font-semibold tabular">{s.weight}%</span>
-                  </div>
-                  <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-[13px] text-muted">
-                    {s.benchmarks.map((b) => (
-                      <a key={b.id} href={`#${b.id}`} className="hover:text-fg">
-                        {b.name} <span className="tabular">{b.weight}</span>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <PublishedWeights />
             <div className="mt-4 flex flex-wrap gap-2 text-[13px]">
               {rubric.presets.map((p) => (
                 <Chip key={p.id} tone={p.official ? "accent" : "neutral"}>
@@ -276,7 +268,7 @@ export function MethodologyPage() {
           <Section id="limitations" title="Limitations.">
             <ul className="flex flex-col gap-2">
               {[
-                "Weights are a judgment call. Presets and custom weights are there to show how much the order depends on them.",
+                "Weights are a judgment call. A public poll sets them, presets and custom weights show how much the order depends on them, and a poll can be swayed by whoever turns up to vote.",
                 "Measured usage relies on public dashboards, which undercount value held in some bridges and apps.",
                 "Independent effective-anonymity studies exist for only a few systems; the rest score “no independent study yet”.",
                 "Scores describe protocols, not the apps built on them. App-level screening or co-signing shows up only as context.",
@@ -364,9 +356,9 @@ export function MethodologyPage() {
               </div>
             </div>
             <p className="mt-4 text-sm text-muted">
-              Versioning: a major version changes criteria or weights, so scores aren't comparable across majors. Minor versions clarify guidance; patches fix
-              typos. Corrections to published results are listed in the notes of the release that applies them, and every decision on a suggested correction,
-              with its reason, is in the{" "}
+              Versioning: a major version changes criteria, so scores aren't comparable across majors. Minor versions clarify guidance; patches fix typos.
+              Weights are versioned on their own (W1, W2…): compare scores under the same weighting. Corrections to published results are listed in the notes of
+              the release that applies them, and every decision on a suggested correction, with its reason, is in the{" "}
               <a href="/releases#corrections" className="underline decoration-line-strong underline-offset-2 hover:text-fg">
                 corrections log
               </a>
@@ -379,13 +371,55 @@ export function MethodologyPage() {
   );
 }
 
+/** The suite and benchmark weights the published results are scored with. */
+function PublishedWeights() {
+  const { ref } = usePublishedWeighting();
+  const shares = useWeightingShares(ref);
+  return (
+    <>
+      <div className="mt-5 overflow-hidden rounded-xl border border-line">
+        {suites.map((s) => (
+          <div key={s.id} className="border-b border-line px-4 py-3 last:border-0">
+            <div className="flex items-baseline justify-between">
+              <span className="font-semibold">
+                {s.name} <span className="font-normal text-muted">· {s.tagline}</span>
+              </span>
+              <span className="font-semibold tabular">{fmtWeight(shares?.suites[s.id])}</span>
+            </div>
+            <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-[13px] text-muted">
+              {s.benchmarks.map((b) => (
+                <a key={b.id} href={`#${b.id}`} className="hover:text-fg">
+                  {b.name} <span className="tabular">{fmtWeight(shares?.benchmarks[b.id])}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      {ref && (
+        <p className="mt-2 text-[13px] text-muted">
+          As in{" "}
+          <a href={ref.number ? `/weighting/${ref.label}` : "/weighting"} className="underline decoration-line-strong underline-offset-4 hover:text-fg">
+            {ref.label}, {ref.title.toLowerCase()}
+          </a>
+          , the weighting the published results are scored with.
+        </p>
+      )}
+    </>
+  );
+}
+
 function WorkedExample() {
   const lb = useLeaderboard();
   const rows = lb.data?.rows ?? [];
   const [slug, setSlug] = useState<string | null>(null);
   const r = rows.find((x) => x.slug === slug) ?? rows[0];
+  // Each result with the suite weights it was scored with.
+  const weights = (lb.data?.weightings ?? []).find((w) => w.id === r?.weighting?.id)?.suites ?? Object.fromEntries(suites.map((x) => [x.id, x.weight]));
   if (!r) return null;
-  const total = suites.reduce((s, su) => s + (r.suites[su.id] ?? 0) * su.weight, 0) / 100;
+  const sum = suites.reduce((s, su) => s + (weights[su.id] ?? 0), 0) || 1;
+  const pct = (id: string) => ((weights[id] ?? 0) * 100) / sum;
+  const total = suites.reduce((s, su) => s + (r.suites[su.id] ?? 0) * pct(su.id), 0) / 100;
   return (
     <div className="mt-4 overflow-hidden rounded-xl border border-line">
       <div className="flex flex-wrap items-center gap-1.5 border-b border-line bg-bg-2 px-3 py-2">
@@ -410,10 +444,10 @@ function WorkedExample() {
             <span className="text-fg-3">
               {su.name}{" "}
               <span className="text-faint">
-                {(r.suites[su.id] ?? 0).toFixed(1)}% × {su.weight}%
+                {(r.suites[su.id] ?? 0).toFixed(1)}% × {fmtWeight(pct(su.id))}
               </span>
             </span>
-            <span className="text-right tabular">{(((r.suites[su.id] ?? 0) * su.weight) / 100).toFixed(2)}</span>
+            <span className="text-right tabular">{(((r.suites[su.id] ?? 0) * pct(su.id)) / 100).toFixed(2)}</span>
           </div>
         ))}
         <div className="mt-1 grid grid-cols-[1fr_auto] gap-4 border-t border-dashed border-line-strong pt-1 font-semibold text-fg">
@@ -542,6 +576,14 @@ function FullRubric() {
   const [open, setOpen] = useState<string | null>(null);
   return (
     <div className="flex flex-col gap-8">
+      <p className="text-[13px] text-muted">
+        Weights and points below are the rubric's own (W1). A community weighting changes the weights and the points of in-between answers; each weighting's
+        numbers are on{" "}
+        <a href="/weighting" className="underline decoration-line-strong underline-offset-4 hover:text-fg">
+          its page
+        </a>
+        .
+      </p>
       {suites.map((s) => (
         <div key={s.id}>
           <div className="flex items-baseline justify-between border-b border-line-strong pb-2">
