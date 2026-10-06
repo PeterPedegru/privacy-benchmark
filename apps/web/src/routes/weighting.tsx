@@ -1,16 +1,15 @@
 import type { PollInfo, PollResponse, WeightingSummary } from "@pb/core";
-import { applyBallot, type Ballot, resolveWeighting, sharesOf, type Weighting } from "@pb/rubric";
+import { type Ballot, resolveWeighting, sharesOf, type Weighting } from "@pb/rubric";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { Check, Clock, LogOut, RotateCcw, Users, Vote } from "lucide-react";
 import { m } from "motion/react";
-import { type ReactNode, useDeferredValue, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { Chip } from "@/components/ui/badges";
 import { Button } from "@/components/ui/button";
 import { LoadError, Skeleton } from "@/components/ui/misc";
 import { ballotFrom, clearDraft, type Draft, draftFrom, loadDraft, movedCount, saveDraft } from "@/components/weighting/draft";
-import { ImpactPreview } from "@/components/weighting/impact";
 import { WeightTree } from "@/components/weighting/tree";
 import { focusIn } from "@/design/motion";
 import { ApiError, api } from "@/lib/api";
@@ -104,8 +103,6 @@ function OpenPoll({ data }: { data: PollResponse }) {
   // What the voter sees as their changes: the sliders they moved. The ballot itself holds only what differs.
   const moved = movedCount(draft, baseShares);
   const changed = Object.keys(ballot).length > 0;
-  const deferred = useDeferredValue(ballot);
-  const mine = useMemo(() => applyBallot(base, deferred), [base, deferred]);
   useEffect(() => {
     if (changed) saveDraft(poll.id, ballot);
     else clearDraft(poll.id);
@@ -191,22 +188,13 @@ function OpenPoll({ data }: { data: PollResponse }) {
         />
       </div>
 
-      <div className="mt-8 grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
-        <div className="min-w-0">
-          <div className="mb-3 flex items-end justify-between gap-3">
-            <div>
-              <div className="text-xl font-semibold tracking-[-0.015em]">Adjust what matters to you</div>
-              <div className="text-sm text-muted">Suites first; open one to weigh its benchmarks, criteria and partial credit.</div>
-            </div>
-          </div>
-          <WeightTree base={baseShares} draft={draft} onChange={setDraft} />
+      {/* No preview of how projects would rank: a vote is on what should matter, not on which project it would help. */}
+      <div className="mt-8 min-w-0">
+        <div className="mb-3">
+          <div className="text-xl font-semibold tracking-[-0.015em]">Adjust what matters to you</div>
+          <div className="text-sm text-muted">Suites first; open one to weigh its benchmarks, criteria and partial credit.</div>
         </div>
-        <aside className="lg:sticky lg:top-24 lg:self-start">
-          <ImpactPreview base={base} mine={mine} changed={changed} />
-          <p className="mt-3 px-1 text-xs leading-5 text-muted">
-            A preview, not the result: the poll's result is the median of every ballot, so one ballot moves it only as far as the voters around it.
-          </p>
-        </aside>
+        <WeightTree base={baseShares} draft={draft} onChange={setDraft} />
       </div>
 
       <ActionBar

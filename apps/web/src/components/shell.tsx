@@ -152,8 +152,8 @@ function DemoBanner() {
 }
 
 /**
- * While a community weighting poll is open: a slim invitation to vote on every public page but the poll's own,
- * dismissible for that poll.
+ * While a community weighting poll is open: an announcement bar at the top of every public page but the poll's own,
+ * like the demo notice, dismissible for that poll.
  */
 function PollBanner() {
   const path = useRouterState({ select: (s) => s.location.pathname });
@@ -178,14 +178,12 @@ function PollBanner() {
   const days = Math.max(0, Math.ceil((Date.parse(open.closesAt) - Date.now()) / 86_400_000));
   return (
     <div className="border-b border-accent-line bg-accent-soft text-accent-fg">
-      <div className="mx-auto flex max-w-[var(--container-wide)] items-center gap-3 px-4 py-2 text-[13px] sm:px-6">
-        <Vote className="size-4 shrink-0" />
-        <Link to="/weighting" className="min-w-0 flex-1 truncate">
-          <span className="font-medium">Vote on the weights.</span>{" "}
-          <span className="hidden sm:inline">
-            The community weighting poll is open for {days <= 1 ? "less than a day" : `${days} more days`}; the result scores the next run.
-          </span>
-          <span className="ml-1 underline underline-offset-4">Vote</span>
+      <div className="relative mx-auto max-w-[var(--container-wide)] px-10 py-2 text-center text-[13px] sm:px-12">
+        <Vote className="mr-1.5 inline size-3.5 -translate-y-px" />
+        The community weighting poll is open for {days <= 1 ? "less than a day" : `${days} more days`}
+        <span className="hidden sm:inline">; the result scores the next run</span>.{" "}
+        <Link to="/weighting" className="font-medium underline decoration-dotted underline-offset-4">
+          Vote on the weights
         </Link>
         <button
           type="button"
@@ -198,7 +196,7 @@ function PollBanner() {
             }
             setHidden(true);
           }}
-          className="rounded p-1 hover:bg-accent/10"
+          className="absolute top-1/2 right-3 -translate-y-1/2 rounded p-1 hover:bg-accent/10 sm:right-5"
         >
           <X className="size-3.5" />
         </button>
@@ -296,8 +294,8 @@ export function PublicLayout() {
     <div className="flex min-h-dvh flex-col">
       <ReleaseSync />
       <DemoBanner />
-      <Header onCommand={openCmd} />
       <PollBanner />
+      <Header onCommand={openCmd} />
       <main className="flex-1">
         <Outlet />
       </main>

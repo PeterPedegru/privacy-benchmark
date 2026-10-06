@@ -28,10 +28,21 @@ test.describe("community weighting", () => {
     const v = await visitor.newPage();
     const errors = watchErrors(v);
 
+    await test.step("the open poll is announced at the top of the site", async () => {
+      await v.goto("/");
+      const banner = v.getByRole("link", { name: "Vote on the weights" });
+      await expect(banner).toBeVisible();
+      // Above the header, like the other announcements.
+      const header = await v.locator("header").boundingBox();
+      expect((await banner.boundingBox())!.y).toBeLessThan(header!.y);
+      await banner.click();
+      await expect(v).toHaveURL(/\/weighting$/);
+    });
+
     await test.step("a visitor votes for the current weights in one click", async () => {
-      await v.goto("/weighting");
       await expect(v.getByText("E2E weighting poll")).toBeVisible();
-      await expect(v.getByText("If your weights won")).toBeVisible();
+      // No preview of how projects would rank: a vote is on what should matter.
+      await expect(v.getByText("If your weights won")).toHaveCount(0);
       await v.getByRole("button", { name: "Keep the current weights", exact: true }).click();
       await expect(v.getByText("Your vote is in")).toBeVisible();
       await expect(v.getByText("1 ballot", { exact: true })).toBeVisible();
