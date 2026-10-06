@@ -3,7 +3,7 @@ import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { inflateSync } from "node:zlib";
 import type { CardConfig, ProjectSnapshot } from "@pb/core";
-import { benchmarks, fmtScore, getBenchmark, privacyText, rubric, suites } from "@pb/rubric";
+import { benchmarks, fmtScore, getBenchmark, levelNumber, operatorNumber, privacyText, rubric, suites } from "@pb/rubric";
 import { renderAsync } from "@resvg/resvg-js";
 import type { ReactNode } from "react";
 import satori from "satori";
@@ -560,6 +560,92 @@ export function renderBrandCard(): Promise<Buffer> {
     throw e;
   });
   return brandCard;
+}
+
+// ---------- landing share image ----------
+
+/** Operator meter colours by trust tier: green when nobody can see, through red when the operator does. */
+const OPERATOR_COLOR = { A: "#0a6b45", B: "#5b4cf0", C: "#9a6700", D: "#a3272a" } as const;
+
+/** A labelled score out of five with its meter, as on the site's Privacy Level badge. */
+function cardMeter(label: string, n: number | null, color: string, t: Theme) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", marginRight: 22 }}>
+      <div style={{ display: "flex", fontSize: 15, color: t.muted, marginRight: 7 }}>{label}</div>
+      <div style={{ display: "flex", fontSize: 17, fontWeight: 700, color: n === null ? t.muted : color, marginRight: 8 }}>{n === null ? "—" : `${n}/5`}</div>
+      {n === null ? null : (
+        <div style={{ display: "flex" }}>
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} style={{ display: "flex", width: 5, height: 15, borderRadius: 3, marginRight: 3, background: i <= n ? color : t.line }} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * The landing page's share image: the headline and the top of the leaderboard, each project's Public and Operator
+ * scores and its overall score. 1200×630 for Open Graph, 1200×600 for X's large card. Drawn from what's published
+ * now, so it follows releases and hidden projects.
+ */
+export async function renderHomeCard(top: ProjectSnapshot[], height: 630 | 600): Promise<Buffer> {
+  const t = theme({ theme: "light", accent: "iris" } as CardConfig);
+  const W = 1200;
+  const H = height;
+  const rows = top.slice(0, 5);
+  const rowH = H === 630 ? 56 : 51;
+  // The latest release among everything shown on the site, not only the top five.
+  const release = top.reduce<ProjectSnapshot["release"] | null>((r, s) => (!r || s.release.publishedAt > r.publishedAt ? s.release : r), null);
+  const node = (
+    <div style={{ display: "flex", flexDirection: "column", width: W, height: H, padding: "44px 64px", background: t.bg, color: t.fg, fontFamily: "Inter" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", fontSize: 24, fontWeight: 700 }}>
+          <div style={{ display: "flex", width: 30, height: 30, borderRadius: 8, background: t.outline, marginRight: 12 }} />
+          Privacy Benchmark
+        </div>
+        <div style={{ display: "flex", fontSize: 18, color: t.muted }}>{release ? `Release ${release.label}` : ""}</div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", marginTop: 26 }}>
+        <div style={{ display: "flex", fontSize: 54, fontWeight: 700, letterSpacing: -1.6, lineHeight: 1.05 }}>Privacy systems, ranked.</div>
+        <div style={{ display: "flex", fontSize: 24, color: t.muted, marginTop: 10 }}>Every score is a sourced, checkable calculation.</div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", marginTop: 24, borderTop: `1px solid ${t.line}` }}>
+        {rows.map((s, i) => {
+          const pub = levelNumber(s.scores.level);
+          const op = operatorNumber(s.scores.trustTier, s.scores.level);
+          const overall = s.scores.overall ?? 0;
+          return (
+            <div key={s.project.slug} style={{ display: "flex", alignItems: "center", height: rowH, borderBottom: `1px solid ${t.line}` }}>
+              <div style={{ display: "flex", width: 40, fontSize: 20, color: t.faint }}>{i + 1}</div>
+              <div style={{ display: "flex", width: 300, fontSize: 24, fontWeight: 600, letterSpacing: -0.3 }}>{s.project.name.slice(0, 22)}</div>
+              <div style={{ display: "flex", flexGrow: 1 }}>
+                {cardMeter("Public", pub, t.outline, t)}
+                {cardMeter("Operator", op, s.scores.trustTier ? OPERATOR_COLOR[s.scores.trustTier] : t.muted, t)}
+              </div>
+              <div style={{ display: "flex", width: 150, height: 8, borderRadius: 4, background: t.track, marginRight: 20 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    width: `${Math.max(0, Math.min(100, overall))}%`,
+                    height: 8,
+                    borderRadius: 4,
+                    background: i === 0 ? t.outline : t.groupLine,
+                  }}
+                />
+              </div>
+              <div style={{ display: "flex", width: 96, justifyContent: "flex-end", fontSize: 26, fontWeight: 700 }}>{fmtScore(s.scores.overall)}</div>
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ display: "flex", flexGrow: 1 }} />
+      <div style={{ display: "flex", fontSize: 18, color: t.faint }}>
+        {`privacybenchmark.org · ${top.length} projects · public rubric, cited evidence · open source`}
+      </div>
+    </div>
+  );
+  return rasterize(node, W, H, t.bg);
 }
 
 async function buildBrandCard(): Promise<Buffer> {

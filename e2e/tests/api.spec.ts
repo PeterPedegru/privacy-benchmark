@@ -48,9 +48,17 @@ test.describe("public API contract", () => {
   });
 
   test("cards render as PNG", async ({ request }) => {
-    const home = await request.get("/og/home.png");
-    expect(home.headers()["content-type"]).toBe("image/png");
-    expect((await home.body()).length).toBeGreaterThan(5_000);
+    // The landing page's share images: 1200×630 for Open Graph, 1200×600 for X's large card.
+    for (const [path, height] of [
+      ["/og/home.png", 630],
+      ["/og/home-x.png", 600],
+    ] as const) {
+      const img = await request.get(path);
+      expect(img.headers()["content-type"]).toBe("image/png");
+      const png = await img.body();
+      expect(png.length).toBeGreaterThan(5_000);
+      expect([png.readUInt32BE(16), png.readUInt32BE(20)], path).toEqual([1200, height]);
+    }
     const { rows } = await (await request.get("/api/public/leaderboard")).json();
     const proj = await request.get(`/og/project/${rows[0].slug}.png`);
     expect(proj.headers()["content-type"]).toBe("image/png");

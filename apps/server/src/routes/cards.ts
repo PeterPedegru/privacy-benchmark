@@ -4,7 +4,7 @@ import { type CardConfig, cardConfigSchema } from "@pb/core";
 import { fmtScore } from "@pb/rubric";
 import { eq } from "drizzle-orm";
 import { type Context, Hono } from "hono";
-import { renderBrandCard, renderCard } from "../cards/render.tsx";
+import { renderBrandCard, renderCard, renderHomeCard } from "../cards/render.tsx";
 import { getDb, schema } from "../db/index.ts";
 import { env } from "../env.ts";
 import { clientIp, windowLimiter } from "../lib/auth.ts";
@@ -154,22 +154,24 @@ cardRoutes.get("/og/project/:file", async (c) => {
 });
 
 /** Default share image: the top five projects by overall score, table card. */
-cardRoutes.get("/og/home.png", async (c) => {
-  const top = (await visibleSnapshots(getDb()))
+/** The top of the leaderboard as published now, one result per project. */
+async function topProjects() {
+  return (await visibleSnapshots(getDb()))
     .sort((a, b) => (b.scores.overall ?? -1) - (a.scores.overall ?? -1))
-    .filter((s, i, arr) => arr.findIndex((x) => x.project.slug === s.project.slug) === i)
-    .slice(0, 5);
-  // Before the first release the home page still advertises /og/home.png, so serve a branded card.
+    .filter((s, i, arr) => arr.findIndex((x) => x.project.slug === s.project.slug) === i);
+}
+
+/**
+ * The landing page's share images: 1200×630 for Open Graph (Slack, LinkedIn, iMessage), 1200×600 for X's large card.
+ * Before the first release the page still advertises them, so a branded card stands in.
+ */
+async function homeImage(c: Context, height: 630 | 600) {
+  const top = await topProjects();
   if (!top.length) return pngResponse(c, { png: await renderBrandCard() });
-  const cfg = cardConfigSchema.parse({
-    template: "table",
-    projects: top.map((s) => s.project.slug),
-    focus: top[0]!.project.slug,
-    rowSet: "suites",
-    size: "landscape",
-  });
-  return pngResponse(c, await cardPng(c, "home", async () => renderCard(cfg, top)));
-});
+  return pngResponse(c, await cardPng(c, `home:${height}`, () => renderHomeCard(top, height)));
+}
+cardRoutes.get("/og/home.png", (c) => homeImage(c, 630));
+cardRoutes.get("/og/home-x.png", (c) => homeImage(c, 600));
 
 function esc(s: string) {
   return s.replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]!);

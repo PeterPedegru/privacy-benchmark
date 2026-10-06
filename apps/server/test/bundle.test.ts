@@ -159,7 +159,14 @@ describe("bundled server (dist/index.js)", () => {
       const page = await fetch(`${BASE}/`);
       expect(page.status).toBe(200);
       expect(page.headers.get("content-security-policy")).toContain("script-src 'self' 'sha256-");
-      expect(await page.text()).toContain('<div id="root">');
+      const html = await page.text();
+      expect(html).toContain('<div id="root">');
+      // Link previews: the Open Graph image and X's own 2:1 image.
+      expect(html).toContain(`og:image" content="`);
+      expect(html).toMatch(/og:image" content="[^"]*\/og\/home\.png"/);
+      expect(html).toMatch(/twitter:image" content="[^"]*\/og\/home-x\.png"/);
+      const x = await fetch(`${BASE}/og/home-x.png`);
+      expect(x.headers.get("content-type")).toBe("image/png");
     }
   });
 

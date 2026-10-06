@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { fmtScore } from "@pb/rubric";
+import { fmtScore, privacyText } from "@pb/rubric";
 import { type Context, Hono } from "hono";
 import { bodyLimit } from "hono/body-limit";
 import { compress } from "hono/compress";
@@ -115,15 +115,37 @@ export function createApp() {
   if (indexHtml) {
     const esc = (v: string) => v.replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]!);
     // A function replacer, so `$&`, `` $` `` and `$'` in a project name are inserted literally (SEC-16).
-    const withMeta = (title: string, description: string, image: string) =>
-      indexHtml.replace(
-        "</head>",
-        () =>
-          `<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:image" content="${esc(image)}"><meta name="twitter:card" content="summary_large_image"></head>`,
+    // Link previews: Open Graph (Slack, LinkedIn, iMessage, Discord) and X's large card, which takes its own 2:1 image.
+    const withMeta = (m: { title: string; description: string; url: string; image: string; xImage: string; alt: string }) =>
+      indexHtml.replace("</head>", () =>
+        [
+          `<meta property="og:type" content="website">`,
+          `<meta property="og:site_name" content="Privacy Benchmark">`,
+          `<meta property="og:url" content="${esc(m.url)}">`,
+          `<meta property="og:title" content="${esc(m.title)}">`,
+          `<meta property="og:description" content="${esc(m.description)}">`,
+          `<meta property="og:image" content="${esc(m.image)}">`,
+          `<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">`,
+          `<meta property="og:image:alt" content="${esc(m.alt)}">`,
+          `<meta name="twitter:card" content="summary_large_image">`,
+          `<meta name="twitter:title" content="${esc(m.title)}">`,
+          `<meta name="twitter:description" content="${esc(m.description)}">`,
+          `<meta name="twitter:image" content="${esc(m.xImage)}">`,
+          `<meta name="twitter:image:alt" content="${esc(m.alt)}">`,
+          "</head>",
+        ].join(""),
       );
     // The page shell must be revalidated so a deploy's new asset hashes are picked up immediately.
     const page = (c: Context, html: string) => c.html(html, 200, { "cache-control": "no-cache" });
-    const home = withMeta("Privacy Benchmark", "Who can see, stop or seize your private transactions? Every number sourced.", `${env.publicUrl}/og/home.png`);
+    const home = withMeta({
+      title: "Privacy Benchmark: privacy systems, ranked",
+      description:
+        "Crypto privacy systems ranked on a published rubric: what's hidden from the public and from operators, and who can stop you. Every score sourced. Open source.",
+      url: `${env.publicUrl}/`,
+      image: `${env.publicUrl}/og/home.png`,
+      xImage: `${env.publicUrl}/og/home-x.png`,
+      alt: "The Privacy Benchmark leaderboard: each project's Public and Operator privacy scores and its overall score",
+    });
 
     app.use("/assets/*", serveStatic({ root: dist, precompressed: true }));
     // A missing hashed asset (a tab left open across a deploy) must 404, not get the SPA shell as JavaScript.
@@ -136,11 +158,14 @@ export function createApp() {
       if (!s) return page(c, home);
       return page(
         c,
-        withMeta(
-          `${s.project.name} · Privacy Benchmark`,
-          `${s.project.name} scores ${fmtScore(s.scores.overall)} (${s.scores.level ?? "—"}).`,
-          `${env.publicUrl}/og/project/${s.project.slug}.png`,
-        ),
+        withMeta({
+          title: `${s.project.name} · Privacy Benchmark`,
+          description: `${s.project.name} scores ${fmtScore(s.scores.overall)} · ${privacyText(s.scores.level, s.scores.trustTier)}. ${s.project.tagline}`,
+          url: `${env.publicUrl}/projects/${s.project.slug}`,
+          image: `${env.publicUrl}/og/project/${s.project.slug}.png`,
+          xImage: `${env.publicUrl}/og/project/${s.project.slug}.png`,
+          alt: `${s.project.name} on the Privacy Benchmark: overall score, privacy scores and suite scores`,
+        }),
       );
     });
     app.get("*", (c) => page(c, home));
