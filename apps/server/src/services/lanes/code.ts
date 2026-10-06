@@ -117,17 +117,57 @@ export interface Selection {
   duplicates: number;
 }
 
+const TS_SOURCE = /\.(ts|tsx|mts|cts|js|mjs|cjs)$/i;
+/** Source files, not type declarations or tool configs (vitest.config.mts, eslint.config.js). */
+const isTsSource = (path: string) =>
+  TS_SOURCE.test(path) && !/\.d\.[cm]?ts$/i.test(path) && !/(^|\/)[^/]*\.config\.[cm]?[jt]sx?$/i.test(path) && !isExcludedPath(path);
+
 /**
- * Picks files: tier 0 first (capped at 80 files / 4 MB), then by score, de-duplicated by blob SHA, TypeScript and
- * JavaScript limited to 35% of the file budget, files up to 2 MB. Pure.
+ * A repository whose own code is TypeScript or JavaScript: a TS-native service (a permissioning API, a sequencer),
+ * not an SDK beside contracts. At least 20 source files, no contract code at all, and three times as many as Rust,
+ * Go or other systems code. Pure.
+ */
+export function isTsPrimary(entries: TreeEntry[]): boolean {
+  let ts = 0;
+  let contracts = 0;
+  let systems = 0;
+  for (const e of entries) {
+    if (e.type !== "blob" || isExcludedPath(e.path)) continue;
+    const ext = e.path.slice(e.path.lastIndexOf(".")).toLowerCase();
+    if (isTsSource(e.path)) ts++;
+    else if ((CODE_EXT[ext] ?? 0) >= 7) contracts++;
+    else if (CODE_EXT[ext] !== undefined || OTHER_CODE.has(ext)) systems++;
+  }
+  return ts >= 20 && contracts === 0 && ts >= 3 * systems;
+}
+
+/** In a TS-native repository its source is the system's code (tier 2), and its SQL migrations define its data. */
+function tsPrimaryTier(path: string): { tier: Tier; score: number } | null {
+  if (isExcludedPath(path)) return null;
+  const sql = /\.sql$/i.test(path);
+  if (!sql && !isTsSource(path)) return null;
+  let s = sql ? 2 : 4;
+  if (KEYWORDS.test(path)) s += 4;
+  s -= Math.min(4, path.split("/").length / 3);
+  return { tier: 2, score: Math.max(0.1, s) };
+}
+
+/**
+ * Picks files: tier 0 first (capped at 80 files / 4 MB), then by score, de-duplicated by blob SHA, files up to 2 MB.
+ * TypeScript and JavaScript beside contracts (SDKs, tooling) are limited to 35% of the file budget; a repository
+ * whose own code is TypeScript (isTsPrimary) has its source and SQL migrations ranked as code, without the cap.
+ * Pure.
  */
 export function selectFiles(entries: TreeEntry[], budget: { files: number; bytes: number }): Selection {
+  const tsPrimary = isTsPrimary(entries);
   const seenSha = new Set<string>();
   let duplicates = 0;
   const candidates: (TreeEntry & { tier: Tier; score: number })[] = [];
   for (const t of entries) {
     if (t.type !== "blob" || (t.size ?? 0) > MAX_FILE_BYTES) continue;
-    const tier = fileTier(t.path);
+    const base = fileTier(t.path);
+    const promoted = tsPrimary && (base === null || base === 3) ? tsPrimaryTier(t.path) : null;
+    const tier = promoted?.tier ?? base;
     if (tier === null) continue;
     if (t.sha) {
       if (seenSha.has(t.sha)) {
@@ -136,7 +176,7 @@ export function selectFiles(entries: TreeEntry[], budget: { files: number; bytes
       }
       seenSha.add(t.sha);
     }
-    candidates.push({ ...t, tier, score: scoreFile(t.path) });
+    candidates.push({ ...t, tier, score: promoted?.score ?? scoreFile(t.path) });
   }
   candidates.sort((a, b) => ((a.tier === 0) !== (b.tier === 0) ? (a.tier === 0 ? -1 : 1) : b.score - a.score || a.path.localeCompare(b.path)));
   const picked: Selection["picked"] = [];

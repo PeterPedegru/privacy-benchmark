@@ -5,6 +5,7 @@ import {
   fileTier,
   isExcludedPath,
   isGeneratedHeader,
+  isTsPrimary,
   latestDeploymentTag,
   latestStableFromTags,
   latestStableTag,
@@ -98,6 +99,29 @@ describe("code file tiering (SRC-6)", () => {
     expect(sel.picked.filter((p) => p.path.endsWith(".ts")).length).toBe(7); // 35% of 20
     expect(sel.picked.some((p) => p.path === "big/Huge.sol")).toBe(false);
     expect(sel.picked.filter((p) => p.path.endsWith(".sol")).length).toBe(6);
+  });
+
+  it("ranks a TypeScript-native service's own code as code, without the cap for SDKs beside contracts", () => {
+    // Like matter-labs/prividium-core: a permissions API in TypeScript with SQL migrations, and no contracts.
+    const entries = [
+      ...Array.from({ length: 40 }, (_, i) => ({ path: `apps/permissions-api/src/routes/r${i}.ts`, type: "blob", size: 100, sha: `api${i}` })),
+      ...Array.from({ length: 10 }, (_, i) => ({ path: `packages/access-control/src/policy${i}.ts`, type: "blob", size: 100, sha: `acl${i}` })),
+      ...Array.from({ length: 8 }, (_, i) => ({ path: `apps/permissions-api/migrations/00${i}_roles.sql`, type: "blob", size: 100, sha: `sql${i}` })),
+      { path: "apps/permissions-api/src/routes/r0.test.ts", type: "blob", size: 100, sha: "t0" },
+      { path: "packages/api-types/src/index.d.ts", type: "blob", size: 100, sha: "d0" },
+      { path: "packages/access-control/vitest.config.mts", type: "blob", size: 100, sha: "cfg" },
+      { path: "README.md", type: "blob", size: 100, sha: "readme" },
+    ];
+    expect(isTsPrimary(entries)).toBe(true);
+    const sel = selectFiles(entries, { files: 100, bytes: 10_000_000 });
+    expect(sel.picked.filter((p) => p.path.endsWith(".ts")).length).toBe(50);
+    expect(sel.picked.filter((p) => p.path.endsWith(".sql")).length).toBe(8);
+    // Tests, type declarations and tool configs stay out.
+    expect(sel.picked.some((p) => /\.test\.ts$|\.d\.ts$|\.config\.mts$/.test(p.path))).toBe(false);
+    // Access-control code ranks ahead of plain routes.
+    expect(sel.picked.findIndex((p) => p.path.includes("access-control"))).toBeLessThan(sel.picked.findIndex((p) => p.path.endsWith("r1.ts")));
+    // One contract makes it a contracts repository, where TypeScript is an SDK and keeps its cap.
+    expect(isTsPrimary([...entries, { path: "contracts/src/Bridge.sol", type: "blob", size: 100, sha: "sol" }])).toBe(false);
   });
 
   it("recognises generated-file headers", () => {
