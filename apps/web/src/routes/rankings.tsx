@@ -83,7 +83,7 @@ export function RankingsPage() {
         })}
       </div>
 
-      <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
+      <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div>
           <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
             <div>
@@ -226,7 +226,7 @@ function RankRow({ r, i, value, top }: { r: LeaderboardRow; i: number; value: nu
       <Link
         to="/projects/$slug"
         params={{ slug: r.slug }}
-        className="grid grid-cols-[28px_1fr_auto] items-center gap-3 px-4 py-3.5 transition-colors hover:bg-bg-2 md:grid-cols-[36px_minmax(160px,1fr)_minmax(200px,1.2fr)_minmax(140px,1fr)_80px]"
+        className="grid grid-cols-[28px_1fr_auto] items-center gap-3 px-4 py-3.5 transition-colors hover:bg-bg-2 md:grid-cols-[36px_minmax(130px,1fr)_minmax(190px,1.2fr)_minmax(90px,1fr)_80px]"
       >
         <span className="text-sm text-muted tabular">{i + 1}</span>
         <span className="flex min-w-0 items-center gap-2.5">

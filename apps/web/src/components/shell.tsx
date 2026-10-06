@@ -73,7 +73,8 @@ function Header({ onCommand }: { onCommand: () => void }) {
     <header
       className={cn("sticky top-0 z-30 border-b bg-bg/95 backdrop-blur-sm transition-colors duration-300", scrolled ? "border-line" : "border-transparent")}
     >
-      <div className="mx-auto flex h-16 max-w-[var(--container-wide)] items-center gap-6 px-4 sm:px-6">
+      {/* Tighter at tablet width, where the menu, search and theme button only just fit. */}
+      <div className="mx-auto flex h-16 max-w-[var(--container-wide)] items-center gap-4 px-4 sm:px-6 lg:gap-6">
         <Logo />
         <nav className="hidden items-center gap-0.5 md:flex">
           {NAV.map((n) => {
@@ -82,7 +83,10 @@ function Header({ onCommand }: { onCommand: () => void }) {
               <Link
                 key={n.to}
                 to={n.to}
-                className={cn("relative rounded-lg px-3 py-1.5 text-sm transition-colors duration-200", active ? "text-fg" : "text-muted hover:text-fg")}
+                className={cn(
+                  "relative rounded-lg px-2.5 py-1.5 text-sm transition-colors duration-200 lg:px-3",
+                  active ? "text-fg" : "text-muted hover:text-fg",
+                )}
               >
                 {active && <m.span layoutId="nav-active" transition={spring} className="absolute inset-0 -z-10 rounded-lg bg-surface" />}
                 {n.label}

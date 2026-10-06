@@ -69,7 +69,7 @@ function Leaderboard({
   return (
     <section className="mx-auto max-w-[var(--container-page)] px-4 pt-6 sm:px-6 md:pt-8">
       <div className="overflow-hidden rounded-2xl border border-line">
-        <div className="hidden grid-cols-[40px_32px_minmax(180px,1.4fr)_minmax(250px,1.2fr)_minmax(180px,1fr)_88px] items-center gap-3 border-b border-line bg-bg-2 px-4 py-2.5 text-xs font-medium text-muted md:grid">
+        <div className="hidden grid-cols-[40px_32px_minmax(130px,0.9fr)_minmax(230px,1.6fr)_minmax(90px,0.8fr)_88px] items-center gap-3 border-b border-line bg-bg-2 px-4 py-2.5 text-xs font-medium text-muted md:grid">
           <span>#</span>
           <span />
           <span>Project</span>
@@ -101,7 +101,7 @@ function Leaderboard({
             <m.div
               key={r.slug}
               variants={focusIn}
-              className="group grid grid-cols-[28px_1fr_auto] items-center gap-x-3 gap-y-2 border-b border-line px-4 py-3.5 transition-colors last:border-0 hover:bg-bg-2 md:grid-cols-[40px_32px_minmax(180px,1.4fr)_minmax(250px,1.2fr)_minmax(180px,1fr)_88px]"
+              className="group grid grid-cols-[28px_1fr_auto] items-center gap-x-3 gap-y-2 border-b border-line px-4 py-3.5 transition-colors last:border-0 hover:bg-bg-2 md:grid-cols-[40px_32px_minmax(130px,0.9fr)_minmax(230px,1.6fr)_minmax(90px,0.8fr)_88px]"
             >
               <span className="text-sm text-muted tabular">{i + 1}</span>
               <button
