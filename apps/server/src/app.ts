@@ -37,18 +37,42 @@ export function inlineScriptHashes(html: string): string[] {
 }
 
 /**
- * The admin shares an origin with the public site and its CSRF cookie is readable from JS, so any script injection
- * would be an admin takeover. Scripts: our own files plus the hashed inline theme script, nothing else. Images:
- * our own origin only, since project logos are proxied (SEC-17).
+ * Privacy-friendly analytics (Plausible: no cookies, no personal data), on privacybenchmark.org's public pages only.
+ * A fork's deployment, local development and the tests send nothing; ANALYTICS_SCRIPT_URL sets another script, and
+ * an empty one turns it off.
  */
-export function contentSecurityPolicy(scriptHashes: string[]): ContentSecurityPolicyOptions {
+const PLAUSIBLE_SCRIPT = "https://plausible.io/js/pa-NjSs7rPY4Yv8Pd5YCZTfH.js";
+const PLAUSIBLE_INIT =
+  "window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()";
+export function analyticsScript(publicUrl: string = env.publicUrl): string | null {
+  const configured = process.env.ANALYTICS_SCRIPT_URL;
+  if (configured !== undefined) return configured || null;
+  return new URL(publicUrl).hostname === "privacybenchmark.org" ? PLAUSIBLE_SCRIPT : null;
+}
+
+/** The page with the analytics snippet before </head>. */
+export function withAnalytics(html: string, scriptUrl: string): string {
+  return html.replace("</head>", () => `<script async src="${scriptUrl}"></script><script>${PLAUSIBLE_INIT}</script></head>`);
+}
+
+/** Admin pages and endpoints: never analytics, and the strict policy whatever the public pages allow. */
+export const isAdminPath = (p: string) => p === "/admin" || p.startsWith("/admin/") || p.startsWith("/api/admin/");
+
+/**
+ * The admin shares an origin with the public site and its CSRF cookie is readable from JS, so any script injection
+ * would be an admin takeover. Scripts: our own files plus the hashed inline scripts, nothing else; public pages
+ * also allow the analytics origin (`analytics`), which admin pages never load. Images: our own origin only, since
+ * project logos are proxied (SEC-17).
+ */
+export function contentSecurityPolicy(scriptHashes: string[], opts: { analytics?: string | null } = {}): ContentSecurityPolicyOptions {
+  const analytics = opts.analytics ? [new URL(opts.analytics).origin] : [];
   return {
     defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", ...scriptHashes],
+    scriptSrc: ["'self'", ...scriptHashes, ...analytics],
     styleSrc: ["'self'", "'unsafe-inline'"],
     imgSrc: ["'self'", "data:", "blob:"],
     fontSrc: ["'self'", "data:"],
-    connectSrc: ["'self'"],
+    connectSrc: ["'self'", ...analytics],
     mediaSrc: ["'self'"],
     workerSrc: ["'self'", "blob:"],
     manifestSrc: ["'self'"],
@@ -59,14 +83,25 @@ export function contentSecurityPolicy(scriptHashes: string[]): ContentSecurityPo
   };
 }
 
+/** A policy as a Content-Security-Policy header value. */
+export function cspHeader(o: ContentSecurityPolicyOptions): string {
+  return Object.entries(o)
+    .map(([k, v]) => `${k.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)} ${(v as string[]).join(" ")}`)
+    .join("; ");
+}
+
 /** Paths other sites may embed: share images and pages, and proxied logos. Everything else is same-origin only. */
 const isShareable = (p: string) => p.startsWith("/og/") || p.startsWith("/c/") || p.startsWith("/api/public/logo");
 
-export function createApp() {
+export function createApp(opts: { analytics?: string | null } = {}) {
   const app = new Hono();
   const dist = resolve(REPO_ROOT, "apps/web/dist");
   const indexPath = resolve(dist, "index.html");
   const indexHtml = existsSync(indexPath) ? readFileSync(indexPath, "utf8") : null;
+  // Public pages carry the analytics snippet; admin pages get the page without it, under the strict policy.
+  const analytics = opts.analytics !== undefined ? opts.analytics : analyticsScript();
+  const publicHtml = indexHtml && analytics ? withAnalytics(indexHtml, analytics) : indexHtml;
+  const adminCsp = cspHeader(contentSecurityPolicy(indexHtml ? inlineScriptHashes(indexHtml) : []));
 
   if (!process.env.VITEST) app.use("*", logger());
 
@@ -76,6 +111,7 @@ export function createApp() {
     const p = c.req.path;
     c.header("Cross-Origin-Resource-Policy", isShareable(p) ? "cross-origin" : "same-origin");
     if (p.startsWith("/api/admin/")) c.header("Cache-Control", "no-store");
+    if (isAdminPath(p)) c.header("Content-Security-Policy", adminCsp);
     // A proxied SVG opened directly must not run script on our origin.
     if (p.startsWith("/api/public/logo")) c.header("Content-Security-Policy", "default-src 'none'; style-src 'unsafe-inline'; sandbox");
     if (p.startsWith("/assets/") && c.res.status === 200) c.header("Cache-Control", IMMUTABLE);
@@ -83,7 +119,7 @@ export function createApp() {
   app.use(
     "*",
     secureHeaders({
-      contentSecurityPolicy: contentSecurityPolicy(indexHtml ? inlineScriptHashes(indexHtml) : []),
+      contentSecurityPolicy: contentSecurityPolicy(publicHtml ? inlineScriptHashes(publicHtml) : [], { analytics }),
       crossOriginResourcePolicy: false,
       permissionsPolicy: {
         camera: [],
@@ -112,12 +148,12 @@ export function createApp() {
   app.all("/og/*", (c) => c.text("not found", 404));
 
   // Production: serve the built SPA, injecting Open Graph tags for shareable pages.
-  if (indexHtml) {
+  if (indexHtml && publicHtml) {
     const esc = (v: string) => v.replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]!);
     // A function replacer, so `$&`, `` $` `` and `$'` in a project name are inserted literally (SEC-16).
     // Link previews: Open Graph (Slack, LinkedIn, iMessage, Discord) and X's large card, which takes its own 2:1 image.
     const withMeta = (m: { title: string; description: string; url: string; image: string; xImage: string; alt: string }) =>
-      indexHtml.replace("</head>", () =>
+      publicHtml.replace("</head>", () =>
         [
           `<meta property="og:type" content="website">`,
           `<meta property="og:site_name" content="Privacy Benchmark">`,
@@ -168,7 +204,8 @@ export function createApp() {
         }),
       );
     });
-    app.get("*", (c) => page(c, home));
+    // Admin pages: the page as built, without the analytics snippet (their policy wouldn't allow it anyway).
+    app.get("*", (c) => page(c, isAdminPath(c.req.path) ? indexHtml : home));
   }
   return app;
 }

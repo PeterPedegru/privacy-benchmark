@@ -176,6 +176,7 @@ The production site runs on Railway, defined as code in `.railway/railway.ts`: a
 
 - The admin is protected by a single password, hashed with scrypt and compared in constant time, with per-IP and global login rate limits. Sessions use `__Host-` cookies (Secure, SameSite=Strict, HttpOnly) plus a CSRF header. In production the server refuses to start with a weak admin password or session secret.
 - Everything agents fetch is treated as untrusted data, never instructions. Their GitHub tools can only read the evaluated project's repositories and auditors' report repositories.
+- Analytics: Plausible (no cookies, no personal data) runs on privacybenchmark.org's public pages only. Admin pages never load it and keep the strict policy; a fork's deployment, local development and the tests send nothing (`ANALYTICS_SCRIPT_URL` sets another script, or turns it off when empty).
 - To report a vulnerability, see [SECURITY.md](SECURITY.md).
 
 ## Contributing

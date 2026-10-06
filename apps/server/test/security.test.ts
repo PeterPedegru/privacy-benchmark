@@ -5,7 +5,7 @@ import { criteria, lowestOption } from "@pb/rubric";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { contentSecurityPolicy, createApp, inlineScriptHashes } from "../src/app.ts";
+import { analyticsScript, contentSecurityPolicy, createApp, cspHeader, inlineScriptHashes, withAnalytics } from "../src/app.ts";
 import { type DB, getDb, openDb, schema, setDb } from "../src/db/index.ts";
 import { costCapFor, env } from "../src/env.ts";
 import { requeueInterrupted } from "../src/eval/queue.ts";
@@ -280,6 +280,38 @@ describe("response headers", () => {
     expect((await app.request("/og/home.png")).headers.get("cross-origin-resource-policy")).toBe("cross-origin");
     const admin = await app.request("/api/admin/me");
     expect(admin.headers.get("cache-control")).toBe("no-store");
+  });
+
+  it("runs analytics on privacybenchmark.org's public pages only, never on admin pages", async () => {
+    const url = "https://plausible.io/js/pa-test.js";
+    // Only the real deployment: a fork, local development and the tests send nothing.
+    expect(analyticsScript("https://privacybenchmark.org")).toMatch(/^https:\/\/plausible\.io\/js\//);
+    expect(analyticsScript("http://localhost:5173")).toBeNull();
+    expect(analyticsScript("https://bench.example.org")).toBeNull();
+    // The snippet's inline script is hashed into the policy like the theme script.
+    const page = withAnalytics("<head><script>theme()</script></head>", url);
+    expect(page).toContain(`<script async src="${url}"></script>`);
+    expect(inlineScriptHashes(page)).toHaveLength(2);
+    const policy = contentSecurityPolicy(inlineScriptHashes(page), { analytics: url });
+    expect(policy.scriptSrc).toContain("https://plausible.io");
+    expect(policy.connectSrc).toEqual(["'self'", "https://plausible.io"]);
+    expect(cspHeader(policy)).toMatch(/script-src 'self' 'sha256-[^;]+ https:\/\/plausible\.io; /);
+    const withA = createApp({ analytics: url });
+    expect((await withA.request("/api/public/meta")).headers.get("content-security-policy")).toContain("connect-src 'self' https://plausible.io");
+    // The admin, which shares the origin and reads its CSRF cookie from JS, never allows a third-party script.
+    for (const path of ["/api/admin/me", "/admin", "/admin/projects"]) {
+      const csp = (await withA.request(path)).headers.get("content-security-policy") ?? "";
+      expect(csp, path).toContain("script-src 'self'");
+      expect(csp, path).not.toContain("plausible");
+    }
+    // With the site built: public pages carry the snippet, admin pages don't.
+    try {
+      readFileSync(resolve(import.meta.dirname, "../../web/dist/index.html"), "utf8");
+      expect(await (await withA.request("/")).text()).toContain(url);
+      expect(await (await withA.request("/admin/projects")).text()).not.toContain("plausible");
+    } catch (e) {
+      if ((e as NodeJS.ErrnoException).code !== "ENOENT") throw e;
+    }
   });
 
   it("hashes the inline theme script exactly", () => {
