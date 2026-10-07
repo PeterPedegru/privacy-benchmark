@@ -216,6 +216,22 @@ async function weightingCard(version: WeightingRow | null): Promise<{ key: strin
   return { key, data };
 }
 
+/**
+ * A short stamp of what the /weighting card shows (the weighting, and the open poll's turnout and days left). The page
+ * puts it in the image URL, so a link preview fetched after anything changed gets the new image, not a cached one.
+ */
+export async function weightingImageStamp(): Promise<string> {
+  const db = getDb();
+  const row = (await defaultWeighting(db))!;
+  const pollRow = await openPollRow(db);
+  const poll = pollRow ? await pollInfo(db, pollRow) : null;
+  const daysLeft = poll ? Math.max(0, Math.ceil((Date.parse(poll.closesAt) - Date.now()) / 86_400_000)) : 0;
+  return createHash("sha256")
+    .update(`${row.id}:${poll ? `${poll.id}:${poll.ballots}:${daysLeft}` : "-"}`)
+    .digest("hex")
+    .slice(0, 10);
+}
+
 async function weightingImage(c: Context, height: 630 | 600, version: WeightingRow | null = null) {
   const { key, data } = await weightingCard(version);
   // Short-lived: the turnout changes while a poll is open.

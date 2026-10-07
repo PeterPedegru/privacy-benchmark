@@ -11,7 +11,7 @@ import { secureHeaders } from "hono/secure-headers";
 import { getDb } from "./db/index.ts";
 import { env, REPO_ROOT } from "./env.ts";
 import { adminRoutes } from "./routes/admin.ts";
-import { cardRoutes } from "./routes/cards.ts";
+import { cardRoutes, weightingImageStamp } from "./routes/cards.ts";
 import { publicRoutes } from "./routes/public.ts";
 import { weightingRoutes } from "./routes/weighting.ts";
 import { healthReport } from "./services/health.ts";
@@ -210,6 +210,8 @@ export function createApp(opts: { analytics?: string | null } = {}) {
     // Community weighting: the open poll's invitation, and each weighting version.
     app.get("/weighting", async (c) => {
       const poll = await openPollRow(getDb()).catch(() => null);
+      // Versioned by content: previews (X caches images by URL) pick up a new turnout or weighting.
+      const v = await weightingImageStamp().catch(() => "0");
       return page(
         c,
         withMeta({
@@ -218,8 +220,8 @@ export function createApp(opts: { analytics?: string | null } = {}) {
             ? "How much should each part of privacy count? The community weighting poll is open: one ballot per X account, and the result scores the next benchmark run."
             : "The Privacy Benchmark's weights are set in public: a five-day poll before each run, one ballot per X account, and the median ballot wins.",
           url: `${env.publicUrl}/weighting`,
-          image: `${env.publicUrl}/og/weighting.png`,
-          xImage: `${env.publicUrl}/og/weighting-x.png`,
+          image: `${env.publicUrl}/og/weighting.png?v=${v}`,
+          xImage: `${env.publicUrl}/og/weighting-x.png?v=${v}`,
           alt: "Privacy Benchmark community weighting: how much each of the seven suites counts, set by public vote",
         }),
       );
@@ -237,8 +239,8 @@ export function createApp(opts: { analytics?: string | null } = {}) {
               ? `${label}, the Privacy Benchmark weights the community voted for: how much each part of privacy counts, and what changed.`
               : `${label}, the rubric's own weights: how much each part of privacy counts in the Privacy Benchmark.`,
           url: `${env.publicUrl}/weighting/${label}`,
-          image: `${env.publicUrl}/og/weighting/${label}.png`,
-          xImage: `${env.publicUrl}/og/weighting/${label}.png`,
+          image: `${env.publicUrl}/og/weighting/${label}.png?v=${row.hash.slice(0, 10)}`,
+          xImage: `${env.publicUrl}/og/weighting/${label}.png?v=${row.hash.slice(0, 10)}`,
           alt: `Privacy Benchmark weighting ${label}: how much each of the seven suites counts`,
         }),
       );
