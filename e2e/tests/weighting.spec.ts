@@ -39,27 +39,49 @@ test.describe("community weighting", () => {
       await expect(v).toHaveURL(/\/weighting$/);
     });
 
-    await test.step("a visitor votes for the current weights in one click", async () => {
+    const slider = v.getByRole("slider", { name: "Privacy coverage weight" });
+    const nudge = async () => {
+      await slider.focus();
+      for (let i = 0; i < 10; i++) await slider.press("ArrowRight");
+    };
+    /** Both vote buttons (the card at the top, the bar at the bottom) offer the same thing. */
+    const bothSay = async (top: string, bottom: string) => {
+      await expect(v.getByRole("button", { name: top, exact: true })).toHaveCount(top === bottom ? 2 : 1);
+      await expect(v.getByRole("button", { name: bottom, exact: true })).toHaveCount(top === bottom ? 2 : 1);
+    };
+
+    await test.step("both vote buttons follow the sliders", async () => {
       await expect(v.getByText("E2E weighting poll")).toBeVisible();
       // No preview of how projects would rank: a vote is on what should matter.
       await expect(v.getByText("If your weights won")).toHaveCount(0);
+      await bothSay("Keep the current weights", "Vote: keep the current weights");
+      await nudge();
+      await expect(v.getByText("1 weight changed")).toBeVisible();
+      await bothSay("Submit my vote", "Submit my vote");
+      await v.getByRole("button", { name: "Reset to the current weights" }).click();
+      await bothSay("Keep the current weights", "Vote: keep the current weights");
+    });
+
+    await test.step("a visitor votes for the current weights in one click", async () => {
       await v.getByRole("button", { name: "Keep the current weights", exact: true }).click();
       await expect(v.getByText("Your vote is in")).toBeVisible();
       await expect(v.getByText("1 ballot", { exact: true })).toBeVisible();
+      await expect(v.getByRole("button", { name: "Vote saved", exact: true })).toBeDisabled();
     });
 
-    await test.step("then changes one weight and updates the vote", async () => {
-      const slider = v.getByRole("slider", { name: "Privacy coverage weight" });
-      await slider.focus();
-      for (let i = 0; i < 10; i++) await slider.press("ArrowRight");
-      await expect(v.getByText("1 weight changed")).toBeVisible();
-      await v.getByRole("button", { name: "Update my vote" }).click();
+    await test.step("then changes one weight and updates the vote from the top card", async () => {
+      await nudge();
+      await expect(v.getByText("You have unsaved changes")).toBeVisible();
+      await bothSay("Update my vote", "Update my vote");
+      await v.getByRole("button", { name: "Update my vote", exact: true }).first().click();
       // The first vote's toast can still be showing: look for this one's.
       await expect(v.getByText(/Vote saved\. You can change it/)).toBeVisible();
+      await expect(v.getByRole("button", { name: "Vote saved", exact: true })).toBeDisabled();
       // Still one ballot: a vote is replaced, not added.
       await v.reload();
       await expect(v.getByText("1 ballot", { exact: true })).toBeVisible();
       await expect(v.getByText("1 weight changed")).toBeVisible();
+      await expect(v.getByText("Your vote is in")).toBeVisible();
     });
 
     await test.step("every weighting has its own page", async () => {

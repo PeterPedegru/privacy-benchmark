@@ -67,6 +67,19 @@ export function ballotFrom(d: Draft, base: WeightingShares): Ballot {
   return b;
 }
 
+/** A ballot in a form two ballots can be compared by (keys sorted at every depth). */
+export function ballotKey(b: Ballot | null | undefined): string {
+  return JSON.stringify(b ?? {}, (_k, v) =>
+    v && typeof v === "object" && !Array.isArray(v)
+      ? Object.fromEntries(
+          Object.keys(v)
+            .sort()
+            .map((k) => [k, (v as Record<string, unknown>)[k]]),
+        )
+      : v,
+  );
+}
+
 /** How many sliders were moved from where they started (what a voter thinks of as their changes). */
 export function movedCount(d: Draft, base: WeightingShares): number {
   let n = 0;

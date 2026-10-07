@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { Chip } from "@/components/ui/badges";
 import { Button } from "@/components/ui/button";
 import { LoadError, Skeleton } from "@/components/ui/misc";
-import { ballotFrom, clearDraft, type Draft, draftFrom, loadDraft, movedCount, saveDraft } from "@/components/weighting/draft";
+import { ballotFrom, ballotKey, clearDraft, type Draft, draftFrom, loadDraft, movedCount, saveDraft } from "@/components/weighting/draft";
 import { WeightTree } from "@/components/weighting/tree";
 import { focusIn } from "@/design/motion";
 import { ApiError, api } from "@/lib/api";
@@ -110,6 +110,11 @@ function OpenPoll({ data }: { data: PollResponse }) {
 
   const needsSignIn = poll.requireX && !voter.signedIn;
   const voted = !!voter.votedAt;
+  // The saved ballot as this page would send it, to tell unsaved edits from what's already counted.
+  const saved = useMemo(() => (voter.ballot ? ballotFrom(draftFrom(baseShares, voter.ballot), baseShares) : null), [voter.ballot, baseShares]);
+  const edited = voted && ballotKey(ballot) !== ballotKey(saved);
+  // One answer for both vote buttons (the card at the top and the bar at the bottom): what voting does right now.
+  const action: VoteAction = needsSignIn ? "sign-in" : voted ? (edited ? "update" : "saved") : changed ? "submit" : "keep";
   const [busy, setBusy] = useState(false);
   const refresh = () => qc.invalidateQueries({ queryKey: ["poll"] });
 
@@ -148,6 +153,12 @@ function OpenPoll({ data }: { data: PollResponse }) {
     await api("/api/public/auth/x/logout", { json: {} }).catch(() => {});
     await refresh();
   };
+  const vote = () => {
+    if (action === "sign-in") signIn();
+    else if (action !== "saved") void submit(ballot);
+  };
+  const resetToCurrent = () => setDraft(draftFrom(baseShares));
+  const discardEdits = () => setDraft(draftFrom(baseShares, voter.ballot));
 
   return (
     <>
@@ -178,11 +189,12 @@ function OpenPoll({ data }: { data: PollResponse }) {
           poll={poll}
           voter={voter}
           xEnabled={data.xEnabled}
-          needsSignIn={needsSignIn}
-          voted={voted}
+          action={action}
+          moved={moved}
           busy={busy}
-          onKeep={() => void submit({})}
-          onSignIn={signIn}
+          onVote={vote}
+          onReset={resetToCurrent}
+          onDiscard={discardEdits}
           onSignOut={() => void signOut()}
           onWithdraw={() => void withdraw()}
         />
@@ -198,46 +210,104 @@ function OpenPoll({ data }: { data: PollResponse }) {
       </div>
 
       <ActionBar
+        action={action}
         moved={moved}
-        changed={changed}
-        needsSignIn={needsSignIn}
         signInAvailable={data.xEnabled}
-        voted={voted}
         busy={busy}
         revisionsLeft={voter.revisionsLeft}
-        onReset={() => setDraft(draftFrom(baseShares))}
-        onSubmit={() => (needsSignIn ? signIn() : void submit(ballot))}
+        onReset={resetToCurrent}
+        onVote={vote}
       />
     </>
   );
 }
 
+/**
+ * What voting does right now, shown the same way by the card at the top and the bar at the bottom: sign in first;
+ * keep every weight as it is; submit the changes; update a saved vote with edits; or nothing (the vote is saved).
+ */
+type VoteAction = "sign-in" | "keep" | "submit" | "update" | "saved";
+
+const VOTE_LABEL: Record<VoteAction, [full: string, short: string]> = {
+  "sign-in": ["Sign in with X to vote", "Sign in to vote"],
+  keep: ["Vote: keep the current weights", "Vote"],
+  submit: ["Submit my vote", "Submit vote"],
+  update: ["Update my vote", "Update vote"],
+  saved: ["Vote saved", "Saved"],
+};
+
 function QuickVote({
   poll,
   voter,
   xEnabled,
-  needsSignIn,
-  voted,
+  action,
+  moved,
   busy,
-  onKeep,
-  onSignIn,
+  onVote,
+  onReset,
+  onDiscard,
   onSignOut,
   onWithdraw,
 }: {
   poll: PollInfo;
   voter: PollResponse["voter"];
   xEnabled: boolean;
-  needsSignIn: boolean;
-  voted: boolean;
+  action: VoteAction;
+  moved: number;
   busy: boolean;
-  onKeep: () => void;
-  onSignIn: () => void;
+  onVote: () => void;
+  onReset: () => void;
+  onDiscard: () => void;
   onSignOut: () => void;
   onWithdraw: () => void;
 }) {
+  const weights = `${moved} weight${moved === 1 ? "" : "s"}`;
+  const savedAt = fmtDate(voter.votedAt, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
   return (
     <div className="flex flex-col rounded-2xl border border-line bg-bg p-5">
-      {voted ? (
+      {action === "sign-in" ? (
+        <>
+          <div className="text-[15px] font-semibold">Sign in with X to vote</div>
+          <p className="mt-1 text-sm text-muted">
+            One ballot per X account, from accounts at least 30 days old. We read your account's id and age, nothing else, and never post.
+            {moved ? ` Your ${weights} changed stay here while you sign in.` : ""}
+          </p>
+          <Button variant="primary" className="mt-4" disabled={!xEnabled} icon={<XLogo />} onClick={onVote}>
+            Sign in with X
+          </Button>
+          {!xEnabled && <p className="mt-2 text-xs text-poor-fg">Sign-in isn't available right now; try again later.</p>}
+        </>
+      ) : action === "keep" ? (
+        <>
+          <div className="text-[15px] font-semibold">Happy with the current weights?</div>
+          <p className="mt-1 text-sm text-muted">One click votes to keep every weight as it is. Or adjust any of them below.</p>
+          <Button variant="primary" className="mt-4" disabled={busy} icon={<Vote className="size-4" />} onClick={onVote}>
+            Keep the current weights
+          </Button>
+        </>
+      ) : action === "submit" ? (
+        <>
+          <div className="text-[15px] font-semibold">Ready to vote?</div>
+          <p className="mt-1 text-sm text-muted">You changed {weights}. Everything you didn't touch counts as a vote for its current value.</p>
+          <Button variant="primary" className="mt-4" disabled={busy} icon={<Vote className="size-4" />} onClick={onVote}>
+            Submit my vote
+          </Button>
+          <Button variant="ghost" size="sm" className="mt-2 self-start" disabled={busy} onClick={onReset}>
+            Reset to the current weights
+          </Button>
+        </>
+      ) : action === "update" ? (
+        <>
+          <div className="text-[15px] font-semibold">You have unsaved changes</div>
+          <p className="mt-1 text-sm text-muted">Your vote saved {savedAt} still counts until you update it.</p>
+          <Button variant="primary" className="mt-4" disabled={busy} icon={<Vote className="size-4" />} onClick={onVote}>
+            Update my vote
+          </Button>
+          <Button variant="ghost" size="sm" className="mt-2 self-start" disabled={busy} onClick={onDiscard}>
+            Discard changes
+          </Button>
+        </>
+      ) : (
         <>
           <div className="flex items-center gap-2 text-[15px] font-semibold">
             <span className="flex size-5 items-center justify-center rounded-full bg-strong-bg text-strong-fg">
@@ -245,31 +315,9 @@ function QuickVote({
             </span>
             Your vote is in
           </div>
-          <p className="mt-1 text-sm text-muted">
-            Saved {fmtDate(voter.votedAt, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}. Change it below or withdraw it until the
-            poll closes.
-          </p>
+          <p className="mt-1 text-sm text-muted">Saved {savedAt}. Change any weight below to update it, or withdraw it, until the poll closes.</p>
           <Button variant="ghost" size="sm" className="mt-3 self-start" disabled={busy} onClick={onWithdraw}>
             Withdraw my vote
-          </Button>
-        </>
-      ) : needsSignIn ? (
-        <>
-          <div className="text-[15px] font-semibold">Sign in with X to vote</div>
-          <p className="mt-1 text-sm text-muted">
-            One ballot per X account, from accounts at least 30 days old. We read your account's id and age, nothing else, and never post.
-          </p>
-          <Button variant="primary" className="mt-4" disabled={!xEnabled} icon={<XLogo />} onClick={onSignIn}>
-            Sign in with X
-          </Button>
-          {!xEnabled && <p className="mt-2 text-xs text-poor-fg">Sign-in isn't available right now; try again later.</p>}
-        </>
-      ) : (
-        <>
-          <div className="text-[15px] font-semibold">Happy with the current weights?</div>
-          <p className="mt-1 text-sm text-muted">One click votes to keep every weight as it is. Or adjust any of them below.</p>
-          <Button variant="primary" className="mt-4" disabled={busy} icon={<Vote className="size-4" />} onClick={onKeep}>
-            Keep the current weights
           </Button>
         </>
       )}
@@ -284,36 +332,39 @@ function QuickVote({
 }
 
 function ActionBar({
+  action,
   moved,
-  changed,
-  needsSignIn,
   signInAvailable,
-  voted,
   busy,
   revisionsLeft,
   onReset,
-  onSubmit,
+  onVote,
 }: {
+  action: VoteAction;
   moved: number;
-  changed: boolean;
-  needsSignIn: boolean;
   signInAvailable: boolean;
-  voted: boolean;
   busy: boolean;
   revisionsLeft: number;
   onReset: () => void;
-  onSubmit: () => void;
+  onVote: () => void;
 }) {
-  const label = needsSignIn ? "Sign in with X to vote" : voted ? "Update my vote" : changed ? "Submit my vote" : "Vote: keep the current weights";
-  const short = needsSignIn ? "Sign in to vote" : voted ? "Update vote" : changed ? "Submit vote" : "Vote";
+  const [label, short] = VOTE_LABEL[action];
+  const note =
+    action === "saved"
+      ? " · your vote is saved"
+      : action === "update"
+        ? " · not saved yet"
+        : moved
+          ? " · everything else stays as it is"
+          : " · a vote for the current weights";
   return (
     <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-bg/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-[var(--container-page)] items-center gap-3 px-4 py-3 sm:px-6">
         <div className="min-w-0 flex-1 text-sm">
           <span className="font-semibold whitespace-nowrap">{moved ? `${moved} weight${moved === 1 ? "" : "s"} changed` : "No changes"}</span>
           <span className="hidden text-muted sm:inline">
-            {changed ? " · everything else stays as it is" : " · a vote for the current weights"}
-            {voted && revisionsLeft < 5 ? ` · ${revisionsLeft} edit${revisionsLeft === 1 ? "" : "s"} left` : ""}
+            {note}
+            {action === "update" && revisionsLeft < 5 ? ` · ${revisionsLeft} edit${revisionsLeft === 1 ? "" : "s"} left` : ""}
           </span>
         </div>
         <Button variant="ghost" size="sm" icon={<RotateCcw className="size-3.5" />} disabled={!moved || busy} onClick={onReset} aria-label="Reset">
@@ -321,9 +372,9 @@ function ActionBar({
         </Button>
         <Button
           variant="primary"
-          disabled={busy || (needsSignIn && !signInAvailable) || (voted && revisionsLeft <= 0)}
-          icon={needsSignIn ? <XLogo /> : <Vote className="size-4" />}
-          onClick={onSubmit}
+          disabled={busy || action === "saved" || (action === "sign-in" && !signInAvailable) || (action === "update" && revisionsLeft <= 0)}
+          icon={action === "sign-in" ? <XLogo /> : action === "saved" ? <Check className="size-4" /> : <Vote className="size-4" />}
+          onClick={onVote}
           aria-label={label}
         >
           <span className="hidden sm:inline">{label}</span>
