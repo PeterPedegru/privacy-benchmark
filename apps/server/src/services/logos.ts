@@ -11,6 +11,7 @@ import type { DB } from "../db/index.ts";
 import { schema } from "../db/index.ts";
 import { env } from "../env.ts";
 import { safeFetch } from "../lib/fetcher.ts";
+import { icoToPng } from "../lib/ico.ts";
 import { LruCache } from "../lib/lru.ts";
 
 export const MAX_LOGO_BYTES = 512 * 1024;
@@ -80,12 +81,16 @@ function writeDisk(key: string, logo: Logo, url: string) {
   }
 }
 
+const BROWSER_ACCEPT = "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8";
+/** What the share cards can draw: CDNs that negotiate send PNG instead of WebP or AVIF when asked. */
+const CARD_ACCEPT = "image/png,image/jpeg;q=0.9,image/svg+xml;q=0.9,image/*;q=0.5";
+
 /** Fetches and validates one logo. Throws LogoRejectedError for anything that isn't a small image. */
-export async function fetchLogo(url: string): Promise<Logo> {
+export async function fetchLogo(url: string, accept = BROWSER_ACCEPT): Promise<Logo> {
   const res = await safeFetch(url, {
     maxBytes: MAX_LOGO_BYTES,
     timeoutMs: FETCH_TIMEOUT_MS,
-    headers: { accept: "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8" },
+    headers: { accept },
   });
   if (res.status !== 200) throw new LogoRejectedError(`HTTP ${res.status}`);
   const declared = res.contentType.split(";")[0]!.trim().toLowerCase();
@@ -95,9 +100,12 @@ export async function fetchLogo(url: string): Promise<Logo> {
   return { contentType, body: res.body, etag: `"${hashOf(url).slice(0, 32)}"` };
 }
 
-/** The cached logo for a URL, fetching it on first use. Null when it can't be fetched or isn't an image. */
-export async function getLogo(url: string): Promise<Logo | null> {
-  const key = hashOf(url);
+/**
+ * The cached logo for a URL, fetching it on first use. Null when it can't be fetched or isn't an image. `card` asks
+ * for a format the share cards can draw, cached apart from the one browsers get.
+ */
+export async function getLogo(url: string, opts: { card?: boolean } = {}): Promise<Logo | null> {
+  const key = hashOf(opts.card ? `card:${url}` : url);
   const hit = memory.get(key);
   if (hit) return hit;
   const failedAt = failures.get(key);
@@ -109,7 +117,7 @@ export async function getLogo(url: string): Promise<Logo | null> {
   }
   let job = inflight.get(key);
   if (!job) {
-    job = fetchLogo(url)
+    job = fetchLogo(url, opts.card ? CARD_ACCEPT : BROWSER_ACCEPT)
       .then((logo) => {
         memory.set(key, logo);
         failures.delete(key);
@@ -126,6 +134,18 @@ export async function getLogo(url: string): Promise<Logo | null> {
     inflight.set(key, job);
   }
   return job;
+}
+
+/** A project's logo as a data URI the share cards can draw (favicons converted to PNG), or null. */
+export async function cardLogo(db: DB, slug: string): Promise<string | null> {
+  const url = await logoUrlForSlug(db, slug);
+  const logo = url ? await getLogo(url, { card: true }) : null;
+  if (!logo) return null;
+  const body =
+    logo.contentType === "image/x-icon" ? icoToPng(logo.body) : ["image/png", "image/jpeg", "image/svg+xml"].includes(logo.contentType) ? logo.body : null;
+  if (!body) return null;
+  const type = logo.contentType === "image/x-icon" ? "image/png" : logo.contentType;
+  return `data:${type};base64,${body.toString("base64")}`;
 }
 
 /** Only URLs that are some project's logo are proxied, so the endpoint can't be used to fetch arbitrary URLs. */

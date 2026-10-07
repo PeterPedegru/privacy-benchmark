@@ -16,6 +16,7 @@ import { publicRoutes } from "./routes/public.ts";
 import { weightingRoutes } from "./routes/weighting.ts";
 import { healthReport } from "./services/health.ts";
 import { resolveSnapshot } from "./services/snapshots.ts";
+import { findWeighting, openPollRow } from "./services/weighting.ts";
 
 export const PUBLIC_BODY_LIMIT = 16 * 1024;
 export const ADMIN_BODY_LIMIT = 3 * 1024 * 1024;
@@ -203,6 +204,42 @@ export function createApp(opts: { analytics?: string | null } = {}) {
           image: `${env.publicUrl}/og/project/${s.project.slug}.png`,
           xImage: `${env.publicUrl}/og/project/${s.project.slug}.png`,
           alt: `${s.project.name} on the Privacy Benchmark: overall score, privacy scores and suite scores`,
+        }),
+      );
+    });
+    // Community weighting: the open poll's invitation, and each weighting version.
+    app.get("/weighting", async (c) => {
+      const poll = await openPollRow(getDb()).catch(() => null);
+      return page(
+        c,
+        withMeta({
+          title: poll ? "Vote on the weights · Privacy Benchmark" : "Community weighting · Privacy Benchmark",
+          description: poll
+            ? "How much should each part of privacy count? The community weighting poll is open: one ballot per X account, and the result scores the next benchmark run."
+            : "The Privacy Benchmark's weights are set in public: a five-day poll before each run, one ballot per X account, and the median ballot wins.",
+          url: `${env.publicUrl}/weighting`,
+          image: `${env.publicUrl}/og/weighting.png`,
+          xImage: `${env.publicUrl}/og/weighting-x.png`,
+          alt: "Privacy Benchmark community weighting: how much each of the seven suites counts, set by public vote",
+        }),
+      );
+    });
+    app.get("/weighting/:ref", async (c) => {
+      const row = await findWeighting(getDb(), c.req.param("ref")).catch(() => null);
+      if (!row) return page(c, home);
+      const label = `W${row.number}`;
+      return page(
+        c,
+        withMeta({
+          title: `${label}: ${row.title} · Privacy Benchmark`,
+          description:
+            row.source === "poll"
+              ? `${label}, the Privacy Benchmark weights the community voted for: how much each part of privacy counts, and what changed.`
+              : `${label}, the rubric's own weights: how much each part of privacy counts in the Privacy Benchmark.`,
+          url: `${env.publicUrl}/weighting/${label}`,
+          image: `${env.publicUrl}/og/weighting/${label}.png`,
+          xImage: `${env.publicUrl}/og/weighting/${label}.png`,
+          alt: `Privacy Benchmark weighting ${label}: how much each of the seven suites counts`,
         }),
       );
     });

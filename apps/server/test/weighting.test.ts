@@ -477,6 +477,23 @@ describe("Sign in with X", () => {
   });
 });
 
+describe("share images", () => {
+  it("/weighting has its own Open Graph and X images, and each version one of its own", async () => {
+    for (const [path, height] of [
+      ["/og/weighting.png", 630],
+      ["/og/weighting-x.png", 600],
+      ["/og/weighting/W1.png", 630],
+    ] as const) {
+      const res = await app.request(path);
+      expect(res.status, path).toBe(200);
+      expect(res.headers.get("content-type")).toBe("image/png");
+      const png = Buffer.from(await res.arrayBuffer());
+      expect([png.readUInt32BE(16), png.readUInt32BE(20)], path).toEqual([1200, height]);
+    }
+    expect((await app.request("/og/weighting/W404.png")).status).toBe(404);
+  });
+});
+
 describe("runs, review and releases", () => {
   it("a run is linked to the weighting it picks, or the current one", async () => {
     const cur = (await admin("/api/admin/runs", { projectIds: ["p1"], mode: "quick" })).status;

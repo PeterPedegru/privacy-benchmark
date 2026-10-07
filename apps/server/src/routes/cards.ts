@@ -1,15 +1,17 @@
 import { createHash } from "node:crypto";
 import type { ProjectSnapshot } from "@pb/core";
 import { type CardConfig, cardConfigSchema } from "@pb/core";
-import { fmtScore } from "@pb/rubric";
+import { fmtScore, sharesOf } from "@pb/rubric";
 import { eq } from "drizzle-orm";
 import { type Context, Hono } from "hono";
-import { renderBrandCard, renderCard, renderHomeCard } from "../cards/render.tsx";
+import { renderBrandCard, renderCard, renderHomeCard, renderWeightingCard, type WeightingCardData } from "../cards/render.tsx";
 import { getDb, schema } from "../db/index.ts";
 import { env } from "../env.ts";
 import { clientIp, windowLimiter } from "../lib/auth.ts";
 import { LruCache } from "../lib/lru.ts";
+import { cardLogo } from "../services/logos.ts";
 import { resolveSnapshot, snapshotGeneration, visibleSnapshots } from "../services/snapshots.ts";
+import { defaultWeighting, findWeighting, openPollRow, pollInfo, type WeightingRow, weightingFor } from "../services/weighting.ts";
 
 export const cardRoutes = new Hono();
 
@@ -172,6 +174,61 @@ async function homeImage(c: Context, height: 630 | 600) {
 }
 cardRoutes.get("/og/home.png", (c) => homeImage(c, 630));
 cardRoutes.get("/og/home-x.png", (c) => homeImage(c, 600));
+
+// ---------- community weighting ----------
+
+/** The projects the weighting card shows by their logo (the names as people know them). */
+const WEIGHTING_LOGOS: [slug: string, name: string][] = [
+  ["aztec", "Aztec"],
+  ["zama", "Zama"],
+  ["miden", "Miden"],
+  ["strk20", "Starknet"],
+  ["zksync-prividium", "ZKsync"],
+];
+
+/**
+ * What the weighting card shows: the open poll and today's weights (/weighting), or one version and how its poll
+ * moved it from its base (/weighting/W2).
+ */
+async function weightingCard(version: WeightingRow | null): Promise<{ key: string; data: WeightingCardData }> {
+  const db = getDb();
+  const row = version ?? (await defaultWeighting(db))!;
+  const w = await weightingFor(db, row.id);
+  const base = row.baseId ? await weightingFor(db, row.baseId).catch(() => null) : null;
+  const pollRow = version ? null : await openPollRow(db);
+  const poll = pollRow ? await pollInfo(db, pollRow) : null;
+  const sourcePoll = row.pollId ? (await db.select().from(schema.weightingPolls).where(eq(schema.weightingPolls.id, row.pollId)))[0] : null;
+  const daysLeft = poll ? Math.max(0, Math.ceil((Date.parse(poll.closesAt) - Date.now()) / 86_400_000)) : 0;
+  const logos = await Promise.all(WEIGHTING_LOGOS.map(async ([slug, name]) => ({ name, src: await cardLogo(db, slug).catch(() => null) })));
+  const data: WeightingCardData = {
+    mode: version ? "version" : "poll",
+    weighting: { label: w.ref.label, title: w.ref.title, source: w.ref.source },
+    suites: sharesOf(w.weighting).suites,
+    // A version's page shows how its poll moved each weight; the invitation shows today's weights as they stand.
+    base: version && base ? sharesOf(base.weighting).suites : null,
+    baseLabel: version && base ? base.ref.label : null,
+    poll: poll ? { title: poll.title, ballots: poll.ballots, daysLeft } : null,
+    ballots: sourcePoll ? sourcePoll.ballots : null,
+    logos,
+  };
+  // Changes with the weighting, the poll's turnout and days left, and which logos loaded.
+  const key = `weighting:${row.id}:${poll ? `${poll.id}:${poll.ballots}:${daysLeft}` : "-"}:${logos.map((l) => (l.src ? 1 : 0)).join("")}`;
+  return { key, data };
+}
+
+async function weightingImage(c: Context, height: 630 | 600, version: WeightingRow | null = null) {
+  const { key, data } = await weightingCard(version);
+  // Short-lived: the turnout changes while a poll is open.
+  return pngResponse(c, await cardPng(c, `${key}:${height}`, () => renderWeightingCard(data, height)), 600);
+}
+cardRoutes.get("/og/weighting.png", (c) => weightingImage(c, 630));
+cardRoutes.get("/og/weighting-x.png", (c) => weightingImage(c, 600));
+cardRoutes.get("/og/weighting/:file", async (c) => {
+  const ref = c.req.param("file").replace(/\.png$/, "");
+  const row = ref.length <= 32 ? await findWeighting(getDb(), ref) : null;
+  if (!row) return c.text("not found", 404);
+  return weightingImage(c, 630, row);
+});
 
 function esc(s: string) {
   return s.replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]!);

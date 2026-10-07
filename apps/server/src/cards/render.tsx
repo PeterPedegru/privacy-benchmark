@@ -669,3 +669,243 @@ async function buildBrandCard(): Promise<Buffer> {
   );
   return rasterize(node, W, H, t.bg);
 }
+
+// ---------- community weighting share image ----------
+
+/** One colour per suite, readable on the dark card and distinct side by side. */
+const SUITE_COLOR: Record<string, string> = {
+  coverage: "#8b7dff",
+  trust: "#47a8ff",
+  custody: "#34d399",
+  programmability: "#fbbf24",
+  governance: "#f472b6",
+  decentralization: "#fb923c",
+  security: "#2dd4bf",
+};
+
+export interface WeightingCardData {
+  /** "poll": the open poll (or the page that invites to the next one); "version": one weighting's own page. */
+  mode: "poll" | "version";
+  weighting: { label: string; title: string; source: "rubric" | "poll" };
+  /** Suite id → % of the overall score. */
+  suites: Record<string, number>;
+  /** The base's suite shares, when this weighting came from a poll: the card shows how the vote moved each. */
+  base: Record<string, number> | null;
+  baseLabel: string | null;
+  poll: { title: string; ballots: number; daysLeft: number } | null;
+  /** Ballots behind this weighting, when a poll produced it. */
+  ballots: number | null;
+  /** Projects the weights score, shown by their logos (a data URI, or null for an initial). */
+  logos: { name: string; src: string | null }[];
+}
+
+const pct = (v: number) => `${Math.abs(v - Math.round(v)) < 0.05 ? Math.round(v) : v.toFixed(1)}%`;
+
+/**
+ * The share image for /weighting and each weighting version: the community vote (an open poll's turnout, or the poll
+ * behind a version) next to the weights themselves, drawn as the vote page's sliders and a composition bar of the
+ * seven suites. 1200×630 for Open Graph, 1200×600 for X.
+ */
+export async function renderWeightingCard(d: WeightingCardData, height: 630 | 600): Promise<Buffer> {
+  const W = 1200;
+  const H = height;
+  const c = {
+    bg: "#0c0d14",
+    fg: "#f5f6fa",
+    muted: "#a3a9b8",
+    faint: "#6c7385",
+    iris: "#8b7dff",
+    panel: "rgba(255,255,255,0.045)",
+    panelLine: "rgba(255,255,255,0.09)",
+    track: "rgba(255,255,255,0.10)",
+    up: "#5fe0a8",
+    down: "#ff8e8c",
+  };
+  const order = suites.map((s) => s.id);
+  const top = Math.max(40, ...order.map((id) => d.suites[id] ?? 0));
+  // Fixed widths: satori sizes flex items from their content, and a panel sized that way runs off the card.
+  const PAD = 56;
+  const LEFT = 500;
+  const GAP = 44;
+  const PANEL = W - 2 * PAD - LEFT - GAP;
+  const INNER = PANEL - 2 * 26;
+  const LABEL = 158;
+  const VALUE = 62;
+  const moved = !!d.base && order.some((id) => Math.abs((d.suites[id] ?? 0) - (d.base![id] ?? 0)) >= 0.05);
+  const DELTA = moved ? 52 : 0;
+  const TRACK = INNER - LABEL - VALUE - DELTA - 18;
+  const open = d.mode === "poll" && d.poll;
+  const headline = open ? "Help set the weights." : d.mode === "version" ? `${d.weighting.label}: weights set in public.` : "Weights set in public.";
+  const sub = open
+    ? "How much should each part of privacy count? One ballot per X account, five days, and the result scores the next run."
+    : d.weighting.source === "poll"
+      ? `The community voted on how much each part of privacy counts. The median ballot became ${d.weighting.label}, and runs are scored with it.`
+      : "How much each part of privacy counts is put to a public vote before benchmark runs. One ballot per X account.";
+  const plural = (n: number, one: string) => `${n} ${one}${n === 1 ? "" : "s"}`;
+  const status = open
+    ? `Poll open · ${plural(d.poll!.ballots, "ballot")} · ${d.poll!.daysLeft <= 1 ? "last day" : `${d.poll!.daysLeft} days left`}`
+    : d.weighting.source === "poll"
+      ? `${d.weighting.label} · set by ${d.ballots !== null ? plural(d.ballots, "ballot") : "community vote"}`
+      : `${d.weighting.label} · the rubric's own weights`;
+  const node = (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: W,
+        height: H,
+        padding: `44px ${PAD}px`,
+        background: c.bg,
+        backgroundImage:
+          "radial-gradient(circle at 88% 8%, rgba(91,76,240,0.38), rgba(12,13,20,0) 46%), radial-gradient(circle at 4% 104%, rgba(45,212,191,0.16), rgba(12,13,20,0) 42%)",
+        color: c.fg,
+        fontFamily: "Inter",
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", fontSize: 22, fontWeight: 700 }}>
+          <div style={{ display: "flex", width: 28, height: 28, borderRadius: 8, background: "#5b4cf0", marginRight: 12 }} />
+          Privacy Benchmark
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            fontSize: 17,
+            fontWeight: 600,
+            padding: "8px 16px",
+            borderRadius: 999,
+            border: `1px solid ${open ? "rgba(95,224,168,0.45)" : c.panelLine}`,
+            background: open ? "rgba(95,224,168,0.10)" : c.panel,
+            color: open ? c.up : c.muted,
+          }}
+        >
+          {open ? <div style={{ display: "flex", width: 9, height: 9, borderRadius: 9, background: c.up, marginRight: 10 }} /> : null}
+          {status}
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexGrow: 1, marginTop: 30 }}>
+        <div style={{ display: "flex", flexDirection: "column", width: LEFT, marginRight: GAP }}>
+          <div style={{ display: "flex", fontSize: 16, fontWeight: 600, letterSpacing: 3, color: c.iris }}>COMMUNITY WEIGHTING</div>
+          <div style={{ display: "flex", fontSize: 58, fontWeight: 700, letterSpacing: -1.8, lineHeight: 1.04, marginTop: 14 }}>{headline}</div>
+          <div style={{ display: "flex", fontSize: 21, lineHeight: 1.42, color: c.muted, marginTop: 18 }}>{sub}</div>
+          <div style={{ display: "flex", flexGrow: 1 }} />
+          <div style={{ display: "flex", fontSize: 15, fontWeight: 600, letterSpacing: 2, color: c.faint, marginBottom: 12 }}>WEIGHTS THAT SCORE</div>
+          <div style={{ display: "flex" }}>
+            {d.logos.map((l) => (
+              <div key={l.name} style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 86, marginRight: 10 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 62,
+                    height: 62,
+                    borderRadius: 18,
+                    background: "#ffffff",
+                    border: `1px solid ${c.panelLine}`,
+                    boxShadow: "0 6px 18px rgba(0,0,0,0.35)",
+                  }}
+                >
+                  {l.src ? (
+                    <img src={l.src} alt={l.name} width={44} height={44} style={{ borderRadius: 10 }} />
+                  ) : (
+                    <div style={{ display: "flex", fontSize: 26, fontWeight: 700, color: "#5b4cf0" }}>{l.name.slice(0, 1)}</div>
+                  )}
+                </div>
+                <div style={{ display: "flex", fontSize: 15, fontWeight: 500, color: c.muted, marginTop: 8 }}>{l.name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: PANEL,
+            padding: "24px 26px 18px",
+            borderRadius: 22,
+            background: c.panel,
+            border: `1px solid ${c.panelLine}`,
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+            <div style={{ display: "flex", fontSize: 18, fontWeight: 600 }}>{open ? "Today's weights" : `${d.weighting.label} weights`}</div>
+            <div style={{ display: "flex", fontSize: 14, color: c.faint }}>
+              {d.base && d.baseLabel ? (moved ? `change vs ${d.baseLabel}` : `same weights as ${d.baseLabel}`) : "share of the overall score"}
+            </div>
+          </div>
+          <div style={{ display: "flex", width: INNER, height: 14, marginTop: 16, marginBottom: 12 }}>
+            {order.map((id, i) => (
+              <div
+                key={id}
+                style={{
+                  display: "flex",
+                  // Each suite's share of the bar, less the gaps between segments.
+                  width: Math.max(2, ((d.suites[id] ?? 0) / 100) * (INNER - 3 * (order.length - 1))),
+                  height: 14,
+                  background: SUITE_COLOR[id],
+                  borderRadius: 4,
+                  marginRight: i === order.length - 1 ? 0 : 3,
+                }}
+              />
+            ))}
+          </div>
+          {suites.map((s) => {
+            const v = d.suites[s.id] ?? 0;
+            const delta = d.base ? v - (d.base[s.id] ?? v) : 0;
+            const fill = (v / top) * 100;
+            return (
+              <div key={s.id} style={{ display: "flex", alignItems: "center", height: H === 630 ? 43 : 40 }}>
+                <div style={{ display: "flex", width: LABEL, fontSize: 17, color: c.fg }}>{s.shortName}</div>
+                <div style={{ display: "flex", position: "relative", width: TRACK, height: 16, marginRight: 18 }}>
+                  <div style={{ display: "flex", position: "absolute", left: 0, top: 5, width: TRACK, height: 6, borderRadius: 3, background: c.track }} />
+                  <div
+                    style={{
+                      display: "flex",
+                      position: "absolute",
+                      left: 0,
+                      top: 5,
+                      width: (fill / 100) * TRACK,
+                      height: 6,
+                      borderRadius: 3,
+                      background: SUITE_COLOR[s.id],
+                    }}
+                  />
+                  <div
+                    style={{
+                      display: "flex",
+                      position: "absolute",
+                      top: 0,
+                      left: (fill / 100) * TRACK,
+                      width: 16,
+                      height: 16,
+                      marginLeft: -8,
+                      borderRadius: 16,
+                      background: "#ffffff",
+                      border: `4px solid ${SUITE_COLOR[s.id]}`,
+                    }}
+                  />
+                </div>
+                <div style={{ display: "flex", width: VALUE, justifyContent: "flex-end", fontSize: 19, fontWeight: 700 }}>{pct(v)}</div>
+                {moved ? (
+                  <div style={{ display: "flex", width: DELTA, justifyContent: "flex-end", fontSize: 14, fontWeight: 600, color: delta > 0 ? c.up : c.down }}>
+                    {Math.abs(delta) >= 0.05 ? `${delta > 0 ? "+" : "−"}${Math.abs(delta).toFixed(1)}` : ""}
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 16, color: c.faint, marginTop: 18 }}>
+        <div style={{ display: "flex" }}>privacybenchmark.org/weighting</div>
+        <div style={{ display: "flex" }}>One ballot per X account · the median ballot wins · badges are never weighted</div>
+      </div>
+    </div>
+  );
+  return rasterize(node, W, H, c.bg);
+}
