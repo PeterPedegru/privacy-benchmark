@@ -483,11 +483,11 @@
     "sourceClass": "marketing",
     "date": "2026-05-27",
     "fetchedAt": "2026-10-07T07:39:13.035847+00:00",
-    "contentHash": "ae1339d41d82043dc95d5ad5cfdc002bed87857a0c3e9f3cbd37ea9d42b2ade4",
+    "contentHash": "3a2536af9f91d8a29d9f2a4026c36673ed255f98d013ca9403f9def5aab6d4fb",
     "file": "sources/program-blog-tech.md",
     "scope": "evaluated",
     "rawContentHash": "def629b74f0cdb3ba1a7b98bfd65280dd5fed8865c95c75f45eb1e200d8f99c2",
-    "normalization": "Extracted source text; trailing line whitespace removed and final newline canonicalized. Wording and internal whitespace preserved."
+    "normalization": "Verbatim evidence passages from the full captured article, with title/date. Full captured text retained in the local raw research archive."
   },
   {
     "id": "program-blog-ga",
@@ -497,11 +497,11 @@
     "sourceClass": "marketing",
     "date": "2026-07-07",
     "fetchedAt": "2026-10-07T07:39:13.222149+00:00",
-    "contentHash": "8d0021a61408f47eef3c09f77aa7b8b4514ebe8ed61f463e7fb50c6017f9869f",
+    "contentHash": "4572885becf007cae7d4d942508033cd29606637d40a68da7ba1df6d2bf8c8a6",
     "file": "sources/program-blog-ga.md",
     "scope": "evaluated",
     "rawContentHash": "e5b8d53fceed1e0a6437980380b728eee5bccea65ed01d80c04371190fc66cf0",
-    "normalization": "Extracted source text; trailing line whitespace removed and final newline canonicalized. Wording and internal whitespace preserved."
+    "normalization": "Verbatim evidence passages from the full captured article, with title/date. Full captured text retained in the local raw research archive."
   },
   {
     "id": "program-code-admin",
