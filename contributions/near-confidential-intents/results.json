@@ -1,0 +1,70 @@
+{
+  "rubricVersion": "1.3.0",
+  "asOf": "2026-10-07",
+  "answered": 45,
+  "unknown": 60,
+  "notApplicable": 1,
+  "sources": 48,
+  "overall": 14.395,
+  "privacyLevel": null,
+  "trustTier": null,
+  "walkaway": {
+    "passed": false,
+    "reasons": ["Exiting needs someone else's cooperation", "Users can't recover funds without the operator", "Spending needs a party other than the user"]
+  },
+  "suites": {
+    "coverage": 29.575,
+    "trust": 1.5,
+    "custody": 7,
+    "programmability": 15.1,
+    "governance": 4.25,
+    "decentralization": 8.6,
+    "security": 27
+  },
+  "researchCoverage": {
+    "covered": 106,
+    "total": 106,
+    "ratio": 1,
+    "suites": [
+      {
+        "suiteId": "coverage",
+        "covered": 28,
+        "total": 28
+      },
+      {
+        "suiteId": "trust",
+        "covered": 10,
+        "total": 10
+      },
+      {
+        "suiteId": "custody",
+        "covered": 16,
+        "total": 16
+      },
+      {
+        "suiteId": "programmability",
+        "covered": 21,
+        "total": 21
+      },
+      {
+        "suiteId": "governance",
+        "covered": 9,
+        "total": 9
+      },
+      {
+        "suiteId": "decentralization",
+        "covered": 11,
+        "total": 11
+      },
+      {
+        "suiteId": "security",
+        "covered": 11,
+        "total": 11
+      }
+    ],
+    "notResearched": 0,
+    "badgeGaps": [],
+    "blocker": null
+  },
+  "note": "Research coverage includes logged unknowns. It is not the number of favorable or established factual answers. The result is a manual contributor proposal, not an official benchmark evaluation."
+}

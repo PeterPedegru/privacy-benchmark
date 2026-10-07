@@ -1,0 +1,2655 @@
+{
+  "rubricVersion": "1.3.0",
+  "asOf": "2026-10-07",
+  "attribution": "Independent contributor assessment researched with Codex and checked against archived public sources. This is a manual draft; the benchmark authors' automated Claude evaluator was not run. Unknowns do not establish adverse facts.",
+  "project": {
+    "slug": "near-confidential-intents",
+    "name": "NEAR Confidential Intents (FAR)",
+    "logoUrl": null,
+    "tagline": "Confidential Intents on a permissioned private NEAR network with a mandatory public/private bridge",
+    "description": "Assessment of the embedded Confidential Account path on near.com: private FAR network, intents.far, its mandatory bridge and relay/account infrastructure. Public NEAR is backing/settlement context where used; its ordinary validator count, history and unrelated NEAR AI/Chain Signatures guarantees are not credited to FAR.",
+    "category": "privacy_app",
+    "mechanism": "private_execution",
+    "attributes": ["tee", "bridged", "transfers", "defi"],
+    "chains": ["FAR", "NEAR"],
+    "l2beatSlug": null,
+    "defillamaSlug": null,
+    "website": "https://intents.near.org/confidential"
+  },
+  "version": {
+    "version": "documented-2026-10-07",
+    "label": "Publicly documented configuration · 7 Oct 2026",
+    "releasedAt": null,
+    "sourceUrl": "https://docs.near-intents.org/integration/market-makers/confidential-intents"
+  },
+  "summary": "Independent manual assessment of NEAR Confidential Intents (FAR), not an official Privacy Benchmark evaluation. Public documentation describes hidden internal balances and fixed private transfers/swaps, with visible public funding boundaries. Access-controlled FAR infrastructure and a mandatory PoA bridge remain essential. Operator decryption access, TEE coverage, deployed FAR code correspondence and administrative thresholds are not established. Private-state recovery without the infrastructure is not supported by the documented path. Scores reflect conservative handling of researched unknowns; they are not proof that every uncertain risk exists.",
+  "context": {
+    "status": "Publicly announced as live/mainnet; exact FAR and bridge deployed code correspondence unverified.",
+    "scope": "near.com embedded Confidential Account → FAR / intents.far → Private PoA Bridge → public backing. Foreign-to-foreign confidentiality modes are separate routes.",
+    "deployment": "FAR account, public Treasury identity and reference interfaces are documented, but FAR private RPC, deployed WASM and bridge enclave measurements are not publicly verified.",
+    "operators": "Seven permissioned validators advertised; independent ownership, thresholds, voting weights and deployed configuration unverified.",
+    "disclosure": "Official pages advertise selective disclosure, while May/July articles describe user viewing keys as planned. No current implementation was established. Legal policy is not proof of a global key.",
+    "usage": "A public dashboard advertises confidential TVL, but labels figures illustrative; its underlying query was not verified. Total public Intents volume is not private-route usage.",
+    "evaluation": "Manual contributor research, not the authors' deep Claude pipeline. Sources and search logs are dated 2026-10-07.",
+    "referenceClient": "near.com embedded account using documented 1Click signed-intent execution; client code/deployment correspondence unverified."
+  },
+  "powers": [
+    "Permissioned private-network admission",
+    "Mandatory authority-based bridge mint/release of backing",
+    "Reference-route sanctions/address screening",
+    "Documented quote-time SHIELD delay; broader bridge/solver policy rollouts are not assumed live",
+    "Public verifier source contains pause/force-transfer/upgrade roles; exact deployed FAR holders and thresholds remain unverified"
+  ],
+  "matrix": {
+    "public_observer": {
+      "sender": {
+        "state": "private",
+        "note": "Internal FAR operation, as described by official docs; public entry/exit fields remain visible and may permit correlation."
+      },
+      "recipient": {
+        "state": "private",
+        "note": "Internal FAR operation, as described by official docs; public entry/exit fields remain visible and may permit correlation."
+      },
+      "amount": {
+        "state": "private",
+        "note": "Internal FAR operation, as described by official docs; public entry/exit fields remain visible and may permit correlation."
+      },
+      "asset": {
+        "state": "private",
+        "note": "Internal FAR operation, as described by official docs; public entry/exit fields remain visible and may permit correlation."
+      },
+      "link": {
+        "state": "at_risk",
+        "note": "Closed internal ledger does not establish resistance to amount/timing correlation across public boundaries."
+      },
+      "function": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "metadata": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      }
+    },
+    "chain_analyst": {
+      "sender": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "recipient": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "amount": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "asset": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "link": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "function": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "metadata": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      }
+    },
+    "network_observer": {
+      "sender": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "recipient": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "amount": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "asset": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "link": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "function": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "metadata": {
+        "state": "exposed",
+        "note": "Authenticated RPC/API route; no supported reference-client network anonymization established."
+      }
+    },
+    "privileged_insider": {
+      "sender": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "recipient": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "amount": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "asset": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "link": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "function": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "metadata": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      }
+    },
+    "future_adversary": {
+      "sender": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "recipient": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "amount": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "asset": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "link": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "function": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      },
+      "metadata": {
+        "state": "unverifiable",
+        "note": "No complete deployed observation/key topology established for this adversary."
+      }
+    }
+  },
+  "answers": [
+    {
+      "criterionId": "coverage.confidentiality.amounts",
+      "status": "answered",
+      "optionId": "hidden",
+      "rationale": "Score internal FAR activity, not the public deposit or withdrawal. The official architecture explicitly hides swap details from public observers and public indexers. This is restricted publication, not a claim of encrypted amounts against the service, solvers or validators.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Balances and swap details on FAR are not visible to the public — the RPC is private and reachable only through authenticated channels.",
+          "claim": "Internal transaction details are not publicly readable.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.confidentiality.balances",
+      "status": "answered",
+      "optionId": "hidden",
+      "rationale": "FAR account balances are excluded from public access. The documented account API requires ownership authentication. Public treasury backing is not a public per-user balance ledger; boundary correlation remains a separate limitation.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Balances and swap details on FAR are not visible to the public — the RPC is private and reachable only through authenticated channels.",
+          "claim": "FAR balances are hidden from public observers.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "coverage-auth",
+          "quote": "Reading private balances or confidential transaction history requires a separate **User-Session** token",
+          "claim": "Reading private balances requires account-owner authentication.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.confidentiality.asset",
+      "status": "answered",
+      "optionId": "hidden",
+      "rationale": "The asset pair belongs to the internal swap details that the architecture removes from public indexers. IMT asset IDs are explicit to solvers and infrastructure, but are not public per-transaction tags. Asset visibility at deposits and withdrawals is scored at the boundary.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "The swap settles entirely on FAR via a `token_diff` intent, invisible to public indexers.",
+          "claim": "The internal swap, including its asset IDs, is not published.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.confidentiality.boundary",
+      "status": "answered",
+      "optionId": "boundary-public",
+      "rationale": "The documented shield/unshield path transfers backing assets to and from a public NEAR treasury. Internal activity is private from public observers; entry and exit transfers are not. No native FAR asset or private bridge path avoiding this public backing boundary was established.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Tokens are transferred to the Treasury account on NEAR.",
+          "claim": "Shielding moves public assets into public treasury backing.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "releases the backing tokens from the Treasury on NEAR.",
+          "claim": "Unshielding returns backing assets on the public network.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.sender",
+      "status": "answered",
+      "optionId": "hidden",
+      "rationale": "The internal FAR transaction is omitted from public view, including its initiating account. This only credits sender shielding for transfers inside the private path. Public deposit senders, service-level signer IDs and possible timing/amount inference are not claimed hidden.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "coverage-privacy",
+          "quote": "removes your transactions from the view of the general public.",
+          "claim": "Internal confidential transactions are withheld from public view.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "The swap settles entirely on FAR via a `token_diff` intent, invisible to public indexers.",
+          "claim": "Internal settlement is not public.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.recipient",
+      "status": "answered",
+      "optionId": "hidden",
+      "rationale": "The internal recipient is part of private FAR activity rather than a public settlement record. External payout recipients and public unshield recipients are outside this internal-transfer guarantee. This does not claim that a solver, relay or operator cannot identify the recipient.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "coverage-privacy",
+          "quote": "removes your transactions from the view of the general public.",
+          "claim": "Confidential transaction records are removed from public view.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.unlinkability.history",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The public/private architecture establishes restricted visibility, but does not document a commitment/nullifier construction or an equivalent cryptographic unlinkability property. The solver signs an account-based token_diff with a nonce; that example is not authenticated deployed FAR bytecode. Marketing about untrackable deposits and withdrawals cannot establish this criterion.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "swaps",
+          "quote": "Confidential Intents:** deposits and withdrawals cannot be tracked to each other.",
+          "claim": "Vendor claims deposit/withdraw unlinkability; no construction or measurement accompanies this statement.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-solver-intents",
+          "quote": "): Promise<{ signedData: SignedIntent; quoteHash: string }> {\n    const builder = this.getSdk()\n      .intentBuilder()\n      .setSigner(this.nearService.getIntentsAccountId())\n      .setVerifyingContract(activeIntentsContract)\n      .setDeadline(deadline)\n      .addIntent({ intent: 'token_diff', diff });",
+          "claim": "The available solver example constructs account-identified signed intents.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart/confidential-swaps",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts",
+          "Web search: \"FAR\" \"intents.far\" nullifiers unlinkability",
+          "Web search: \"Confidential Intents\" \"nullifiers\"",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/engine/state/mod.rs"
+        ],
+        "note": "Read architecture, swaps, signed-execution docs and exact solver nonce/signing code. No cryptographic receipt/spend unlinkability specification was established; deployed FAR code and state could not be read. Additionally read the public near/intents StateView account/key/nonce/balance interface at 4127e8e8; its deployed FAR equivalence remains unverified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.unlinkability.public-apps",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "A documented public withdrawal is not proof of anonymous arbitrary public-contract access. The FAR path supports private swap settlement and exits, but no documented caller-hiding public-contract adapter or exact reference-client behavior was established. Public NEAR programmability is not inherited. The public source has AuthCall, but no proven FAR-to-public deployment/path mapping establishes anonymous access.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "coverage-product",
+          "quote": "Move funds between your confidential and public NEAR Intents accounts at any time, or withdraw to any foreign chain.",
+          "claim": "The vendor documents exit reach, not arbitrary anonymous public calls.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://intents.near.org/confidential",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts",
+          "https://docs.near-intents.org/api-reference/oneclick/request-a-swap-quote",
+          "Web search: site:docs.near-intents.org \"private\" \"function\" \"contract\"",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/intents/mod.rs",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/intents/auth.rs"
+        ],
+        "note": "Read quote recipient/withdrawal options and example token_diff construction. Neither proves a general anonymous public-contract caller. Scope excludes automatic inheritance of separate Chain Signatures/NEAR L1 capability. Additionally read public near/intents Intent enum and AuthCall at 4127e8e8. Public source includes a cross-contract on_auth capability but its deployment/enabling on FAR and public caller leakage remain unverified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.unlinkability.fees",
+      "status": "answered",
+      "optionId": "optional-relayer",
+      "rationale": "The embedded confidential balance path uses an off-chain signature submitted to the mandatory 1Click endpoint rather than requiring the user to publish a gas-paying FAR account transaction. The documented required path is one service family; independent default broadcasters or distributed traffic shares are not established. Therefore credit the rubric middle option, not fully distributed private fee payment.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "signed-execution",
+          "quote": "For Confidential Intents balances, this is the required path because there is no RPC path for confidential intents.",
+          "claim": "The documented private path depends on the 1Click signed-intent service.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "signed-execution",
+          "quote": "the user authorizes the swap by signing an intent message off-chain instead of sending an on-chain deposit.",
+          "claim": "User authorization is not a public gas-paying transaction.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.identity.persistent-id",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Public boundary transfers expose source/destination addresses, whereas internal FAR activity is not published. The rubric requires deciding whether stable public tags attach to all necessary activity; neither a private-network address alone nor public addresses on boundary transfers settles that question for the whole near.com account flow. No verified reference-client trace establishes all published identifiers.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Tokens are transferred to the Treasury account on NEAR.",
+          "claim": "Public boundaries exist.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-auth",
+          "quote": "1. Build a `MultiPayload` message: `recipient` set to `\"intents.near\"`, a fresh `nonce`, and `message` set to a stringified JSON object with an empty `intents` array plus a `deadline` and the account's `signer_id`. The empty `intents` array is what makes this a proof of ownership instead of a real swap, see [Signing Intents](/integration/verifier-contract/signing-intents) for the full `MultiPayload` spec across every supported wallet standard.",
+          "claim": "Authentication identifies the private account to the service, not necessarily publicly.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://intents.near.org/confidential",
+          "https://docs.near-intents.org/integration/distribution-channels/1click-api/authentication",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts"
+        ],
+        "note": "Read public/private treasury flow, owner-session identity, and account-signing example. Authenticated account IDs are not automatically public discovery tags. No complete reference-client boundary trace or deployed FAR index was available.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.identity.registration",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The service obtains an owner-signed User-Session for balance/history access; that is authentication, not by itself mandatory legal-identity registration or viewing-key registration. Partner JWT onboarding is integration access. The available materials do not establish whether the deployed FAR protocol or near.com confidential account additionally requires registering a credential with a third party.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "coverage-auth",
+          "quote": "Your Partner JWT authenticates **your integration",
+          "claim": "Partner onboarding is distinct from end-user protocol identity.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-auth",
+          "quote": "proof of ownership instead of a real swap",
+          "claim": "User-session issuance is ownership authentication.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/distribution-channels/1click-api/authentication",
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts",
+          "Web search: site:docs.near-intents.org \"confidential\" \"register\"",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/engine/state/mod.rs"
+        ],
+        "note": "Read authentication and solver UserAuthService flow. Did not treat ownership login as credential registration or a claim of no KYC. Deployed FAR account registration rules and reference-client account creation remain unverified. Additionally read the public near/intents StateView account/key/nonce/balance interface at 4127e8e8; its deployed FAR equivalence remains unverified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.identity.reusable-address",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Internal account activity is hidden from public observers, but no default stealth/one-time receiving address derivation or reference-client receiving behavior is specified. A recipient account accepted by the confidential API is not sufficient evidence of unlinkable receiving addresses as defined by this criterion.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "quote-api",
+          "quote": "`CONFIDENTIAL_INTENTS` - assets are transferred to the `recipient`",
+          "claim": "The API supports a confidential recipient account, but does not specify a stealth-address primitive.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart/confidential-swaps",
+          "https://docs.near-intents.org/api-reference/oneclick/request-a-swap-quote",
+          "https://docs.near-intents.org/integration/distribution-channels/1click-api/authentication",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts"
+        ],
+        "note": "Read recipient schemas and account-signing/authentication code. No verified default receive-address generation for near.com was established; account confidentiality alone was not substituted for the requested primitive.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.identity.identity-proofs",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Selective disclosure and proof of account ownership are documented, but neither proves attributes such as membership or compliance while concealing identity. No FAR-native anonymous credential primitive or deployable private-identity app interface was established. Separate NEAR applications cannot be inherited by FAR.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "coverage-product",
+          "quote": "Confidential Intents supports selective disclosure and auditable execution",
+          "claim": "Disclosure of financial activity is not necessarily an identity-attribute proof.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://intents.near.org/confidential",
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://docs.near-intents.org/llms.txt",
+          "Web search: \"Confidential Intents\" \"identity proofs\"",
+          "Web search: \"Confidential Intents\" \"identity\" proofs",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/intents/mod.rs"
+        ],
+        "note": "Reviewed documentation index, product disclosure statements and architecture; searches returned generic identity/ZK material rather than an implemented FAR primitive. FAR contract code was unavailable; no code absence conclusion is made. The public near/intents Intent enum was also inspected at 4127e8e8; its explicit key/signature authorization is not an anonymous attribute-proof primitive, and deployed FAR equivalence is unverified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.execution.private-state",
+      "status": "answered",
+      "optionId": "balances-only",
+      "rationale": "The directly established state is the private multi-token ledger on intents.far used for balances and swaps. Credit private balances in the fixed asset contract. The fact that FAR is a NEAR fork does not establish an available general-purpose private-state deployment interface for developers.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "the `intents.far` contract executes swaps with shielded balances",
+          "claim": "A fixed settlement contract holds private balances.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.execution.private-logic",
+      "status": "answered",
+      "optionId": "limited",
+      "rationale": "The documented confidential quote settlement uses token_diff and optional imt_burn, enabling private swaps beyond deposit/transfer/withdraw. This qualifies as the fixed-menu middle option. It does not establish arbitrary user-defined hidden programs or encrypted-input computation.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Must contain exactly one `token_diff`. May optionally include an `imt_burn`",
+          "claim": "Confidential swap settlement uses constrained intent actions.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.execution.function-hiding",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The private RPC excludes the internal call record from public view, but this criterion requests function privacy in the Zexe sense. The published fixed contract and intent format may reveal a known action class; no verified function-hiding construction or full public boundary leakage specification was established.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "the `intents.far` contract executes swaps with shielded balances",
+          "claim": "The contract/action class is known.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-solver-intents",
+          "quote": ".addIntent({ intent: 'token_diff', diff });",
+          "claim": "The available example uses a known token_diff action.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts",
+          "https://intents.near.org/confidential",
+          "Web search: site:docs.near-intents.org \"private\" \"function\" \"contract\"",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/intents/mod.rs",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/intents/auth.rs"
+        ],
+        "note": "Read architecture and solver action construction. Restricted RPC visibility was not equated with Zexe-style function privacy. Deployed FAR code and reference-client call traces were unavailable. Additionally read public near/intents Intent enum and AuthCall at 4127e8e8. Public source includes a cross-contract on_auth capability but its deployment/enabling on FAR and public caller leakage remain unverified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.execution.shared-state",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Swaps settle against multiple accounts, but the documented balances are not specified as pooled encrypted inputs, FHE or MPC state. No native shared-private-computation primitive or bounded implementation qualifying for the rubric was established. Privacy from the public alone does not prove encrypted shared-state computation.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Market makers quote against their private IMT liquidity on FAR.",
+          "claim": "Private liquidity is documented; the encrypted multi-user computation mechanism is not.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts",
+          "https://docs.near-intents.org/integration/market-makers/confidential-example",
+          "Web search: \"Confidential Intents\" \"private smart contracts\"",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/engine/state/mod.rs"
+        ],
+        "note": "Read multi-account liquidity architecture and fixed token_diff example; did not infer encrypted shared computation from plain account liquidity. No deployed FAR encrypted-state specification was established. Additionally read the public near/intents StateView account/key/nonce/balance interface at 4127e8e8; its deployed FAR equivalence remains unverified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.callstack.targets",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The documented confidential flow settles a fixed token_diff on intents.far. The available solver does not implement or establish private cross-contract composition. No deployed FAR call-stack specification or reference-client trace settles which nested private contracts execute. Public-network exclusion alone is not sufficient to award private call-stack guarantees, and unavailable code is not evidence that all calls are visible.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "The swap settles entirely on FAR via a `token_diff` intent, invisible to public indexers.",
+          "claim": "Only fixed settlement is established.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-solver-intents",
+          "quote": ".addIntent({ intent: 'token_diff', diff });",
+          "claim": "The available solver invokes a fixed action; it is not deployed FAR contract code.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts",
+          "https://docs.near-intents.org/integration/market-makers/confidential-example",
+          "Web search: site:docs.near-intents.org \"private\" \"function\" \"contract\"",
+          "Web search: site:near.org \"confidential\" \"smart contracts\" FAR",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/intents/mod.rs",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/intents/auth.rs"
+        ],
+        "note": "Read supported confidential actions and exact solver code. General public NEAR cross-contract capabilities were not transferred to FAR. FAR nested-call execution and boundary traces remain unavailable. Additionally read public near/intents Intent enum and AuthCall at 4127e8e8. Public source includes a cross-contract on_auth capability but its deployment/enabling on FAR and public caller leakage remain unverified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.callstack.structure",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The documented confidential flow settles a fixed token_diff on intents.far. The available solver does not implement or establish private cross-contract composition. No deployed FAR call-stack specification or reference-client trace settles the number and depth of nested private calls. Public-network exclusion alone is not sufficient to award private call-stack guarantees, and unavailable code is not evidence that all calls are visible.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "The swap settles entirely on FAR via a `token_diff` intent, invisible to public indexers.",
+          "claim": "Only fixed settlement is established.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-solver-intents",
+          "quote": ".addIntent({ intent: 'token_diff', diff });",
+          "claim": "The available solver invokes a fixed action; it is not deployed FAR contract code.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts",
+          "https://docs.near-intents.org/integration/market-makers/confidential-example",
+          "Web search: site:docs.near-intents.org \"private\" \"function\" \"contract\"",
+          "Web search: site:near.org \"confidential\" \"smart contracts\" FAR",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/intents/mod.rs",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/intents/auth.rs"
+        ],
+        "note": "Read supported confidential actions and exact solver code. General public NEAR cross-contract capabilities were not transferred to FAR. FAR nested-call execution and boundary traces remain unavailable. Additionally read public near/intents Intent enum and AuthCall at 4127e8e8. Public source includes a cross-contract on_auth capability but its deployment/enabling on FAR and public caller leakage remain unverified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.callstack.public-boundary",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The documented confidential flow settles a fixed token_diff on intents.far. The available solver does not implement or establish private cross-contract composition. No deployed FAR call-stack specification or reference-client trace settles caller and argument leakage when private code calls public contracts. Public-network exclusion alone is not sufficient to award private call-stack guarantees, and unavailable code is not evidence that all calls are visible.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "The swap settles entirely on FAR via a `token_diff` intent, invisible to public indexers.",
+          "claim": "Only fixed settlement is established.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-solver-intents",
+          "quote": ".addIntent({ intent: 'token_diff', diff });",
+          "claim": "The available solver invokes a fixed action; it is not deployed FAR contract code.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts",
+          "https://docs.near-intents.org/integration/market-makers/confidential-example",
+          "Web search: site:docs.near-intents.org \"private\" \"function\" \"contract\"",
+          "Web search: site:near.org \"confidential\" \"smart contracts\" FAR",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/intents/mod.rs",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/intents/auth.rs"
+        ],
+        "note": "Read supported confidential actions and exact solver code. General public NEAR cross-contract capabilities were not transferred to FAR. FAR nested-call execution and boundary traces remain unavailable. Additionally read public near/intents Intent enum and AuthCall at 4127e8e8. Public source includes a cross-contract on_auth capability but its deployment/enabling on FAR and public caller leakage remain unverified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.metadata.network",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "The reference interface policy explicitly collects IP addresses during interface use. Thus user IP is not hidden from every network party by default, irrespective of whether a relayer hides the public gas payer. No documented built-in opt-in Tor/mixnet setting was established.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "coverage-privacy",
+          "quote": "IP address, MAC address, log files, domain server",
+          "claim": "The reference interface collects network/device identifiers.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.metadata.reads",
+      "status": "answered",
+      "optionId": "rpc-sees",
+      "rationale": "Private balance and history reads require an owner-signed session at 1Click. The API associates the session with signer_id and returns that account data; the tokenIds selector identifies requested assets. The example also reads all balances through AccountService, not local trial decryption. These are account-specific service queries.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "coverage-auth",
+          "quote": "1. Build a `MultiPayload` message: `recipient` set to `\"intents.near\"`, a fresh `nonce`, and `message` set to a stringified JSON object with an empty `intents` array plus a `deadline` and the account's `signer_id`. The empty `intents` array is what makes this a proof of ownership instead of a real swap, see [Signing Intents](/integration/verifier-contract/signing-intents) for the full `MultiPayload` spec across every supported wallet standard.",
+          "claim": "Ownership session identifies the requesting account.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "coverage-balances",
+          "quote": "Returns token balances for the authenticated user from private balance",
+          "claim": "The server reads authenticated per-account data.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "coverage-solver-intents",
+          "quote": "const { balances } = await AccountService.getBalances();",
+          "claim": "The documented solver example obtains private balances from a service.",
+          "stance": "context"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.metadata.pending",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The documented relay and API receive structured signed instructions, but no deployed topology establishes who can inspect pending private instructions outside the execution environment. An authenticated endpoint is neither a zero-knowledge guarantee nor proof of operator access outside an enclave. Pending-transaction protection remains unverified for near.com.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "signed-execution",
+          "quote": "Call `POST /v0/submit-intent` with the signed payload",
+          "claim": "A mandatory service receives signed intent contents before settlement.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-solver-intents",
+          "quote": ".addIntent({ intent: 'token_diff', diff });",
+          "claim": "Available signing code signs explicit asset amounts rather than producing a hiding proof.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read Confidential Intents architecture, signed-execution and account API docs saved in sources/",
+          "Reviewed near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348 and pinned solver integration at 59d5753323ff8b4ebb1224d490a44d75bb60455; no deployed FAR correspondence established",
+          "Read OutLayer agent-custody technical integration documentation and official May 27 architecture article; distinguish paths and unspecified enclave coverage"
+        ],
+        "note": "Independent second review corrected an inference stronger than the evidence. Deployed FAR and near.com correspondence remains unavailable.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.metadata.fingerprinting",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The sources document public entry/exit movements, quote deadlines and variable token_diff amounts. They do not establish enforced padding, uniform shapes or timing defenses for the entire reference-client path. No independent timing/shape measurement was found; absence of a public mempool is not a protocol-level fingerprint mitigation.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "The nonce is constructed using `VersionedNonceBuilder`",
+          "claim": "A nonce encoding deadline/salt is documented, not uniform transaction padding.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts",
+          "https://docs.near-intents.org/integration/market-makers/confidential-example",
+          "https://intents.near.org/confidential",
+          "Web search: \"Confidential Intents\" \"fingerprint\" OR \"padding\" OR \"batching\""
+        ],
+        "note": "Read nonce construction, quote deadlines, signed amounts and example token encoding; no whole-path enforced timing/size policy or measurement was established. Not an exhaustive deployed-code absence proof.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.anonymity-set.structure",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The FAR ledger uses a shared treasury and multi-token IDs, but a shared contract is not evidence of one effective anonymity set across assets and apps. Public token boundaries and asset-dependent exits may partition candidates. No measured or explicitly specified anonymity-set construction was established.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "This account ID (`PRIVATE_TREASURY_ACCOUNT_ID` in solver configs) is a production constant shared by all participants.",
+          "claim": "A common backing account is documented, not a measured cross-asset anonymity set.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://intents.near.org/confidential",
+          "https://github.com/hairy-pointer/near-intents-amm-solver/blob/59d5753323ff8b4ebb1224d490a44d75bb60452a/src/services/intents.service.ts",
+          "Web search: \"Confidential Intents\" \"anonymity set\"",
+          "Web search: \"Confidential Intents\" independent anonymity analysis academic",
+          "https://github.com/near/intents/blob/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/core/src/engine/state/mod.rs"
+        ],
+        "note": "Read shared treasury and asset identifiers. Search found vendor timing caveats and general privacy publications, not a FAR set-construction specification. Shared backing alone was not credited as shared anonymity. Additionally read the public near/intents StateView account/key/nonce/balance interface at 4127e8e8; its deployed FAR equivalence remains unverified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "coverage.anonymity-set.default",
+      "status": "answered",
+      "optionId": "opt-in",
+      "rationale": "Confidential activity is private within the selected account, but choosing Confidential Account is an explicit user action in the reference client; the general quote API also defaults to public. Score opt-in for the system-wide reference-client crowd, without treating the foreign-to-foreign and embedded paths as identical.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "coverage-product",
+          "quote": "Opt into confidentiality when you need it by toggling between your Main Account and Confidential Account directly on near.com.",
+          "claim": "The reference client makes confidentiality an account choice.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "coverage.anonymity-set.usage",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The official dashboard separately labels Confidential TVL and shows $144.06M on the retrieved 2026-10-07 page, which would cross the large tier if established as measured private state. However the same page explicitly calls figures illustrative, and no underlying Dune query or reproducible balance/valuation series was authenticated. This is not no public figure: an explicit figure exists, but its measured status remains unresolved. Neither general Intents volume nor Zcash route volume is substituted.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "coverage-revenue",
+          "quote": "Total value locked in NEAR Intents' confidential pools, in USD.\n$144.06M",
+          "claim": "A confidential-specific figure is publicly shown.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-revenue",
+          "quote": "Figures shown are illustrative.",
+          "claim": "The source limits reliability as a measured balance figure.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://revenue.near.org/",
+          "https://nearstats.org/near-intents/confidential",
+          "Web search: \"Confidential Intents\" private transactions volume TVL",
+          "Web search: \"Confidential Intents\" \"TVL\" \"Revenue\"",
+          "Web search: site:near.org \"Confidential\" \"TVL\" \"$\""
+        ],
+        "note": "Read official revenue page and NearStats. NearStats separately disclaims source verification. The official page labels Confidential TVL but also marks figures illustrative; underlying Dune query not validated. No private transaction counts or directly reproducible value locked were established.",
+        "codeChecked": false
+      }
+    },
+    {
+      "criterionId": "coverage.anonymity-set.effective",
+      "status": "answered",
+      "optionId": "no-study",
+      "rationale": "A targeted search found no independent quantitative study of effective versus nominal anonymity for this FAR implementation by the assessment cutoff. Product explanations and market/TVL reports are not linkability measurements. This uses the rubric explicit no-study option rather than an unknown or a fabricated percentage.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Balances and swap details on FAR are not visible to the public — the RPC is private and reachable only through authenticated channels.",
+          "claim": "Public observers lack direct FAR records; this is architecture context, not an independent anonymity measurement.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Web search: \"NEAR\" \"Confidential Intents\" anonymity analysis",
+          "Web search: \"Confidential Intents\" \"unlinkability\" study",
+          "Web search: \"Confidential Intents\" independent anonymity analysis academic",
+          "Web search: \"Confidential Intents\" \"anonymity set\"",
+          "https://eprint.iacr.org/2024/982.pdf",
+          "https://nearstats.org/near-intents/confidential"
+        ],
+        "note": "Searches yielded product/integrator commentary and unrelated or earlier general intent-privacy papers. None measured FAR effective anonymity or percentage shrinkage. A 2024 SoK predates the assessed FAR implementation and cannot supply its measured reduction.",
+        "codeChecked": false
+      }
+    },
+    {
+      "criterionId": "trust.decryption.standing-access",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Authenticated balance/history responses demonstrate application processing but do not establish operator access outside an enclave. The official architecture describes user-key encryption, while OutLayer describes operator/solver visibility for another integration. The production key hierarchy and enclave coverage for the selected near.com path remain unverified; neither a master key nor user-only access is established.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "coverage-balances",
+          "quote": "Returns token balances for the authenticated user from private balance sources",
+          "claim": "The account-data infrastructure returns private balance data as structured values.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-auth",
+          "quote": "none of that data is exposed by any public endpoint",
+          "claim": "Access is private/authenticated, rather than publicly readable.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read Confidential Intents architecture, signed-execution and account API docs saved in sources/",
+          "Reviewed near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348 and pinned solver integration at 59d5753323ff8b4ebb1224d490a44d75bb60455; no deployed FAR correspondence established",
+          "Read OutLayer agent-custody technical integration documentation and official May 27 architecture article; distinguish paths and unspecified enclave coverage"
+        ],
+        "note": "Independent second review corrected an inference stronger than the evidence. Deployed FAR and near.com correspondence remains unavailable.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "trust.decryption.infra-visibility",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Structured signed requests and plaintext balance responses do not establish where transport is decrypted or whether plaintext handling is confined to an enclave. OutLayer reports plaintext solver visibility for its integration, but a deployed topology for near.com, FAR validators, relay and bridge is unavailable. The selected path cannot be classified as operator-visible or TEE-only from these sources.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "signed-execution",
+          "quote": "Call `POST /v0/submit-intent` with the signed payload",
+          "claim": "The ordinary signed request is sent to a service.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-balances",
+          "quote": "Available balance (as string to preserve precision)",
+          "claim": "The account endpoint exposes the balance as an application-readable value.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "coverage-product",
+          "quote": "no client-side proof generation",
+          "claim": "Client-side zero-knowledge proving is not required for the advertised workflow.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read Confidential Intents architecture, signed-execution and account API docs saved in sources/",
+          "Reviewed near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348 and pinned solver integration at 59d5753323ff8b4ebb1224d490a44d75bb60455; no deployed FAR correspondence established",
+          "Read OutLayer agent-custody technical integration documentation and official May 27 architecture article; distinguish paths and unspecified enclave coverage"
+        ],
+        "note": "Independent second review corrected an inference stronger than the evidence. Deployed FAR and near.com correspondence remains unavailable.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "trust.decryption.retroactive",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The sources establish access-controlled infrastructure but do not specify storage encryption, archive retention, backup keys or a global/threshold decryption-key hierarchy. Legal disclosure capability is not proof of a global key. It remains unsettled whether compromise of a particular key or committee would reveal every user history.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "coverage-privacy",
+          "quote": "certain nonpublic on-chain information about a transaction may be accessible and disclosed",
+          "claim": "The policy discusses possible disclosure but not the technical key mechanism.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://docs.near-intents.org/integration/distribution-channels/1click-api/authentication",
+          "https://near.com/privacy",
+          "https://docs.near-intents.org/llms.txt",
+          "https://github.com/near/intents/tree/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/src",
+          "web search: NEAR FAR confidential intents private shard viewing keys encryption post quantum master key"
+        ],
+        "note": "Read architecture, authentication and privacy policy; searched docs index and inspected the public verifier source. No FAR storage/backup key hierarchy or deployment-bound decryption model was found. Public verifier account keys are signing keys, not evidence of a global viewing key.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "trust.disclosure.selective",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The product asserts selective disclosure for institutions, but it does not identify a live user-controlled viewing key, disclosure proof or supported export mechanism. Account-owner authentication to a balance/history service is not enough to establish native or app-specific disclosure to a chosen third party. The marketing claim remains unverified at the requested deployment boundary.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "coverage-product",
+          "quote": "supports selective disclosure and auditable execution",
+          "claim": "This is an advertised capability without a technical user disclosure interface.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://intents.near.org/confidential",
+          "https://docs.near-intents.org/integration/distribution-channels/1click-api/authentication",
+          "https://docs.near-intents.org/llms.txt",
+          "https://docs.near-intents.org/api-reference/account/get-transaction-history",
+          "https://github.com/near/intents/tree/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/src",
+          "web search: site:docs.near-intents.org confidential viewing key disclosure revocation"
+        ],
+        "note": "Read product, authentication, balance/history API and indexed docs; inspected verifier account and FAR key-management source. No implemented sharing or proof interface tied to deployed FAR was established.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "trust.disclosure.granularity",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "History APIs can filter records, and balance APIs can filter asset IDs, but query filters do not prove that delegated access is cryptographically or server-side limited to a transaction, asset or time range. Neither fine-grained nor whole-account-only disclosure is established for a chosen recipient.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "coverage-history",
+          "quote": "Filter by deposit address",
+          "claim": "Filtering an owner-authorized history request is not a disclosure scope.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/distribution-channels/1click-api/authentication",
+          "https://docs.near-intents.org/api-reference/account/get-transaction-history",
+          "https://docs.near-intents.org/api-reference/account/get-user-token-balances",
+          "https://intents.near.org/confidential",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/accounts.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AccountManager, public_keys_of, account-key rotation, view_key/viewing_key/disclosure scan",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AccountManager, public_keys_of, account-key rotation, view_key/viewing_key/disclosure scan",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/state.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AccountManager, public_keys_of, account-key rotation, view_key/viewing_key/disclosure scan",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AccountManager, public_keys_of, account-key rotation, view_key/viewing_key/disclosure scan",
+          "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+        ],
+        "note": "Inspected the API schemas and authentication flow. Found owner sessions and query filters, but no disclosure-recipient authorization scopes. Second code check: Reviewed account APIs and u128 balance storage plus the intent enum. User signing-key management is present; no scoped disclosure API was identified in the reviewed public core. It cannot settle granularity of any independent FAR history/view-key service. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "trust.disclosure.revocable",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Short-lived owner session tokens and refresh tokens are documented. Their expiry is not proof of revocable selective-disclosure grants or of a viewing-key rotation that stops a third party from seeing future activity. No live revocation mechanism for the advertised disclosure feature was established.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "coverage-auth",
+          "quote": "Short-lived bearer token.",
+          "claim": "A session lifetime exists, but this is not a specified disclosure revocation mechanism.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/distribution-channels/1click-api/authentication",
+          "https://docs.near-intents.org/llms.txt",
+          "https://intents.near.org/confidential",
+          "https://github.com/near/intents/tree/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/src"
+        ],
+        "note": "Read authentication and indexed API endpoints; inspected public verifier account key management. Found signing-key management and session expiry, not a deployment-bound disclosure-key rotation/revocation feature.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "trust.crypto.setup",
+      "status": "answered",
+      "optionId": "no-proofs",
+      "rationale": "The selected privacy mechanism is restricted visibility on a permissioned NEAR fork, with a PoA/TEE bridge, rather than a zero-knowledge transaction proof system. Normal signatures and bridge attestations should not be awarded a transparent ZK setup score. The product explicitly advertises no client-side proof generation; no ZK confidentiality proof system is specified for FAR.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "coverage-product",
+          "quote": "without the complexity of ZK-only systems",
+          "claim": "The advertised architecture does not present a ZK-only privacy system.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "trust.crypto.hardware",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "A TEE-based bridge is explicitly part of the system, but the public material does not state whether its TEE is essential to confidentiality, only to bridge integrity, or merely defense in depth. It also does not document TEE coverage for validators or services. Neither no reliance nor the more specific confidentiality/integrity classification is established.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-blockchain",
+          "quote": "connected to NEAR mainnet via a TEE-based bridge",
+          "claim": "Hardware is used by a mandatory bridge; its precise confidentiality function is not specified.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://intents.near.org/confidential",
+          "https://www.near.org/blockchain",
+          "https://docs.near-intents.org/security-compliance/terms-of-service",
+          "https://docs.near-intents.org/llms.txt",
+          "web search: site:nearone.org private shard TEE bridge FAR confidential",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, token_diff; case-insensitive word-boundary TEE/TDX/SGX/attestation/encrypt/decrypt scan across contracts/defuse and crates/near, crates/primitives, crates/signatures",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/engine/state/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, token_diff; case-insensitive word-boundary TEE/TDX/SGX/attestation/encrypt/decrypt scan across contracts/defuse and crates/near, crates/primitives, crates/signatures",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/token_diff.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, token_diff; case-insensitive word-boundary TEE/TDX/SGX/attestation/encrypt/decrypt scan across contracts/defuse and crates/near, crates/primitives, crates/signatures",
+          "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+        ],
+        "note": "Read architecture, product and blockchain pages and bridge risk terms. Related NEAR One CKD research was found but not linked to the deployed FAR bridge; it was not imported as a FAR guarantee. Second code check: Reviewed deterministic public ledger arithmetic and account state. The searched public core does not implement the FAR networking/enclave privacy boundary; no matches for the targeted TEE/encryption mechanisms were found. Bridge TEE marketing does not determine whether confidentiality depends on that hardware. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "trust.crypto.post-quantum",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The sources do not specify FAR private-data encryption at rest or in transit with sufficient detail to classify harvest-now-decrypt-later resistance. Ed25519 authorization, public NEAR commitments and unrelated Chain Signatures/CKD work do not establish post-quantum confidentiality of this private system.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "2. **FAR (Private)** — A private NEAR fork where the `intents.far` contract executes swaps with shielded balances\n\nFAR is a permissioned instance of the NEAR protocol operated by a small validator set with no public networking. Balances and swap details on FAR are not visible to the public — the RPC is private and reachable only through authenticated channels.",
+          "claim": "Public networking restrictions do not identify a post-quantum encryption construction.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://docs.near-intents.org/integration/distribution-channels/1click-api/authentication",
+          "https://docs.near-intents.org/llms.txt",
+          "https://github.com/near/intents/tree/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/src",
+          "web search: NEAR FAR confidential intents private shard viewing keys encryption post quantum master key"
+        ],
+        "note": "Reviewed architecture/authentication and searched for private-data encryption/PQ specifications; inspected FAR-related verifier code. No deployed FAR encryption suite or PQ security claim was established.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "trust.crypto.formal-privacy",
+      "status": "answered",
+      "optionId": "de-facto",
+      "rationale": "The technical definition is operational restricted visibility: a private NEAR fork with authenticated RPC and no public networking. This is an informal confidentiality model, not a formally specified zero-knowledge property. The product also explicitly distinguishes the design from ZK-only systems. This answer does not mean ordinary signature integrity is absent.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-api-terms",
+          "quote": "restricted-visibility execution environment for confidential intents",
+          "claim": "The formal service definition characterizes privacy as restricted execution visibility.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "the RPC is private and reachable only through authenticated channels",
+          "claim": "The concrete documented guarantee is access restriction.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.self-custody.spending",
+      "status": "answered",
+      "optionId": "federation",
+      "rationale": "Users sign intents, but the criterion includes backing custody, not only ordinary account authorization. Private balances are backed by a Treasury account and redeemed through a mandatory PoA bridge; the terms say bridge validators or authorities may control assets in flight. This is authority-held bridge backing, rather than purely user-key custody or a validity-proven canonical bridge. The signers and threshold are not established, so no claim of a named independent federation is made.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-api-terms",
+          "quote": "including, in the case of the PoA Bridge, by its validators or authorities",
+          "claim": "Bridge assets can be controlled by authorities during transfer.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "tokens locked in the Treasury smart-contract account on the public chain",
+          "claim": "Private balances depend on shared public-chain backing.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.self-custody.backing",
+      "status": "answered",
+      "optionId": "committee-bridge",
+      "rationale": "IMTs are 1:1 backed by tokens in the public Treasury and are minted/redeemed through the Private PoA Bridge. The authority-based bridge fits the committee/authority bridge category; no validity-proof canonical bridge is established. This identifies the documented architecture, without inventing a bridge threshold or operator roster.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "The Private PoA Bridge processes this deposit and mints equivalent IMT tokens on FAR.",
+          "claim": "Minting depends on the private authority bridge.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.self-custody.recoverability",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "The rubric requires publicly available recovery data and sufficient user keys. FAR has no public networking and its RPC requires authenticated access; private balances and history come from a required User-Session service. User-held signing keys alone cannot reconstruct and spend the full private state from public data if this infrastructure disappears.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "2. **FAR (Private)** — A private NEAR fork where the `intents.far` contract executes swaps with shielded balances\n\nFAR is a permissioned instance of the NEAR protocol operated by a small validator set with no public networking. Balances and swap details on FAR are not visible to the public — the RPC is private and reachable only through authenticated channels.",
+          "claim": "The private ledger is not publicly available for independent reconstruction.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "coverage-auth",
+          "quote": "requires a separate **User-Session** token",
+          "claim": "Private balance/history reads depend on the account-data service.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.pause.pause-fn",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Published verifier source contains pause roles, and the service terms warn of pause/unpause powers. However, the current source revision is not matched to deployed FAR bytecode or its live role grants; it does not establish whether one entity, a multisig fast path or delayed governance controls the protocol pause. Quote-time SHIELD restrictions alone are not equated to a chain-level pause.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-code-roles",
+          "quote": "UnrestrictedAccountManager,\n}\n\n#[access_control(role_type(Role))]\n#[derive(Pausable, PanicOnDefault)]\n#[pausable(\n    pause_roles(Role::DAO, Role::PauseManager),\n    unpause_roles(Role::DAO, Role::UnpauseManager)\n)]\n#[near(\n    contract_state,\n    contract_metadata(\n        standard(standard = \"dip4\", version = \"0.1.0\"),",
+          "claim": "The public source implements role-based pausing, but deployment/grantee thresholds remain unverified.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://docs.near-intents.org/security-compliance/terms-of-service",
+          "https://github.com/near/intents/tree/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/src",
+          "https://docs.near-intents.org/security-compliance/proactive-intents-security"
+        ],
+        "note": "Read roles, account controls, IMT burn and upgrade in near/intents at 4127e8e; FAR production linkage and live pause-role grants are not public in the inspected material. No favorable absence conclusion is made.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "custody.pause.halt",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Seven permissioned validators are advertised, but the source does not establish their names, independent ownership, voting weights, threshold for liveness, infrastructure control or a halt switch. The small-set option requires at least three independent parties. Counting advertised validators alone cannot prove that threshold.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-blockchain",
+          "quote": "operated by seven permissioned validators",
+          "claim": "Advertised validator count does not establish independent control or liveness threshold.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://www.near.org/blockchain",
+          "https://intents.near.org/confidential",
+          "https://docs.near-intents.org/llms.txt",
+          "web search: NEAR private shard FAR validator halt incident outage 2026",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Pausable, PauseManager, UnpauseManager, #[pause] on imt_burn, upgrade",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/tokens/imt.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Pausable, PauseManager, UnpauseManager, #[pause] on imt_burn, upgrade",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/upgrade.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Pausable, PauseManager, UnpauseManager, #[pause] on imt_burn, upgrade",
+          "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+        ],
+        "note": "Inspected official chain/product/architecture descriptions and searched FAR halts. No live FAR validator/stake/configuration record or independent-control threshold was established. Second code check: Public core has contract-level pause roles and a paused IMT burn entry point. Contract pausing differs from halting the FAR host chain. No private consensus/node implementation was available to establish chain halt powers or their absence. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "custody.pause.exits-during-pause",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "Every documented unshield requires FAR token burning and bridge processing to release Treasury backing. The service terms explicitly permit blocking, freezing or rejecting bridged withdrawals; no always-available exit exception is documented. Thus the reference withdrawal route is not pause-resistant. This answer concerns the required bridge route, not a claim about a verified global FAR pause transaction.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-api-terms",
+          "quote": "bridging and cross-chain transfers are subject to applicable transaction screening, sanctions, and KYT/AML controls",
+          "claim": "Withdrawal processing can be restricted.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "trust-api-terms",
+          "quote": "may be delayed, blocked, frozen, or rejected on that basis",
+          "claim": "These controls can prevent a bridge exit.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.pause.track-record",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "A dated source tracking FAR chain/protocol halts over the relevant year was not accessible or identified. General NEAR mainnet uptime, individual interface availability and lack of search results cannot prove a clean FAR track record. No incident count is invented.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "FAR is a permissioned instance of the NEAR protocol",
+          "claim": "The relevant incident scope is FAR and required protocol dependencies, not public NEAR alone.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://status.near-intents.org/",
+          "web search: NEAR private shard FAR validator halt incident outage 2026",
+          "web search: site:near-intents.org Confidential halt",
+          "https://docs.near-intents.org/llms.txt"
+        ],
+        "note": "The linked status host failed to resolve via curl and web open returned an internal error. Official architecture and docs index were read; searches did not establish a dated FAR halt tracker. Absence of search results is not absence of incidents.",
+        "codeChecked": false
+      }
+    },
+    {
+      "criterionId": "custody.freeze.blocklist",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Published verifier code implements force_lock_account, and the official terms warn that administrative roles may lock accounts. This rules out awarding absence from documentation silence, but the current public source is not proven to match deployed FAR and the live roles are not established. Whether a native FAR capability is currently enforced protocol-wide remains unsettled; third-party asset screening is scored separately.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-code-freeze",
+          "quote": "fn force_lock_account(&mut self, account_id: AccountId) -> bool",
+          "claim": "The public verifier implementation includes an account-lock power.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/security-compliance/terms-of-service",
+          "https://github.com/near/intents/tree/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/src",
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents"
+        ],
+        "note": "Inspected contract/accounts/force.rs and role definitions at 4127e8e, including FAR-specific public-key controls; no deployed FAR code hash/ACL linkage was established. Service address screening is not silently mapped to native token standard hooks.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "custody.freeze.seizure",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The current verifier source implements forced transfers and the terms warn of administrative balance-transfer/withdrawal powers. These are material adverse context, but deployed FAR linkage and active permissions remain unverified. An issuer-only answer would ignore possible broader powers; impossible is unsupported. The evaluation therefore leaves the precise deployed seizure capability unknown.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-code-force-transfer",
+          "quote": "contract::{Contract, ContractExt, Role},\n    tokens::nep245::MultiTokenForcedCore,\n};\n\n#[near]\nimpl MultiTokenForcedCore for Contract {\n    #[access_control_any(roles(Role::DAO, Role::UnrestrictedWithdrawer))]\n    #[payable]\n    fn mt_force_transfer(\n        &mut self,\n        owner_id: AccountId,\n        receiver_id: AccountId,",
+          "claim": "Current source gates forced transfers to privileged roles.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/security-compliance/terms-of-service",
+          "https://github.com/near/intents/tree/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/src",
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents"
+        ],
+        "note": "Read forced multi-token transfers, forced account controls, FAR key additions/removals and IMT burn. No deployed FAR source/configuration match or exact active bridge backing permissions was established.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "custody.freeze.systemic",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Private IMTs share Treasury backing, so a restriction on that escrow is a concentration risk. The sources do not establish the exact deployed asset contract/issuer blacklist path needed to prove one blacklist action freezes all holders of a particular backing asset. Neither native per-user isolation nor a specific live systemic issuer freeze is assumed.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "This account ID (`PRIVATE_TREASURY_ACCOUNT_ID` in solver configs) is a production constant shared by all participants.",
+          "claim": "The backing path has a shared Treasury account.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents",
+          "https://docs.near-intents.org/security-compliance/terms-of-service",
+          "https://github.com/near/intents/tree/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/src"
+        ],
+        "note": "Inspected Treasury/IMT architecture and verifier token implementation. The relevant token issuer control and deployed backing-escrow linkage were not independently established; source concentration alone is not a verified blacklist event/path.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "custody.exit.unilateral",
+      "status": "answered",
+      "optionId": "none",
+      "rationale": "The documented exit requires a FAR burn and mandatory Private PoA Bridge release of Treasury backing; the bridge is request-driven and access is controlled. This is not a unilateral live exit if the required operator disappears or refuses service. Solver recover intents cover failed settlement, not escape from a hostile/offline bridge.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "The PoA Bridge processes the burn request and releases the backing tokens from the Treasury on NEAR.",
+          "claim": "Releasing backing requires bridge processing.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "it processes deposits and burns via RPC requests rather than actively detecting on-chain events.",
+          "claim": "The mandatory bridge needs a request-processing service.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "signed-execution",
+          "quote": "this is the required path because there is no RPC path for confidential intents.",
+          "claim": "The private-balance execution route requires the partner-authenticated service, without a direct user RPC fallback.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.exit.window",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The public source includes direct code deployment by an upgrade role, and the terms warn that governance changes may take effect without individual notice. Neither source establishes the live FAR upgrade account, delay, public proposal visibility or withdrawal time. The exact net exit window is unknown; no immutable/infinite or guaranteed delay score is awarded.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-code-upgrade",
+          "quote": "let p = Promise::new(env::current_account_id()).deploy_contract(code);",
+          "claim": "The contextual source implements a deploy action, not a documented FAR timelock.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "https://github.com/near/intents/tree/4127e8e8fbe4206fa910c4fe7f8028c9e0972348/contracts/defuse/src",
+          "https://docs.near-intents.org/security-compliance/terms-of-service",
+          "https://docs.near-intents.org/llms.txt",
+          "https://docs.near-intents.org/integration/market-makers/confidential-intents"
+        ],
+        "note": "Read upgrade implementation and source role assignments. No live FAR account keys/ACLs, governance queue or upgrade timelock were established; source code alone is not proof of production net exit window.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "custody.exit.gatekeeper",
+      "status": "answered",
+      "optionId": "can-refuse",
+      "rationale": "Unshielding depends on the private bridge processing the burn and releasing public backing. The applicable service terms allow bridge transfers to be blocked or rejected. No public user-controlled fallback that bypasses this bridge is specified; normal public withdrawal after an accepted unshield does not remove that gate.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-api-terms",
+          "quote": "may be delayed, blocked, frozen, or rejected on that basis",
+          "claim": "Bridge transfer processing can be refused by compliance controls.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.access.entry",
+      "status": "answered",
+      "optionId": "screened",
+      "rationale": "The reference client uses 1Click quote and bridge routes. Automated address checks operate on integrated quote flows, and the applicable terms explicitly permit restrictions on bridging/deposits. This is screened entry for the reference route, not a claim that every user must complete KYC or that all alternative routes share identical enforcement.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-compliance",
+          "quote": "NEAR Intents applies automated compliance screening on integrated quote flows against multiple trusted data sources:",
+          "claim": "Integrated quote flows perform third-party address screening.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "trust-terms",
+          "quote": "take measures to block or suspend your access to the Services",
+          "claim": "The reference service can refuse access.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.access.private-exit",
+      "status": "answered",
+      "optionId": "gate",
+      "rationale": "The documented private exit requires the same bridge and 1Click processing, and bridge screening can block or reject transfers. No always-live public fallback from an existing FAR balance that bypasses the private bridge is established. The refundable foreign-to-foreign deposit and solver recover flows are not escape routes for an embedded Confidential Account.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-api-terms",
+          "quote": "may be delayed, blocked, frozen, or rejected on that basis",
+          "claim": "The required bridge route can gate withdrawals.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "custody.access.screening",
+      "status": "answered",
+      "optionId": "address-screening",
+      "rationale": "The current implementation compares addresses in quote requests to external risk databases (including TRM, AMLBot/PureFi and Binance AML). This is third-party screening of public addresses, not a user-generated zero-knowledge proof. Possible developer KYB and geographic restrictions do not establish mandatory end-user identity disclosure as the normal selected path.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "trust-compliance",
+          "quote": "These checks identify overlap between addresses in the request and addresses flagged in external databases.",
+          "claim": "The documented screening mechanism checks request addresses against external databases.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.contracts.model",
+      "status": "answered",
+      "optionId": "fixed",
+      "rationale": "The evidenced live FAR integration offers ledger transfers, token-diff swaps and shield/unshield actions. It is scored as fixed-function private actions. Being a NEAR fork does not establish that third parties can deploy general-purpose private programs.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Market makers quote against their private IMT liquidity on FAR. The swap settles entirely on FAR via a `token_diff` intent, invisible to public indexers.",
+          "claim": "The documented confidential execution is a token_diff swap on the existing FAR ledger.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.contracts.deployment",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "FAR is permissioned and solver admission is gated, but deployer rights are unspecified. A solver allowlist is not a contract-deployer allowlist, and public NEAR deployment tutorials cannot establish open FAR deployment. No private contract deployment policy or deployed third-party example was verified.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "FAR is a permissioned instance of the NEAR protocol operated by a small validator set with no public networking.",
+          "claim": "Permissioning does not establish deployed contract privileges.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read docs-index, architecture, swaps, signed-execution and program-example",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"deploy\" governance upgrade",
+          "Web search: \"intents.far\" \"contract\" \"deploy\"",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/upgrade.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed upgrade, deploy_contract, add_full_access_key, AuthCall, commented state_init, DeterministicStateInit",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/admin.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed upgrade, deploy_contract, add_full_access_key, AuthCall, commented state_init, DeterministicStateInit",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/auth.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed upgrade, deploy_contract, add_full_access_key, AuthCall, commented state_init, DeterministicStateInit",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/auth_call.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed upgrade, deploy_contract, add_full_access_key, AuthCall, commented state_init, DeterministicStateInit",
+          "/private/tmp/near-trust-intents/crates/near/promise/src/actions/state_init.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed upgrade, deploy_contract, add_full_access_key, AuthCall, commented state_init, DeterministicStateInit",
+          "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+        ],
+        "note": "FAR is permissioned and solver admission is gated, but deployer rights are unspecified. A solver allowlist is not a contract-deployer allowlist, and public NEAR deployment tutorials cannot establish open FAR deployment. No private contract deployment policy or deployed third-party example was verified. Second code check: Public code can upgrade its own contract and includes generic deployment-related promise primitives. AuthCall state_init integration is commented out. None of this establishes third-party deployment permission or a deployment endpoint on FAR. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "programmability.contracts.standards",
+      "status": "answered",
+      "optionId": "emerging",
+      "rationale": "The system documents IMT private asset identifiers and versioned signed-intent conventions. These establish an emerging private integration interface. Private NFT standards and broad use by several independent private applications were not verified, so established standards are not credited.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Confidential assets are represented as **IMT (Intents Multi-Token)** tokens on FAR.",
+          "claim": "A documented private asset representation exists.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "The nonce is constructed using `VersionedNonceBuilder` from the `@defuse-protocol/intents-sdk`:",
+          "claim": "The confidential intent interface has SDK support.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.contracts.accounts",
+      "status": "answered",
+      "optionId": "contracts",
+      "rationale": "The private path uses contract-ledger accounts and off-chain wallet signatures; the relay verifies signatures against public intents.near while reading FAR balances. This is contract-based account abstraction. Public NEAR native multi-key features do not establish arbitrary native custom authentication or recovery in FAR.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Verifies signatures against the public `intents.near` contract, but reads balances from FAR",
+          "claim": "Account validation is contract-based.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "signed-execution",
+          "quote": "Use signed intent execution when a quote uses `depositType: INTENTS` or `depositType: CONFIDENTIAL_INTENTS`.",
+          "claim": "Confidential account authorization uses signed intents.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.composability.private-private",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Private atomic balance settlement inside intents.far does not establish atomic private function calls between different contracts. No deployed FAR intercontract example or call semantics were located. Public NEAR cross-contract capabilities are not substituted for private-system evidence.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Market makers quote against their private IMT liquidity on FAR. The swap settles entirely on FAR via a `token_diff` intent, invisible to public indexers.",
+          "claim": "Single-ledger private settlement is established, not intercontract calls.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read architecture, swaps, quote-api and program-example",
+          "Web search: site:docs.near-intents.org \"private\" \"atomic\" contracts",
+          "Web search: site:docs.near-intents.org \"FAR\" \"public state\"",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AuthCall, Promise::new, on_auth, auth_call, concurrent promise warning",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/auth.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AuthCall, Promise::new, on_auth, auth_call, concurrent promise warning",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/auth_call.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AuthCall, Promise::new, on_auth, auth_call, concurrent promise warning",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/state.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AuthCall, Promise::new, on_auth, auth_call, concurrent promise warning",
+          "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+        ],
+        "note": "Private atomic balance settlement inside intents.far does not establish atomic private function calls between different contracts. No deployed FAR intercontract example or call semantics were located. Public NEAR cross-contract capabilities are not substituted for private-system evidence. Second code check: Public core has AuthCall creating asynchronous on_auth promises; the intent-container warning says promises from different intents execute concurrently. This is not evidence of atomic calls between arbitrary private FAR contracts, nor proof such capabilities are absent from the private fork. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "programmability.composability.private-public",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "The documented reference path uses separate public and FAR environments with bridge-mediated shield and unshield requests. Public interaction requires releasing funds to the public environment; there is no documented atomic public/private call in one transaction. This describes the evidenced path, not an assertion that future adapters are impossible.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Unshield (private → public):** IMT tokens are burned on FAR. The PoA Bridge processes the burn request and releases the backing tokens from the Treasury on NEAR.",
+          "claim": "Public interaction crosses through a bridge release.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "The bridge operates on a request-driven model — it processes deposits and burns via RPC requests rather than actively detecting on-chain events.",
+          "claim": "The crossing is request-driven rather than one atomic cross-contract operation.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.composability.liquidity",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Shielding a solver's own liquidity and moving backing through the bridge do not establish access to existing public AMMs or lending contracts while preserving a confidential user identity. No specific live public-DeFi adapter for the embedded Confidential Account was established.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Market makers quote against their private IMT liquidity on FAR. The swap settles entirely on FAR via a `token_diff` intent, invisible to public indexers.",
+          "claim": "Private swaps use solver liquidity.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "| `shield` | No | Transfer of solver's public liquidity to the Treasury (triggers IMT mint on FAR) |",
+          "claim": "Public solver liquidity enters through the bridge.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read Confidential Intents architecture, signed-execution and account API docs saved in sources/",
+          "Reviewed near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348 and pinned solver integration at 59d5753323ff8b4ebb1224d490a44d75bb60455; no deployed FAR correspondence established",
+          "Read OutLayer agent-custody technical integration documentation and official May 27 architecture article; distinguish paths and unspecified enclave coverage"
+        ],
+        "note": "Independent second review corrected an inference stronger than the evidence. Deployed FAR and near.com correspondence remains unavailable.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "programmability.composability.cross-domain",
+      "status": "answered",
+      "optionId": "public-legs",
+      "rationale": "The mandatory Private PoA Bridge conveys shield and burn/release requests between FAR and public NEAR. This is limited public/private asset messaging, not arbitrary confidential cross-chain calls. Foreign-to-foreign swaps and unrelated Chain Signatures are not credited as private execution composability.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Shield (public → private):** Tokens are transferred to the Treasury account on NEAR. The Private PoA Bridge processes this deposit and mints equivalent IMT tokens on FAR.",
+          "claim": "Cross-domain value movement has a public NEAR bridge leg.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "swaps",
+          "quote": "Run a normal `ORIGIN_CHAIN` → `DESTINATION_CHAIN` swap and set the `confidentiality` parameter to `basic` or `advanced`.",
+          "claim": "The integration supports foreign-chain endpoints.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.blending.granularity",
+      "status": "answered",
+      "optionId": "per-contract",
+      "rationale": "Public and private balances occupy different ledger contracts, intents.near and intents.far. Integrators select balance channels rather than marking arbitrary functions or variables private. Per-contract captures this coarse ledger-level choice; a separate Confidential Account does not establish fine-grained hybrid programming.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "1. **NEAR (Public)** — The public blockchain. `intents.near` is the smart-contract ledger that credits deposited balances.\n2. **FAR (Private)** — A private NEAR fork where the `intents.far` contract executes swaps with shielded balances",
+          "claim": "Privacy choice separates two ledger contracts.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.blending.private-reads",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The relay reads public signature authorization and FAR balances, but that is not a privacy/consistency guarantee for application logic reading public price or configuration state. No live FAR read primitive establishing concealment of the read set or consistency was verified.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Verifies signatures against the public `intents.near` contract, but reads balances from FAR",
+          "claim": "Relay reads do not establish private application read guarantees.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read architecture, swaps, quote-api and program-example",
+          "Web search: site:docs.near-intents.org \"private\" \"atomic\" contracts",
+          "Web search: site:docs.near-intents.org \"FAR\" \"public state\"",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/engine/state/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, auth_call, wnear_id, token_balances",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/state.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, auth_call, wnear_id, token_balances",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/state.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, auth_call, wnear_id, token_balances",
+          "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+        ],
+        "note": "The relay reads public signature authorization and FAR balances, but that is not a privacy/consistency guarantee for application logic reading public price or configuration state. No live FAR read primitive establishing concealment of the read set or consistency was verified. Second code check: Reviewed ledger state access and external promise calls. No private read-set concealment or coherent public-to-FAR snapshot guarantee is supplied by these public interfaces. Private oracle/bridge runtime remains unavailable. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "programmability.blending.crossing",
+      "status": "answered",
+      "optionId": "steps",
+      "rationale": "Values cross between public NEAR and FAR through explicit shield/unshield steps, using bridge-mediated mint/burn and release. This fits separate steps rather than native atomic public/private state movement.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Shield (public → private):** Tokens are transferred to the Treasury account on NEAR. The Private PoA Bridge processes this deposit and mints equivalent IMT tokens on FAR.",
+          "claim": "Shield is an explicit crossing step.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "Unshield (private → public):** IMT tokens are burned on FAR. The PoA Bridge processes the burn request and releases the backing tokens from the Treasury on NEAR.",
+          "claim": "Unshield is an explicit reverse step.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.disclosure.primitives",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "May architecture and July GA material still describe account-level view keys as planned. No released app-facing disclosure primitive or view-key API was located. Roadmap language cannot establish a live native or limited mechanism; incomplete implementation visibility also prevents a categorical universal absence claim.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "program-blog-ga",
+          "quote": "Confidential Intents plans to roll out a selective disclosure feature",
+          "claim": "Dated announcement describes user disclosure as planned.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read program-blog-tech (2026-05-27), program-blog-ga (2026-07-07), program-changelog, docs-index, signed-execution and program-aml",
+          "Web search: site:docs.near-intents.org \"view key\" disclosure",
+          "Web search: \"NEAR Confidential Intents\" \"view key\" 2026",
+          "Web search: site:docs.near-intents.org \"confidential\" \"disclosure\"",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/accounts.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/execute.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/token_diff.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+        ],
+        "note": "May architecture and July GA material still describe account-level view keys as planned. No released app-facing disclosure primitive or view-key API was located. Roadmap language cannot establish a live native or limited mechanism; incomplete implementation visibility also prevents a categorical universal absence claim. Second code check: Reviewed published signing-key APIs, action enumeration and plain public event fields. The targeted disclosure/proof terms produced no matches in the selected public-core scan. Ordinary signature checks and event hashes do not establish live scoped disclosure, private compliance statements or completeness/correctness proofs for confidential FAR data. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "programmability.disclosure.compliance-proofs",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The documented compliance mechanism screens request addresses against AML databases, rather than having users prove private compliance statements. No native association-set, credential-attribute or non-sanction proof interface was verified. Ordinary address screening is not credited as a private cryptographic proof, while evidence is insufficient to assert universal absence.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "trust-compliance",
+          "quote": "These checks identify overlap between addresses in the request and addresses flagged in external databases.",
+          "claim": "The documented mechanism is address screening, not a user private proof.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read program-blog-tech (2026-05-27), program-blog-ga (2026-07-07), program-changelog, docs-index, signed-execution and program-aml",
+          "Web search: site:docs.near-intents.org \"view key\" disclosure",
+          "Web search: \"NEAR Confidential Intents\" \"view key\" 2026",
+          "Web search: site:docs.near-intents.org \"confidential\" \"disclosure\"",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/accounts.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/execute.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/token_diff.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+        ],
+        "note": "The documented compliance mechanism screens request addresses against AML databases, rather than having users prove private compliance statements. No native association-set, credential-attribute or non-sanction proof interface was verified. Ordinary address screening is not credited as a private cryptographic proof, while evidence is insufficient to assert universal absence. Second code check: Reviewed published signing-key APIs, action enumeration and plain public event fields. The targeted disclosure/proof terms produced no matches in the selected public-core scan. Ordinary signature checks and event hashes do not establish live scoped disclosure, private compliance statements or completeness/correctness proofs for confidential FAR data. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "programmability.disclosure.verifiable",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Planned view keys and lawful disclosure statements do not establish live completeness/correctness proofs for disclosed FAR history. No scoped disclosure response format or cryptographic completeness guarantee was located. A hypothetical plaintext export is not credited without a verified live disclosure mechanism.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "program-blog-ga",
+          "quote": "Confidential Intents plans to roll out a selective disclosure feature",
+          "claim": "Dated announcement describes user disclosure as planned.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read program-blog-tech (2026-05-27), program-blog-ga (2026-07-07), program-changelog, docs-index, signed-execution and program-aml",
+          "Web search: site:docs.near-intents.org \"view key\" disclosure",
+          "Web search: \"NEAR Confidential Intents\" \"view key\" 2026",
+          "Web search: site:docs.near-intents.org \"confidential\" \"disclosure\"",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/accounts.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/execute.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/token_diff.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+          "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+        ],
+        "note": "Planned view keys and lawful disclosure statements do not establish live completeness/correctness proofs for disclosed FAR history. No scoped disclosure response format or cryptographic completeness guarantee was located. A hypothetical plaintext export is not credited without a verified live disclosure mechanism. Second code check: Reviewed published signing-key APIs, action enumeration and plain public event fields. The targeted disclosure/proof terms produced no matches in the selected public-core scan. Ordinary signature checks and event hashes do not establish live scoped disclosure, private compliance statements or completeness/correctness proofs for confidential FAR data. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "programmability.developer.toolchain",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "TypeScript/API integration supports fixed confidential actions, but does not establish a language, debugger and test framework for third-party private contracts. Generic public NEAR Rust/WASM tooling and the current public Verifier source are not evidence of a FAR private deployment toolchain.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "coverage-example",
+          "quote": "The core quoting logic and AMM pricing remain unchanged — the same `token_diff` intent structure works for both public and confidential swaps.",
+          "claim": "The documented developer path integrates existing private execution.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read docs-index, architecture, swaps, signed-execution and program-example",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"deploy\" governance upgrade",
+          "Web search: \"intents.far\" \"contract\" \"deploy\"",
+          "Read program-sdk, program-code-readme and pinned IMT primitive source"
+        ],
+        "note": "TypeScript/API integration supports fixed confidential actions, but does not establish a language, debugger and test framework for third-party private contracts. Generic public NEAR Rust/WASM tooling and the current public Verifier source are not evidence of a FAR private deployment toolchain.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "programmability.developer.local-dev",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Public Verifier source provides integration tests, but no local FAR plus private relay and bridge environment was verified. No public testnet does not prove absence of a local sandbox. Public NEAR tests cannot be credited as full end-to-end confidential test support without a supported private-system fixture.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "program-code-readme",
+          "quote": "cargo integration-tests <defuse|poa|escrow-swap>",
+          "claim": "Public contract tests exist; private-system equivalence is unverified.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "verifier",
+          "quote": "There is no testnet deployment. Use small amounts for testing purposes.",
+          "claim": "No hosted testnet is documented.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read program-code-readme, program-sdk, verifier, program-example and docs-index",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"sandbox\""
+        ],
+        "note": "Public Verifier source provides integration tests, but no local FAR plus private relay and bridge environment was verified. No public testnet does not prove absence of a local sandbox. Public NEAR tests cannot be credited as full end-to-end confidential test support without a supported private-system fixture.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "programmability.developer.sdks",
+      "status": "answered",
+      "optionId": "one",
+      "rationale": "near.com exposes the reference Confidential Account path, and the confidential integration guide uses the Intents SDK. At least one supported SDK/wallet path is established. No count of multiple independent wallets with released Confidential Account functionality was verified; ordinary public Intents integrations are not counted.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "swaps",
+          "quote": "When the funds already live inside a user's Confidential Intents balance, set `depositType`, `recipientType`, and/or `refundType` to `CONFIDENTIAL_INTENTS` and authorize the swap with [Signed Intent Execution](./signed-intent-execution). This is the advanced, wallet-style use case — integrators that keep user balances in Intents, for example [near.com](https://near.com).\n  </Card>\n</CardGroup>\n\nTo request a foreign-to-foreign confidential quote, add `confidentiality` to a standard quote request. Everything else in the request/response cycle is identical to [Making a Request](./making-a-request):",
+          "claim": "near.com is the documented confidential reference wallet.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "The nonce is constructed using `VersionedNonceBuilder` from the `@defuse-protocol/intents-sdk`:",
+          "claim": "A documented SDK supports confidential integration.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.developer.familiarity",
+      "status": "answered",
+      "optionId": "mainstream",
+      "rationale": "The available confidential integration uses mainstream TypeScript and REST/WebSocket APIs, with mode/configuration changes to an existing solver. This credits familiarity of actual fixed-action integration tooling without claiming general-purpose private-contract deployment.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "coverage-example",
+          "quote": "export enum SolverMode {\n  PUBLIC = 'public',\n  CONFIDENTIAL = 'confidential',\n}",
+          "claim": "Confidential integration uses TypeScript.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "import { VersionedNonceBuilder } from '@defuse-protocol/intents-sdk';",
+          "claim": "Confidential SDK uses mainstream tooling.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.performance.proving-time",
+      "status": "not_applicable",
+      "optionId": null,
+      "rationale": "The reference confidential path does not require user-generated client-side cryptographic proofs. Client proving time is not applicable under the rubric; FAR finality and swap latency are not used as proof-time measurements.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "program-blog-tech",
+          "quote": "no ZK-proof generation, state sync, or additional wallet setup",
+          "claim": "The stated reference path requires no client proofs.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "programmability.performance.throughput",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "No sustained live FAR private-transaction throughput measurement was located. This option explicitly includes unknown throughput. The approximately 200 ms finality claim is latency, not TPS; public NEAR theoretical peaks and aggregate Intents volume are outside this measurement.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "program-blog-tech",
+          "quote": "The permissioned validator set uses a Practical Byzantine Fault Tolerance consensus model that provides ~200ms finality.",
+          "claim": "Finality is not sustained private TPS.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read architecture, program-blog-tech, program-blog-ga, program-example and program-changelog",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"TPS\"",
+          "Web search: \"NEAR Confidential Intents\" \"throughput\" benchmark",
+          "Reviewed pinned public verifier source/build documentation for TPS/throughput/benchmark; no sustained live FAR measurement is established by code."
+        ],
+        "note": "No sustained live FAR private-transaction throughput measurement was located. This option explicitly includes unknown throughput. The approximately 200 ms finality claim is latency, not TPS; public NEAR theoretical peaks and aggregate Intents volume are outside this measurement.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "programmability.performance.cost",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Generic fees name the public intents.near ledger and 1Click quote schedules, but do not establish a typical all-in $1,000 confidential-to-confidential transfer cost through near.com. Foreign-chain gas, partner fee schedules and swaps are not silently substituted for the scoped P2P private transfer. No transaction or paid quote was executed.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "coverage-fees",
+          "quote": "Collected on-chain by the [`intents.near`](https://nearblocks.io/address/intents.near) smart contract",
+          "claim": "The fee disclosure names the public ledger.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": ["Read program-fees, quote-api, architecture, program-blog-tech and program-sdk"],
+        "note": "Generic fees name the public intents.near ledger and 1Click quote schedules, but do not establish a typical all-in $1,000 confidential-to-confidential transfer cost through near.com. Foreign-chain gas, partner fee schedules and swaps are not silently substituted for the scoped P2P private transfer. No transaction or paid quote was executed.",
+        "codeChecked": false
+      }
+    },
+    {
+      "criterionId": "governance.upgrades.upgradeability",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Pinned public near/intents code contains DAO/Upgrader-authorized replacement deployment, but is not matched to deployed intents.far or the private bridge. An external controller may impose additional rules. No deployed private-system role state or enforceable notice delay was verified, so neither immutable nor instant upgrades are asserted.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "trust-code-upgrade",
+          "quote": "use super::{Contract, ContractExt, Role};\n\nconst STATE_MIGRATE_DEFAULT_GAS: Gas = Gas::from_tgas(5);\n\n#[near]\nimpl ControllerUpgradable for Contract {\n    #[access_control_any(roles(Role::DAO, Role::Upgrader))]\n    #[payable]\n    fn upgrade(\n        &mut self,\n        #[serializer(borsh)] code: Vec<u8>,\n        #[serializer(borsh)] state_migration_gas: Option<Gas>,",
+          "claim": "Current source contains a privileged upgrade path; deployed FAR configuration is unverified.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "trust-code-upgrade",
+          "quote": "let p = Promise::new(env::current_account_id()).deploy_contract(code);",
+          "claim": "Source permits code replacement subject to deployment-specific authority.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read architecture, program-changelog, program-shield and docs-index",
+          "Web search: \"intents.far\" \"upgrade\"",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"deploy\" governance upgrade",
+          "Review near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348: contracts/defuse/src/contract/upgrade.rs and admin.rs"
+        ],
+        "note": "Pinned public near/intents code contains DAO/Upgrader-authorized replacement deployment, but is not matched to deployed intents.far or the private bridge. An external controller may impose additional rules. No deployed private-system role state or enforceable notice delay was verified, so neither immutable nor instant upgrades are asserted.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "governance.upgrades.emergency",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "No deployed FAR/bridge emergency bypass policy, council signers or threshold was verified. Public NEAR governance and MPC image voting do not establish private-system permissions. Missing evidence supports neither no emergency path nor a particular multisig/council classification.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "FAR is a permissioned instance of the NEAR protocol operated by a small validator set with no public networking.",
+          "claim": "Permissioning does not establish deployed contract privileges.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read architecture, program-changelog, program-shield and docs-index",
+          "Web search: \"intents.far\" \"upgrade\"",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"deploy\" governance upgrade",
+          "Review near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348: contracts/defuse/src/contract/upgrade.rs and admin.rs"
+        ],
+        "note": "No deployed FAR/bridge emergency bypass policy, council signers or threshold was verified. Public NEAR governance and MPC image voting do not establish private-system permissions. Missing evidence supports neither no emergency path nor a particular multisig/council classification.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "governance.upgrades.verifier",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The system has public account-signature checks, FAR execution and bridge verification, but no complete deployed verifier/attestation-key change policy was verified. Absence of user ZK circuits does not settle verification administration, and this criterion does not allow N/A. Public MPC governance is not imported as private bridge control.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Verifies signatures against the public `intents.near` contract, but reads balances from FAR",
+          "claim": "Several verification boundaries exist with unspecified change policies.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read architecture, program-changelog, program-shield and docs-index",
+          "Web search: \"intents.far\" \"upgrade\"",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"deploy\" governance upgrade",
+          "Review near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348: contracts/defuse/src/contract/upgrade.rs and admin.rs",
+          "Read pinned IMT mint/burn source and signed-execution"
+        ],
+        "note": "The system has public account-signature checks, FAR execution and bridge verification, but no complete deployed verifier/attestation-key change policy was verified. Absence of user ZK circuits does not settle verification administration, and this criterion does not allow N/A. Public MPC governance is not imported as private bridge control.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "governance.roles.scope",
+      "status": "answered",
+      "optionId": "funds-or-privacy",
+      "rationale": "Privileged admission controls gate the confidential solver relay, while authorized SHIELD consumers can impose scoped delay on live integrated 1Click quotes. These roles affect execution access/liveness through the private integration, exceeding advisory or fee-only roles. This is a bounded execution-control finding, not proof of seizure or universal bridge pausing.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "program-changelog",
+          "quote": "Solver access on the confidential relay is now gated by an allowlist.\n  Whitelisted solvers connect over WebSocket only, subscribing to relay streams\n  and responding with signed quotes; solvers not on the list are denied entirely.",
+          "claim": "A privileged allowlist controls confidential solver access.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "trust-shield",
+          "quote": "Live today for integrated quote-time checks, including scoped delay.",
+          "claim": "Operational policy can delay integrated 1Click quote execution.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "governance.roles.holders",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Defuse is identified as the relay access team and SHIELD documents operational participants, but the full FAR/bridge role holders and signer independence/thresholds are not supplied. A complete single-key or multisig classification cannot be established from a named contact team.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Contact the Defuse team for access to the private relay URL and credentials.",
+          "claim": "Access contact is named but full privileged-holder structure is not.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read architecture, program-changelog, program-shield and docs-index",
+          "Web search: \"intents.far\" \"upgrade\"",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"deploy\" governance upgrade",
+          "Review near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348: contracts/defuse/src/contract/upgrade.rs and admin.rs",
+          "Read program-shield partner permission model"
+        ],
+        "note": "Defuse is identified as the relay access team and SHIELD documents operational participants, but the full FAR/bridge role holders and signer independence/thresholds are not supplied. A complete single-key or multisig classification cannot be established from a named contact team.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "governance.roles.transparency",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Named access contacts and operational permission models do not identify every FAR/bridge holder or public timing of role changes. The source declares roles without matching deployed private-system holder state. Complete role inventory transparency is therefore unverified.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "trust-shield",
+          "quote": "Producers do not inherit capabilities automatically. Each producer receives an explicit permission set.",
+          "claim": "Permission assignment exists; holder list/change timing is unspecified.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read architecture, program-changelog, program-shield and docs-index",
+          "Web search: \"intents.far\" \"upgrade\"",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"deploy\" governance upgrade",
+          "Review near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348: contracts/defuse/src/contract/upgrade.rs and admin.rs",
+          "Read program-shield scoped permissions"
+        ],
+        "note": "Named access contacts and operational permission models do not identify every FAR/bridge holder or public timing of role changes. The source declares roles without matching deployed private-system holder state. Complete role inventory transparency is therefore unverified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "governance.process.control",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Restricted FAR participation and relay admission do not specify who can ultimately impose FAR or private bridge upgrades. Public NEAR social consensus, Foundation activity and token governance cannot be assumed to govern this private fork. No private-system authorization hierarchy or ultimate-controller statement was verified.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "FAR is a permissioned instance of the NEAR protocol operated by a small validator set with no public networking.",
+          "claim": "Permissioning does not establish deployed contract privileges.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read architecture, program-changelog, program-shield and docs-index",
+          "Web search: \"intents.far\" \"upgrade\"",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"deploy\" governance upgrade",
+          "Review near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348: contracts/defuse/src/contract/upgrade.rs and admin.rs"
+        ],
+        "note": "Restricted FAR participation and relay admission do not specify who can ultimately impose FAR or private bridge upgrades. Public NEAR social consensus, Foundation activity and token governance cannot be assumed to govern this private fork. No private-system authorization hierarchy or ultimate-controller statement was verified.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "governance.process.public-process",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The dated changelog records releases, but does not prove that FAR/bridge decisions are public proposals executed on-chain. No proposal-to-execution record was verified. Failure to locate records is not presented as proof of an opaque governance process.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "program-changelog",
+          "quote": "New features, API changes, and\n  launches land here as dated entries.",
+          "claim": "A release changelog is not governance execution evidence.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read architecture, program-changelog, program-shield and docs-index",
+          "Web search: \"intents.far\" \"upgrade\"",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"deploy\" governance upgrade",
+          "Review near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348: contracts/defuse/src/contract/upgrade.rs and admin.rs",
+          "Read program-changelog dated confidential entries"
+        ],
+        "note": "The dated changelog records releases, but does not prove that FAR/bridge decisions are public proposals executed on-chain. No proposal-to-execution record was verified. Failure to locate records is not presented as proof of an opaque governance process.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "governance.process.concentration",
+      "status": "answered",
+      "optionId": "unclear",
+      "rationale": "Research did not locate FAR/bridge governance voting rules, role-holder distribution or threshold state needed to establish whether one entity can pass changes alone. The rubric explicitly supplies Unclear for this logged research gap. Public NEAR token distribution and nominal private validator count do not resolve private-system voting concentration.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "FAR is a permissioned instance of the NEAR protocol operated by a small validator set with no public networking.",
+          "claim": "Permissioning does not establish deployed contract privileges.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read architecture, program-changelog, program-shield and docs-index",
+          "Web search: \"intents.far\" \"upgrade\"",
+          "Web search: site:docs.near-intents.org \"Confidential\" \"deploy\" governance upgrade",
+          "Review near/intents at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348: contracts/defuse/src/contract/upgrade.rs and admin.rs"
+        ],
+        "note": "Research did not locate FAR/bridge governance voting rules, role-holder distribution or threshold state needed to establish whether one entity can pass changes alone. The rubric explicitly supplies Unclear for this logged research gap. Public NEAR token distribution and nominal private validator count do not resolve private-system voting concentration.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "decentralization.operators.producers",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Seven permissioned validators are advertised, but names, independent ownership, voting weights and live admission configuration are not established. The rubric counts independent operators rather than validator keys; the public NEAR validator set is outside this private-host criterion.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "FAR is a permissioned instance of the NEAR protocol operated by a small validator set with no public networking.",
+          "claim": "FAR has permissioned networking.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read NEAR blockchain private-shard section and May 27 architecture article; no operator roster given",
+          "Searched \"Confidential Intents\" \"PBFT\" \"validators\"; found publisher descriptions rather than operator identities",
+          "Inspected public near/intents code; it does not establish FAR operator ownership"
+        ],
+        "note": "Seven permissioned validators are advertised, but names, independent ownership, voting weights and live admission configuration are not established. The rubric counts independent operators rather than validator keys; the public NEAR validator set is outside this private-host criterion.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "decentralization.operators.entry",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "FAR is explicitly permissioned and has no public networking. Becoming a public NEAR validator does not grant entry to the private FAR producer set.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "FAR is a permissioned instance of the NEAR protocol operated by a small validator set with no public networking.",
+          "claim": "FAR producer entry is permissioned.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.operators.concentration",
+      "status": "answered",
+      "optionId": "unclear",
+      "rationale": "No public FAR voting-weight or independent-operator distribution was established. The advertised seven validators do not establish an ownership or client-diversity distribution.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "FAR is a permissioned instance of the NEAR protocol operated by a small validator set with no public networking.",
+          "claim": "The private producer set is small.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read private-shard descriptions at near.org/blockchain and May 27 architecture article",
+          "Searched \"Confidential Intents\" \"PBFT\" \"validators\" and inspected near/intents tree for private-network configuration; no voting distribution found"
+        ],
+        "note": "No public FAR voting-weight or independent-operator distribution was established. The advertised seven validators do not establish an ownership or client-diversity distribution.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "decentralization.censorship.forced-inclusion",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The documented path requires private RPC and bridge processing, but no bounded forced-inclusion mechanism is established for FAR. No such guarantee is inferred from public NEAR inclusion; unavailable deployed node code prevents asserting the absolute absence of all alternatives.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "The bridge operates on a request-driven model — it processes deposits and burns via RPC requests rather than actively detecting on-chain events.",
+          "claim": "Bridge processing is required.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read archived architecture, reference-client API and near/intents source at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348 for decentralization.censorship.forced-inclusion",
+          "Searched deployed FAR/bridge specifications; source-to-deployment correspondence and private node configuration were unavailable"
+        ],
+        "note": "The documented path requires private RPC and bridge processing, but no bounded forced-inclusion mechanism is established for FAR. No such guarantee is inferred from public NEAR inclusion; unavailable deployed node code prevents asserting the absolute absence of all alternatives.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "decentralization.censorship.observed",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "No dated public dashboard measuring the fraction of FAR blocks censoring transactions was found. Sanctions screening and access controls are not a measured block censorship share.",
+      "confidence": "low",
+      "evidence": [],
+      "searchLog": {
+        "searched": [
+          "Searched \"Confidential Intents\" \"censorship\" \"dashboard\"; no FAR block-share measurement found",
+          "Read official architecture, producer descriptions and SHIELD incident documentation; they do not quantify censored FAR blocks"
+        ],
+        "note": "No dated public dashboard measuring the fraction of FAR blocks censoring transactions was found. Sanctions screening and access controls are not a measured block censorship share.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "decentralization.censorship.indistinguishable",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "No deployed transaction/enclave topology establishes which private fields FAR producers inspect. Closed networking hides transactions from the public but does not establish indistinguishability to producers.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "Balances and swap details on FAR are not visible to the public — the RPC is private and reachable only through authenticated channels.",
+          "claim": "Public access is restricted.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read archived architecture, reference-client API and near/intents source at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348 for decentralization.censorship.indistinguishable",
+          "Searched deployed FAR/bridge specifications; source-to-deployment correspondence and private node configuration were unavailable"
+        ],
+        "note": "No deployed transaction/enclave topology establishes which private fields FAR producers inspect. Closed networking hides transactions from the public but does not establish indistinguishability to producers.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "decentralization.proving.client-side",
+      "status": "answered",
+      "optionId": "no",
+      "rationale": "The reference product explicitly uses private-shard execution without client-side proof generation. Signing an intent is not generating a zero-knowledge transaction proof.",
+      "confidence": "high",
+      "evidence": [
+        {
+          "sourceId": "program-blog-tech",
+          "quote": "The confidentiality layer operates underneath without adding client-side complexity, so no ZK-proof generation, state sync, or additional wallet setup.",
+          "claim": "No client-side ZK proving required.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.proving.provers",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "No separate block-proving implementation, verifier or live prover network for FAR was established. Absence of client-side proofs does not itself prove that block proving is unnecessary or permissionless.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "program-blog-tech",
+          "quote": "The permissioned validator set uses a Practical Byzantine Fault Tolerance consensus model that provides ~200ms finality.",
+          "claim": "The publisher describes permissioned consensus.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read archived architecture, reference-client API and near/intents source at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348 for decentralization.proving.provers",
+          "Searched deployed FAR/bridge specifications; source-to-deployment correspondence and private node configuration were unavailable"
+        ],
+        "note": "No separate block-proving implementation, verifier or live prover network for FAR was established. Absence of client-side proofs does not itself prove that block proving is unnecessary or permissionless.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "decentralization.proving.verification",
+      "status": "answered",
+      "optionId": "committee",
+      "rationale": "FAR is described as permissioned PBFT and asset release as a PoA bridge. Apply the rubric option for known-party re-execution/honest-majority committees; public NEAR consensus does not independently verify confidential FAR state.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "program-blog-tech",
+          "quote": "The permissioned validator set uses a Practical Byzantine Fault Tolerance consensus model that provides ~200ms finality.",
+          "claim": "Permissioned PBFT consensus is described.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "The bridge operates on a request-driven model — it processes deposits and burns via RPC requests rather than actively detecting on-chain events.",
+          "claim": "Asset release depends on authority-operated processing.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.settlement.settlement",
+      "status": "answered",
+      "optionId": "committee",
+      "rationale": "Confidential swaps execute on FAR and settle back to public NEAR through the Private PoA Bridge. No public validity proof of private state is established; the evaluated settlement trust boundary is the private committee/bridge, rather than public NEAR consensus alone.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "program-changelog",
+          "quote": "Confidential swaps execute on a\n  private chain with shielded balances and settle back to public NEAR through\n  the Private PoA Bridge.",
+          "claim": "Private execution settles through a PoA bridge.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "decentralization.settlement.data",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "FAR has restricted network/RPC access, but that fact does not establish whether data availability is committee-held, operator-only or supported by an additional recovery/publication mechanism. No deployed data-availability/recovery topology is public. The public NEAR ledger cannot be substituted for private FAR state.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "architecture",
+          "quote": "FAR is a permissioned instance of the NEAR protocol operated by a small validator set with no public networking.",
+          "claim": "No public networking.",
+          "stance": "context"
+        },
+        {
+          "sourceId": "architecture",
+          "quote": "Balances and swap details on FAR are not visible to the public — the RPC is private and reachable only through authenticated channels.",
+          "claim": "Private RPC access is authenticated.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read current architecture and dated May 27 FAR/PBFT description, account balances/history API schemas",
+          "Reviewed public near/intents StateView, intents and auth implementations at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; no deployed FAR storage/DA correspondence",
+          "Independent reviewer checked restricted access versus committee/operator-only distinctions; FAR deployment configuration unavailable"
+        ],
+        "note": "Unknown preserves the distinction between restricted visibility and a verified data-availability topology.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "security.soundness.open-critical",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "No complete dated disclosure record for FAR, the private bridge and reference client establishes presence or absence of an unpatched critical issue. Empty public verifier advisories do not prove that the whole system has none.",
+      "confidence": "low",
+      "evidence": [],
+      "searchLog": {
+        "searched": [
+          "Searched NEAR Confidential Intents exploit incident security vulnerability; no complete FAR disclosure inventory identified",
+          "Read https://github.com/near/intents/security/advisories: no published entries, but this repository is not full FAR/bridge/client scope",
+          "Read official Security and incident API docs; no full public FAR vulnerability record supplied"
+        ],
+        "note": "No complete dated disclosure record for FAR, the private bridge and reference client establishes presence or absence of an unpatched critical issue. Empty public verifier advisories do not prove that the whole system has none.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "security.soundness.history",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "Shared ecosystem bridge incidents exist, but their relationship to the selected confidential route and severity is unsettled. No dated source supplies a complete scoped 24-month critical-issue count; neither zero nor a particular exploit count is assigned.",
+      "confidence": "low",
+      "evidence": [],
+      "searchLog": {
+        "searched": [
+          "Searched Confidential Intents exploit incident security vulnerability and read official LTC incident description status.near-intents.org/posts/details/P902X7O",
+          "Read official Security, SHIELD incident API and public verifier advisory list; these do not establish a complete FAR incident history"
+        ],
+        "note": "Shared ecosystem bridge incidents exist, but their relationship to the selected confidential route and severity is unsettled. No dated source supplies a complete scoped 24-month critical-issue count; neither zero nor a particular exploit count is assigned.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "security.soundness.defense-in-depth",
+      "status": "answered",
+      "optionId": "one",
+      "rationale": "SHIELD documents one live quote-time policy layer that can delay requests based on incidents and anomalies without a governance vote. Credit one immediate guard in the required 1Click route. Broader bridge/solver controls are rolling out or vision, not additional proven deployed layers.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "trust-shield",
+          "quote": "Today: integrated quote requests can be delayed based on incident and anomaly outcomes.",
+          "claim": "One scoped request-time safety layer is live.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.assurance.open-source",
+      "status": "answered",
+      "optionId": "partial",
+      "rationale": "The mandatory public verifier is documented as open source; public contract and SDK repositories exist. Exact FAR node/bridge and default near.com client source correspondence is not established. Credit only the published portion, without claiming all privacy-critical components are open source.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "verifier",
+          "quote": "The contract is open source. You can find it on GitHub:",
+          "claim": "The public verifier dependency has published source.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.assurance.reproducibility",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "No source-to-WASM or enclave-image match for deployed intents.far/private bridge was established. Public intents.near account hashes confirm public account state only. No reproduction of the deployed privacy-critical configuration is assumed.",
+      "confidence": "low",
+      "evidence": [],
+      "searchLog": {
+        "searched": [
+          "Read Verifier GitHub/build docs and near/intents releases; no FAR production correspondence supplied",
+          "Read public NEAR account and access-key state saved in security-public-state.json; FAR RPC is private",
+          "Searched Confidential Intents audit FAR bridge; no deployed WASM/enclave measurement mapping found"
+        ],
+        "note": "No source-to-WASM or enclave-image match for deployed intents.far/private bridge was established. Public intents.near account hashes confirm public account state only. No reproduction of the deployed privacy-critical configuration is assumed.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "security.assurance.audits",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "The official security page lists general Intents contract audits, but no report was matched to live FAR/private-bridge/client revisions. Public NEAR, Chain Signatures and Omnibridge audits are not automatically audits of this private system.",
+      "confidence": "low",
+      "evidence": [
+        {
+          "sourceId": "security-security",
+          "quote": "NEAR Intents smart contracts have been audited by independent security firms.",
+          "claim": "General audits are advertised; FAR scope correspondence is missing.",
+          "stance": "context"
+        }
+      ],
+      "searchLog": {
+        "searched": [
+          "Read official Security and Google Drive audit folder listing: NEARCore, Chain Signatures, HOT Bridge, Intents and Omnibridge; no FAR mapping supplied",
+          "Searched site:docs.near-intents.org Confidential Intents audit security and \"Confidential Intents\" audit FAR bridge; no mapped independent FAR report found"
+        ],
+        "note": "The official security page lists general Intents contract audits, but no report was matched to live FAR/private-bridge/client revisions. Public NEAR, Chain Signatures and Omnibridge audits are not automatically audits of this private system.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "security.assurance.formal-verification",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "No machine-checked proof for the selected live FAR contract/bridge was identified. Consensus validation, signatures and TEE attestation are not formal verification of the implementation.",
+      "confidence": "low",
+      "evidence": [],
+      "searchLog": {
+        "searched": [
+          "Searched \"Confidential Intents\" \"formal verification\"; no scoped machine-checked proof found",
+          "Read near/intents source using formal/certora/coq/isabelle patterns and official Security docs; no deployed FAR formal-proof correspondence established"
+        ],
+        "note": "No machine-checked proof for the selected live FAR contract/bridge was identified. Consensus validation, signatures and TEE attestation are not formal verification of the implementation.",
+        "codeChecked": true
+      }
+    },
+    {
+      "criterionId": "security.assurance.bounty",
+      "status": "answered",
+      "optionId": "smaller",
+      "rationale": "An active verifier bounty names near/intents and caps critical rewards at $300,000, also subject to 10% affected funds. Credit the public verifier component below $1M; coverage of FAR nodes/private bridge and near.com is not established.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "security-bounty",
+          "quote": "Critical - up to $ 300 000",
+          "claim": "Critical maximum is $300,000.",
+          "stance": "supports"
+        },
+        {
+          "sourceId": "security-bounty",
+          "quote": "All Scope Focus Area Program Rules Disclosure Guidelines Eligibility and Coordinated Disclosure In scopeTargetTypeSeverityhttps://github.com/near/intentsCopy Copied Smart Contract CriticalTargethttps://github.com/near/intentsCopy Copied TypeSmart ContractSeverity CriticalOut of scopeTargetTypeSeverityhttps://github.com/near/intents/tree/main/escrow-swapCopy Copied Smart Contract CriticalTargethttps://github.com/near/intents/tree/main/escrow-swapCopy Copied TypeSmart ContractSeverity CriticalFocus AreaPlease note that the main smart contract in the repository, under the directory defuse, is referred to as the \"Verifier\" in the ecosystem. Near Intents contains more components that work in tandem to achieve its purpose. Nevertheless, this smart contract, the Verifier, can be used independently without needing anything else.",
+          "claim": "The named target is the Intents contract repository.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.maturity.status",
+      "status": "answered",
+      "optionId": "mainnet",
+      "rationale": "General availability is announced, and the dated May architecture article describes working confidential near.com balances, transfers, swaps and withdrawals. No current alpha/beta label is identified. Credit product availability; exact FAR binaries and operator independence remain unverified.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "program-blog-ga",
+          "quote": "Confidential Intents is live and publicly available to all integrators.",
+          "claim": "General availability is announced.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.maturity.age",
+      "status": "answered",
+      "optionId": "3m",
+      "rationale": "The May 27, 2026 article describes confidential near.com deposits, withdrawals, swaps and transfers as already available. The selected privacy route is at least three months and under a year old by October 7. July B2B rollout is another milestone; public NEAR launch age is not used.",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "sourceId": "program-blog-tech",
+          "quote": "Confidential deposits, withdrawals, swaps, and peer-to-peer transfers are now available at    near.com  through the “Confidential Mode” feature.",
+          "claim": "The May 27 article describes near.com availability.",
+          "stance": "supports"
+        }
+      ]
+    },
+    {
+      "criterionId": "security.maturity.continuity",
+      "status": "unknown",
+      "optionId": null,
+      "rationale": "No complete dated record of forced FAR balance/state migrations was found. A state_migrate function and changelog feature updates do not prove that users have or have never been forced to withdraw and redeposit.",
+      "confidence": "low",
+      "evidence": [],
+      "searchLog": {
+        "searched": [
+          "Read official changelog and May/July Confidential Intents articles for migrations and deprecations",
+          "Reviewed near/intents state migration/upgrade code at 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; code does not establish migration history"
+        ],
+        "note": "No complete dated record of forced FAR balance/state migrations was found. A state_migrate function and changelog feature updates do not prove that users have or have never been forced to withdraw and redeposit.",
+        "codeChecked": true
+      }
+    }
+  ]
+}

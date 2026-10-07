@@ -1,0 +1,191 @@
+[
+  {
+    "request": {
+      "jsonrpc": "2.0",
+      "id": "privacy-benchmark-read-only",
+      "method": "query",
+      "params": {
+        "request_type": "view_account",
+        "finality": "final",
+        "account_id": "intents.near"
+      }
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "result": {
+        "amount": "125674144682629664549207002805",
+        "block_hash": "EmJbRLducxumKr3AzLczFnXqC77oGKbs3vP7T1D6HQot",
+        "block_height": 218914995,
+        "code_hash": "EHTzkKyabhTGuKpvET5hBi7xPdKacuesMc91dDGkWvqb",
+        "locked": "0",
+        "storage_paid_at": 0,
+        "storage_usage": 12493544014
+      },
+      "id": "privacy-benchmark-read-only"
+    }
+  },
+  {
+    "request": {
+      "jsonrpc": "2.0",
+      "id": "privacy-benchmark-read-only",
+      "method": "query",
+      "params": {
+        "request_type": "view_access_key_list",
+        "account_id": "intents.near",
+        "block_id": "EmJbRLducxumKr3AzLczFnXqC77oGKbs3vP7T1D6HQot"
+      }
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "result": {
+        "block_hash": "EmJbRLducxumKr3AzLczFnXqC77oGKbs3vP7T1D6HQot",
+        "block_height": 218914995,
+        "keys": [
+          {
+            "access_key": {
+              "nonce": 151978851756532,
+              "permission": {
+                "FunctionCall": {
+                  "allowance": null,
+                  "method_names": ["execute_intents"],
+                  "receiver_id": "intents.near"
+                }
+              }
+            },
+            "public_key": "ed25519:oxEocH88sCavwDRXqoMtryK2Qm9Af72jxMsvsQGHQJx"
+          },
+          {
+            "access_key": {
+              "nonce": 151978851757235,
+              "permission": {
+                "FunctionCall": {
+                  "allowance": null,
+                  "method_names": ["execute_intents"],
+                  "receiver_id": "intents.near"
+                }
+              }
+            },
+            "public_key": "ed25519:2nwukzu9FrAYbrrBRyHH7XNaJpQcYCoVqZAPeSXEbQJF"
+          },
+          {
+            "access_key": {
+              "nonce": 151978851757127,
+              "permission": {
+                "FunctionCall": {
+                  "allowance": null,
+                  "method_names": ["execute_intents"],
+                  "receiver_id": "intents.near"
+                }
+              }
+            },
+            "public_key": "ed25519:4vq3dbhcG3A1fJufpgMZwa1UKQcnWf3aprFFp916J82Z"
+          },
+          {
+            "access_key": {
+              "nonce": 149367527778915,
+              "permission": {
+                "FunctionCall": {
+                  "allowance": null,
+                  "method_names": ["execute_intents"],
+                  "receiver_id": "intents.near"
+                }
+              }
+            },
+            "public_key": "ed25519:5feHBLeyMBf7mppZR1kHv3Hk43kG7b69pM1JKEfWPjdC"
+          },
+          {
+            "access_key": {
+              "nonce": 149367527779264,
+              "permission": {
+                "FunctionCall": {
+                  "allowance": null,
+                  "method_names": ["execute_intents"],
+                  "receiver_id": "intents.near"
+                }
+              }
+            },
+            "public_key": "ed25519:8KwHMd5ruFvFqcBCAq1k7k5aqpdLoGMfbUeQKjbaMdSb"
+          },
+          {
+            "access_key": {
+              "nonce": 186377974014151,
+              "permission": {
+                "FunctionCall": {
+                  "allowance": null,
+                  "method_names": ["execute_intents"],
+                  "receiver_id": "intents.near"
+                }
+              }
+            },
+            "public_key": "ed25519:Anpgu2DvnC3E4yULEyN5eX64KPpgpKTHomgWcm6ArZyr"
+          },
+          {
+            "access_key": {
+              "nonce": 149367527779298,
+              "permission": {
+                "FunctionCall": {
+                  "allowance": null,
+                  "method_names": ["execute_intents"],
+                  "receiver_id": "intents.near"
+                }
+              }
+            },
+            "public_key": "ed25519:BXa2Evq6XGAr3TiXfQisyv9PYp4Gpzm14AbLuw8h6G77"
+          },
+          {
+            "access_key": {
+              "nonce": 151978851756294,
+              "permission": {
+                "FunctionCall": {
+                  "allowance": null,
+                  "method_names": ["execute_intents"],
+                  "receiver_id": "intents.near"
+                }
+              }
+            },
+            "public_key": "ed25519:CTjF3Xm8s7Gob9qLPMbh3sAq8scdoEpibrDFFCMAVwcQ"
+          },
+          {
+            "access_key": {
+              "nonce": 151978851756471,
+              "permission": {
+                "FunctionCall": {
+                  "allowance": null,
+                  "method_names": ["execute_intents"],
+                  "receiver_id": "intents.near"
+                }
+              }
+            },
+            "public_key": "ed25519:FKPYRP9c93qVKPexkDAsHhqmgwmrS4H5uMiuqGXhY2y3"
+          }
+        ]
+      },
+      "id": "privacy-benchmark-read-only"
+    }
+  },
+  {
+    "request": {
+      "jsonrpc": "2.0",
+      "id": "privacy-benchmark-read-only",
+      "method": "query",
+      "params": {
+        "request_type": "view_account",
+        "finality": "final",
+        "account_id": "51e8f94d77b5e90dc9852ca6113771e11e8382ce69473a75e313e41665de7cbe"
+      }
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "result": {
+        "amount": "10000000000000000000000",
+        "block_hash": "CAavTBWpKT21Mr22pQwbrdq5SLLziCDP52Vrvh497XEs",
+        "block_height": 218915006,
+        "code_hash": "11111111111111111111111111111111",
+        "locked": "0",
+        "storage_paid_at": 0,
+        "storage_usage": 182
+      },
+      "id": "privacy-benchmark-read-only"
+    }
+  }
+]

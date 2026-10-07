@@ -1,0 +1,190 @@
+pub mod cached;
+pub mod deltas;
+
+use crate::{
+    AccountId, AccountIdRef, Nonce, NoncePrefix, Result, Salt,
+    amounts::Amounts,
+    fees::Pips,
+    intents::{
+        auth::AuthCall,
+        tokens::{
+            FtWithdraw, MtWithdraw, NativeWithdraw, NftWithdraw, NotifyOnTransfer, StorageDeposit,
+        },
+    },
+    public_key::PublicKey,
+    token_id::{TokenId, nep141::Nep141TokenId},
+};
+use cached::CachedState;
+use impl_tools::autoimpl;
+use std::borrow::Cow;
+
+#[cfg(feature = "imt")]
+use crate::{
+    DefuseError,
+    tokens::{MT_ON_TRANSFER_GAS_DEFAULT, MT_ON_TRANSFER_GAS_MIN, imt::ImtTokens},
+};
+
+#[autoimpl(for<T: trait + ?Sized> &T, &mut T, Box<T>)]
+pub trait StateView {
+    fn verifying_contract(&self) -> Cow<'_, AccountIdRef>;
+    fn wnear_id(&self) -> Cow<'_, AccountIdRef>;
+    fn wnear_token_id(&self) -> TokenId {
+        Nep141TokenId::new(self.wnear_id().into_owned()).into()
+    }
+
+    fn fee(&self) -> Pips;
+    fn fee_collector(&self) -> Cow<'_, AccountIdRef>;
+
+    #[must_use]
+    fn has_public_key(&self, account_id: &AccountIdRef, public_key: &PublicKey) -> bool;
+    fn iter_public_keys(&self, account_id: &AccountIdRef) -> impl Iterator<Item = PublicKey> + '_;
+
+    #[must_use]
+    fn is_nonce_used(&self, account_id: &AccountIdRef, nonce: Nonce) -> bool;
+
+    #[must_use]
+    fn balance_of(&self, account_id: &AccountIdRef, token_id: &TokenId) -> u128;
+
+    fn is_account_locked(&self, account_id: &AccountIdRef) -> bool;
+
+    /// Returns whether authentication by `PREDECESSOR_ID` is enabled.
+    fn is_auth_by_predecessor_id_enabled(&self, account_id: &AccountIdRef) -> bool;
+
+    /// Returns whether salt in nonce is valid
+    fn is_valid_salt(&self, salt: Salt) -> bool;
+
+    #[inline]
+    fn cached(self) -> CachedState<Self>
+    where
+        Self: Sized,
+    {
+        CachedState::new(self)
+    }
+}
+
+#[autoimpl(for<T: trait + ?Sized> &mut T, Box<T>)]
+pub trait State: StateView {
+    fn add_public_key(&mut self, account_id: AccountId, public_key: PublicKey) -> Result<()>;
+
+    fn remove_public_key(&mut self, account_id: AccountId, public_key: PublicKey) -> Result<()>;
+
+    fn commit_nonce(&mut self, account_id: AccountId, nonce: Nonce) -> Result<()>;
+
+    fn cleanup_nonce_by_prefix(
+        &mut self,
+        account_id: &AccountIdRef,
+        prefix: NoncePrefix,
+    ) -> Result<bool>;
+
+    fn internal_add_balance(
+        &mut self,
+        owner_id: AccountId,
+        tokens: impl IntoIterator<Item = (TokenId, u128)>,
+    ) -> Result<()>;
+
+    fn internal_sub_balance(
+        &mut self,
+        owner_id: &AccountIdRef,
+        tokens: impl IntoIterator<Item = (TokenId, u128)>,
+    ) -> Result<()>;
+
+    fn internal_apply_deltas(
+        &mut self,
+        owner_id: &AccountIdRef,
+        tokens: impl IntoIterator<Item = (TokenId, i128)>,
+    ) -> Result<()> {
+        for (token_id, delta) in tokens {
+            let tokens = [(token_id, delta.unsigned_abs())];
+            if delta.is_negative() {
+                self.internal_sub_balance(owner_id, tokens)?;
+            } else {
+                self.internal_add_balance(owner_id.to_owned(), tokens)?;
+            }
+        }
+        Ok(())
+    }
+
+    fn ft_withdraw(&mut self, owner_id: &AccountIdRef, withdraw: FtWithdraw) -> Result<()>;
+
+    fn nft_withdraw(&mut self, owner_id: &AccountIdRef, withdraw: NftWithdraw) -> Result<()>;
+
+    fn mt_withdraw(&mut self, owner_id: &AccountIdRef, withdraw: MtWithdraw) -> Result<()>;
+
+    fn native_withdraw(&mut self, owner_id: &AccountIdRef, withdraw: NativeWithdraw) -> Result<()>;
+
+    fn notify_on_transfer(
+        &self,
+        sender_id: &AccountIdRef,
+        receiver_id: AccountId,
+        tokens: Amounts,
+        notification: NotifyOnTransfer,
+    ) -> Result<()>;
+
+    fn storage_deposit(
+        &mut self,
+        owner_id: &AccountIdRef,
+        storage_deposit: StorageDeposit,
+    ) -> Result<()>;
+
+    /// Sets whether authentication by `PREDECESSOR_ID` is enabled.
+    /// Returns whether authentication by `PREDECESSOR_ID` was toggled.
+    fn set_auth_by_predecessor_id(&mut self, account_id: AccountId, enable: bool) -> Result<bool>;
+
+    fn auth_call(&mut self, signer_id: &AccountIdRef, auth_call: AuthCall) -> Result<()>;
+
+    fn mint(&mut self, owner_id: AccountId, tokens: Amounts, memo: Option<String>) -> Result<()>;
+
+    fn burn(
+        &mut self,
+        owner_id: &AccountIdRef,
+        tokens: Amounts,
+        memo: Option<String>,
+    ) -> Result<()>;
+
+    #[cfg(feature = "imt")]
+    fn imt_mint(
+        &mut self,
+        minter_id: &AccountIdRef,
+        receiver_id: AccountId,
+        tokens: ImtTokens,
+        memo: Option<String>,
+        notification: Option<NotifyOnTransfer>,
+    ) -> Result<()> {
+        if tokens.is_empty() {
+            return Err(DefuseError::InvalidIntent);
+        }
+
+        let tokens = tokens.into_generic_tokens(minter_id)?;
+        self.mint(receiver_id.clone(), tokens.clone(), memo)?;
+
+        if let Some(mut notification) = notification {
+            notification.min_gas = Some(
+                notification
+                    .min_gas
+                    .unwrap_or(MT_ON_TRANSFER_GAS_DEFAULT)
+                    .max(MT_ON_TRANSFER_GAS_MIN),
+            );
+
+            self.notify_on_transfer(minter_id, receiver_id, tokens, notification)?;
+        }
+
+        Ok(())
+    }
+
+    #[cfg(feature = "imt")]
+    fn imt_burn(
+        &mut self,
+        owner_id: &AccountIdRef,
+        minter_id: &AccountIdRef,
+        tokens: ImtTokens,
+        memo: Option<String>,
+    ) -> Result<()> {
+        if tokens.is_empty() {
+            return Err(crate::DefuseError::InvalidIntent);
+        }
+
+        let tokens = tokens.into_generic_tokens(minter_id)?;
+
+        self.burn(owner_id, tokens, memo)
+    }
+}

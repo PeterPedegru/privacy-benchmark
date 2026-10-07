@@ -1,0 +1,749 @@
+{
+  "reviewer": "Independent contributor review with separate research and second code-check passes",
+  "asOf": "2026-10-07",
+  "source": "Manual Codex research, not the upstream automated evaluator",
+  "criteria": [
+    {
+      "criterionId": "coverage.confidentiality.amounts",
+      "status": "answered",
+      "optionId": "hidden",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. Score internal FAR activity, not the public deposit or withdrawal. The official architecture explicitly hides swap details from public observers and public indexers. This is restricted publication, not a claim of encrypted amounts against the service, solvers or validators."
+    },
+    {
+      "criterionId": "coverage.confidentiality.balances",
+      "status": "answered",
+      "optionId": "hidden",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. FAR account balances are excluded from public access. The documented account API requires ownership authentication. Public treasury backing is not a public per-user balance ledger; boundary correlation remains a separate limitation."
+    },
+    {
+      "criterionId": "coverage.confidentiality.asset",
+      "status": "answered",
+      "optionId": "hidden",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The asset pair belongs to the internal swap details that the architecture removes from public indexers. IMT asset IDs are explicit to solvers and infrastructure, but are not public per-transaction tags. Asset visibility at deposits and withdrawals is scored at the boundary."
+    },
+    {
+      "criterionId": "coverage.confidentiality.boundary",
+      "status": "answered",
+      "optionId": "boundary-public",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The documented shield/unshield path transfers backing assets to and from a public NEAR treasury. Internal activity is private from public observers; entry and exit transfers are not. No native FAR asset or private bridge path avoiding this public backing boundary was established."
+    },
+    {
+      "criterionId": "coverage.unlinkability.sender",
+      "status": "answered",
+      "optionId": "hidden",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The internal FAR transaction is omitted from public view, including its initiating account. This only credits sender shielding for transfers inside the private path. Public deposit senders, service-level signer IDs and possible timing/amount inference are not claimed hidden."
+    },
+    {
+      "criterionId": "coverage.unlinkability.recipient",
+      "status": "answered",
+      "optionId": "hidden",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The internal recipient is part of private FAR activity rather than a public settlement record. External payout recipients and public unshield recipients are outside this internal-transfer guarantee. This does not claim that a solver, relay or operator cannot identify the recipient."
+    },
+    {
+      "criterionId": "coverage.unlinkability.history",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The public/private architecture establishes restricted visibility, but does not document a commitment/nullifier construction or an equivalent cryptographic unlinkability property. The solver signs an account-based token_diff with a nonce; that example is not authenticated deployed FAR bytecode. Marketing about untrackable deposits and withdrawals cannot establish this criterion."
+    },
+    {
+      "criterionId": "coverage.unlinkability.public-apps",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. A documented public withdrawal is not proof of anonymous arbitrary public-contract access. The FAR path supports private swap settlement and exits, but no documented caller-hiding public-contract adapter or exact reference-client behavior was established. Public NEAR programmability is not inherited. The public source has AuthCall, but no proven FAR-to-public deployment/path mapping establishes anonymous access."
+    },
+    {
+      "criterionId": "coverage.unlinkability.fees",
+      "status": "answered",
+      "optionId": "optional-relayer",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The embedded confidential balance path uses an off-chain signature submitted to the mandatory 1Click endpoint rather than requiring the user to publish a gas-paying FAR account transaction. The documented required path is one service family; independent default broadcasters or distributed traffic shares are not established. Therefore credit the rubric middle option, not fully distributed private fee payment."
+    },
+    {
+      "criterionId": "coverage.identity.persistent-id",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Public boundary transfers expose source/destination addresses, whereas internal FAR activity is not published. The rubric requires deciding whether stable public tags attach to all necessary activity; neither a private-network address alone nor public addresses on boundary transfers settles that question for the whole near.com account flow. No verified reference-client trace establishes all published identifiers."
+    },
+    {
+      "criterionId": "coverage.identity.registration",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The service obtains an owner-signed User-Session for balance/history access; that is authentication, not by itself mandatory legal-identity registration or viewing-key registration. Partner JWT onboarding is integration access. The available materials do not establish whether the deployed FAR protocol or near.com confidential account additionally requires registering a credential with a third party."
+    },
+    {
+      "criterionId": "coverage.identity.reusable-address",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Internal account activity is hidden from public observers, but no default stealth/one-time receiving address derivation or reference-client receiving behavior is specified. A recipient account accepted by the confidential API is not sufficient evidence of unlinkable receiving addresses as defined by this criterion."
+    },
+    {
+      "criterionId": "coverage.identity.identity-proofs",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Selective disclosure and proof of account ownership are documented, but neither proves attributes such as membership or compliance while concealing identity. No FAR-native anonymous credential primitive or deployable private-identity app interface was established. Separate NEAR applications cannot be inherited by FAR."
+    },
+    {
+      "criterionId": "coverage.execution.private-state",
+      "status": "answered",
+      "optionId": "balances-only",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The directly established state is the private multi-token ledger on intents.far used for balances and swaps. Credit private balances in the fixed asset contract. The fact that FAR is a NEAR fork does not establish an available general-purpose private-state deployment interface for developers."
+    },
+    {
+      "criterionId": "coverage.execution.private-logic",
+      "status": "answered",
+      "optionId": "limited",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The documented confidential quote settlement uses token_diff and optional imt_burn, enabling private swaps beyond deposit/transfer/withdraw. This qualifies as the fixed-menu middle option. It does not establish arbitrary user-defined hidden programs or encrypted-input computation."
+    },
+    {
+      "criterionId": "coverage.execution.function-hiding",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The private RPC excludes the internal call record from public view, but this criterion requests function privacy in the Zexe sense. The published fixed contract and intent format may reveal a known action class; no verified function-hiding construction or full public boundary leakage specification was established."
+    },
+    {
+      "criterionId": "coverage.execution.shared-state",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Swaps settle against multiple accounts, but the documented balances are not specified as pooled encrypted inputs, FHE or MPC state. No native shared-private-computation primitive or bounded implementation qualifying for the rubric was established. Privacy from the public alone does not prove encrypted shared-state computation."
+    },
+    {
+      "criterionId": "coverage.callstack.targets",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The documented confidential flow settles a fixed token_diff on intents.far. The available solver does not implement or establish private cross-contract composition. No deployed FAR call-stack specification or reference-client trace settles which nested private contracts execute. Public-network exclusion alone is not sufficient to award private call-stack guarantees, and unavailable code is not evidence that all calls are visible."
+    },
+    {
+      "criterionId": "coverage.callstack.structure",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The documented confidential flow settles a fixed token_diff on intents.far. The available solver does not implement or establish private cross-contract composition. No deployed FAR call-stack specification or reference-client trace settles the number and depth of nested private calls. Public-network exclusion alone is not sufficient to award private call-stack guarantees, and unavailable code is not evidence that all calls are visible."
+    },
+    {
+      "criterionId": "coverage.callstack.public-boundary",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The documented confidential flow settles a fixed token_diff on intents.far. The available solver does not implement or establish private cross-contract composition. No deployed FAR call-stack specification or reference-client trace settles caller and argument leakage when private code calls public contracts. Public-network exclusion alone is not sufficient to award private call-stack guarantees, and unavailable code is not evidence that all calls are visible."
+    },
+    {
+      "criterionId": "coverage.metadata.network",
+      "status": "answered",
+      "optionId": "none",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The reference interface policy explicitly collects IP addresses during interface use. Thus user IP is not hidden from every network party by default, irrespective of whether a relayer hides the public gas payer. No documented built-in opt-in Tor/mixnet setting was established."
+    },
+    {
+      "criterionId": "coverage.metadata.reads",
+      "status": "answered",
+      "optionId": "rpc-sees",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. Private balance and history reads require an owner-signed session at 1Click. The API associates the session with signer_id and returns that account data; the tokenIds selector identifies requested assets. The example also reads all balances through AccountService, not local trial decryption. These are account-specific service queries."
+    },
+    {
+      "criterionId": "coverage.metadata.pending",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The documented relay and API receive structured signed instructions, but no deployed topology establishes who can inspect pending private instructions outside the execution environment. An authenticated endpoint is neither a zero-knowledge guarantee nor proof of operator access outside an enclave. Pending-transaction protection remains unverified for near.com."
+    },
+    {
+      "criterionId": "coverage.metadata.fingerprinting",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The sources document public entry/exit movements, quote deadlines and variable token_diff amounts. They do not establish enforced padding, uniform shapes or timing defenses for the entire reference-client path. No independent timing/shape measurement was found; absence of a public mempool is not a protocol-level fingerprint mitigation."
+    },
+    {
+      "criterionId": "coverage.anonymity-set.structure",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The FAR ledger uses a shared treasury and multi-token IDs, but a shared contract is not evidence of one effective anonymity set across assets and apps. Public token boundaries and asset-dependent exits may partition candidates. No measured or explicitly specified anonymity-set construction was established."
+    },
+    {
+      "criterionId": "coverage.anonymity-set.default",
+      "status": "answered",
+      "optionId": "opt-in",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. Confidential activity is private within the selected account, but choosing Confidential Account is an explicit user action in the reference client; the general quote API also defaults to public. Score opt-in for the system-wide reference-client crowd, without treating the foreign-to-foreign and embedded paths as identical."
+    },
+    {
+      "criterionId": "coverage.anonymity-set.usage",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The official dashboard separately labels Confidential TVL and shows $144.06M on the retrieved 2026-10-07 page, which would cross the large tier if established as measured private state. However the same page explicitly calls figures illustrative, and no underlying Dune query or reproducible balance/valuation series was authenticated. This is not no public figure: an explicit figure exists, but its measured status remains unresolved. Neither general Intents volume nor Zcash route volume is substituted."
+    },
+    {
+      "criterionId": "coverage.anonymity-set.effective",
+      "status": "answered",
+      "optionId": "no-study",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. A targeted search found no independent quantitative study of effective versus nominal anonymity for this FAR implementation by the assessment cutoff. Product explanations and market/TVL reports are not linkability measurements. This uses the rubric explicit no-study option rather than an unknown or a fabricated percentage."
+    },
+    {
+      "criterionId": "trust.decryption.standing-access",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Authenticated balance/history responses demonstrate application processing but do not establish operator access outside an enclave. The official architecture describes user-key encryption, while OutLayer describes operator/solver visibility for another integration. The production key hierarchy and enclave coverage for the selected near.com path remain unverified; neither a master key nor user-only access is established."
+    },
+    {
+      "criterionId": "trust.decryption.infra-visibility",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Structured signed requests and plaintext balance responses do not establish where transport is decrypted or whether plaintext handling is confined to an enclave. OutLayer reports plaintext solver visibility for its integration, but a deployed topology for near.com, FAR validators, relay and bridge is unavailable. The selected path cannot be classified as operator-visible or TEE-only from these sources."
+    },
+    {
+      "criterionId": "trust.decryption.retroactive",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The sources establish access-controlled infrastructure but do not specify storage encryption, archive retention, backup keys or a global/threshold decryption-key hierarchy. Legal disclosure capability is not proof of a global key. It remains unsettled whether compromise of a particular key or committee would reveal every user history."
+    },
+    {
+      "criterionId": "trust.disclosure.selective",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The product asserts selective disclosure for institutions, but it does not identify a live user-controlled viewing key, disclosure proof or supported export mechanism. Account-owner authentication to a balance/history service is not enough to establish native or app-specific disclosure to a chosen third party. The marketing claim remains unverified at the requested deployment boundary."
+    },
+    {
+      "criterionId": "trust.disclosure.granularity",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. History APIs can filter records, and balance APIs can filter asset IDs, but query filters do not prove that delegated access is cryptographically or server-side limited to a transaction, asset or time range. Neither fine-grained nor whole-account-only disclosure is established for a chosen recipient."
+    },
+    {
+      "criterionId": "trust.disclosure.revocable",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Short-lived owner session tokens and refresh tokens are documented. Their expiry is not proof of revocable selective-disclosure grants or of a viewing-key rotation that stops a third party from seeing future activity. No live revocation mechanism for the advertised disclosure feature was established."
+    },
+    {
+      "criterionId": "trust.crypto.setup",
+      "status": "answered",
+      "optionId": "no-proofs",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The selected privacy mechanism is restricted visibility on a permissioned NEAR fork, with a PoA/TEE bridge, rather than a zero-knowledge transaction proof system. Normal signatures and bridge attestations should not be awarded a transparent ZK setup score. The product explicitly advertises no client-side proof generation; no ZK confidentiality proof system is specified for FAR."
+    },
+    {
+      "criterionId": "trust.crypto.hardware",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. A TEE-based bridge is explicitly part of the system, but the public material does not state whether its TEE is essential to confidentiality, only to bridge integrity, or merely defense in depth. It also does not document TEE coverage for validators or services. Neither no reliance nor the more specific confidentiality/integrity classification is established."
+    },
+    {
+      "criterionId": "trust.crypto.post-quantum",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The sources do not specify FAR private-data encryption at rest or in transit with sufficient detail to classify harvest-now-decrypt-later resistance. Ed25519 authorization, public NEAR commitments and unrelated Chain Signatures/CKD work do not establish post-quantum confidentiality of this private system."
+    },
+    {
+      "criterionId": "trust.crypto.formal-privacy",
+      "status": "answered",
+      "optionId": "de-facto",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The technical definition is operational restricted visibility: a private NEAR fork with authenticated RPC and no public networking. This is an informal confidentiality model, not a formally specified zero-knowledge property. The product also explicitly distinguishes the design from ZK-only systems. This answer does not mean ordinary signature integrity is absent."
+    },
+    {
+      "criterionId": "custody.self-custody.spending",
+      "status": "answered",
+      "optionId": "federation",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. Users sign intents, but the criterion includes backing custody, not only ordinary account authorization. Private balances are backed by a Treasury account and redeemed through a mandatory PoA bridge; the terms say bridge validators or authorities may control assets in flight. This is authority-held bridge backing, rather than purely user-key custody or a validity-proven canonical bridge. The signers and threshold are not established, so no claim of a named independent federation is made."
+    },
+    {
+      "criterionId": "custody.self-custody.backing",
+      "status": "answered",
+      "optionId": "committee-bridge",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. IMTs are 1:1 backed by tokens in the public Treasury and are minted/redeemed through the Private PoA Bridge. The authority-based bridge fits the committee/authority bridge category; no validity-proof canonical bridge is established. This identifies the documented architecture, without inventing a bridge threshold or operator roster."
+    },
+    {
+      "criterionId": "custody.self-custody.recoverability",
+      "status": "answered",
+      "optionId": "no",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The rubric requires publicly available recovery data and sufficient user keys. FAR has no public networking and its RPC requires authenticated access; private balances and history come from a required User-Session service. User-held signing keys alone cannot reconstruct and spend the full private state from public data if this infrastructure disappears."
+    },
+    {
+      "criterionId": "custody.pause.pause-fn",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Published verifier source contains pause roles, and the service terms warn of pause/unpause powers. However, the current source revision is not matched to deployed FAR bytecode or its live role grants; it does not establish whether one entity, a multisig fast path or delayed governance controls the protocol pause. Quote-time SHIELD restrictions alone are not equated to a chain-level pause."
+    },
+    {
+      "criterionId": "custody.pause.halt",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Seven permissioned validators are advertised, but the source does not establish their names, independent ownership, voting weights, threshold for liveness, infrastructure control or a halt switch. The small-set option requires at least three independent parties. Counting advertised validators alone cannot prove that threshold."
+    },
+    {
+      "criterionId": "custody.pause.exits-during-pause",
+      "status": "answered",
+      "optionId": "no",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. Every documented unshield requires FAR token burning and bridge processing to release Treasury backing. The service terms explicitly permit blocking, freezing or rejecting bridged withdrawals; no always-available exit exception is documented. Thus the reference withdrawal route is not pause-resistant. This answer concerns the required bridge route, not a claim about a verified global FAR pause transaction."
+    },
+    {
+      "criterionId": "custody.pause.track-record",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. A dated source tracking FAR chain/protocol halts over the relevant year was not accessible or identified. General NEAR mainnet uptime, individual interface availability and lack of search results cannot prove a clean FAR track record. No incident count is invented."
+    },
+    {
+      "criterionId": "custody.freeze.blocklist",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Published verifier code implements force_lock_account, and the official terms warn that administrative roles may lock accounts. This rules out awarding absence from documentation silence, but the current public source is not proven to match deployed FAR and the live roles are not established. Whether a native FAR capability is currently enforced protocol-wide remains unsettled; third-party asset screening is scored separately."
+    },
+    {
+      "criterionId": "custody.freeze.seizure",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The current verifier source implements forced transfers and the terms warn of administrative balance-transfer/withdrawal powers. These are material adverse context, but deployed FAR linkage and active permissions remain unverified. An issuer-only answer would ignore possible broader powers; impossible is unsupported. The evaluation therefore leaves the precise deployed seizure capability unknown."
+    },
+    {
+      "criterionId": "custody.freeze.systemic",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Private IMTs share Treasury backing, so a restriction on that escrow is a concentration risk. The sources do not establish the exact deployed asset contract/issuer blacklist path needed to prove one blacklist action freezes all holders of a particular backing asset. Neither native per-user isolation nor a specific live systemic issuer freeze is assumed."
+    },
+    {
+      "criterionId": "custody.exit.unilateral",
+      "status": "answered",
+      "optionId": "none",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The documented exit requires a FAR burn and mandatory Private PoA Bridge release of Treasury backing; the bridge is request-driven and access is controlled. This is not a unilateral live exit if the required operator disappears or refuses service. Solver recover intents cover failed settlement, not escape from a hostile/offline bridge."
+    },
+    {
+      "criterionId": "custody.exit.window",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The public source includes direct code deployment by an upgrade role, and the terms warn that governance changes may take effect without individual notice. Neither source establishes the live FAR upgrade account, delay, public proposal visibility or withdrawal time. The exact net exit window is unknown; no immutable/infinite or guaranteed delay score is awarded."
+    },
+    {
+      "criterionId": "custody.exit.gatekeeper",
+      "status": "answered",
+      "optionId": "can-refuse",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. Unshielding depends on the private bridge processing the burn and releasing public backing. The applicable service terms allow bridge transfers to be blocked or rejected. No public user-controlled fallback that bypasses this bridge is specified; normal public withdrawal after an accepted unshield does not remove that gate."
+    },
+    {
+      "criterionId": "custody.access.entry",
+      "status": "answered",
+      "optionId": "screened",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The reference client uses 1Click quote and bridge routes. Automated address checks operate on integrated quote flows, and the applicable terms explicitly permit restrictions on bridging/deposits. This is screened entry for the reference route, not a claim that every user must complete KYC or that all alternative routes share identical enforcement."
+    },
+    {
+      "criterionId": "custody.access.private-exit",
+      "status": "answered",
+      "optionId": "gate",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The documented private exit requires the same bridge and 1Click processing, and bridge screening can block or reject transfers. No always-live public fallback from an existing FAR balance that bypasses the private bridge is established. The refundable foreign-to-foreign deposit and solver recover flows are not escape routes for an embedded Confidential Account."
+    },
+    {
+      "criterionId": "custody.access.screening",
+      "status": "answered",
+      "optionId": "address-screening",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The current implementation compares addresses in quote requests to external risk databases (including TRM, AMLBot/PureFi and Binance AML). This is third-party screening of public addresses, not a user-generated zero-knowledge proof. Possible developer KYB and geographic restrictions do not establish mandatory end-user identity disclosure as the normal selected path."
+    },
+    {
+      "criterionId": "programmability.contracts.model",
+      "status": "answered",
+      "optionId": "fixed",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The evidenced live FAR integration offers ledger transfers, token-diff swaps and shield/unshield actions. It is scored as fixed-function private actions. Being a NEAR fork does not establish that third parties can deploy general-purpose private programs."
+    },
+    {
+      "criterionId": "programmability.contracts.deployment",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. FAR is permissioned and solver admission is gated, but deployer rights are unspecified. A solver allowlist is not a contract-deployer allowlist, and public NEAR deployment tutorials cannot establish open FAR deployment. No private contract deployment policy or deployed third-party example was verified."
+    },
+    {
+      "criterionId": "programmability.contracts.standards",
+      "status": "answered",
+      "optionId": "emerging",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The system documents IMT private asset identifiers and versioned signed-intent conventions. These establish an emerging private integration interface. Private NFT standards and broad use by several independent private applications were not verified, so established standards are not credited."
+    },
+    {
+      "criterionId": "programmability.contracts.accounts",
+      "status": "answered",
+      "optionId": "contracts",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The private path uses contract-ledger accounts and off-chain wallet signatures; the relay verifies signatures against public intents.near while reading FAR balances. This is contract-based account abstraction. Public NEAR native multi-key features do not establish arbitrary native custom authentication or recovery in FAR."
+    },
+    {
+      "criterionId": "programmability.composability.private-private",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Private atomic balance settlement inside intents.far does not establish atomic private function calls between different contracts. No deployed FAR intercontract example or call semantics were located. Public NEAR cross-contract capabilities are not substituted for private-system evidence."
+    },
+    {
+      "criterionId": "programmability.composability.private-public",
+      "status": "answered",
+      "optionId": "no",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The documented reference path uses separate public and FAR environments with bridge-mediated shield and unshield requests. Public interaction requires releasing funds to the public environment; there is no documented atomic public/private call in one transaction. This describes the evidenced path, not an assertion that future adapters are impossible."
+    },
+    {
+      "criterionId": "programmability.composability.liquidity",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Shielding a solver's own liquidity and moving backing through the bridge do not establish access to existing public AMMs or lending contracts while preserving a confidential user identity. No specific live public-DeFi adapter for the embedded Confidential Account was established."
+    },
+    {
+      "criterionId": "programmability.composability.cross-domain",
+      "status": "answered",
+      "optionId": "public-legs",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The mandatory Private PoA Bridge conveys shield and burn/release requests between FAR and public NEAR. This is limited public/private asset messaging, not arbitrary confidential cross-chain calls. Foreign-to-foreign swaps and unrelated Chain Signatures are not credited as private execution composability."
+    },
+    {
+      "criterionId": "programmability.blending.granularity",
+      "status": "answered",
+      "optionId": "per-contract",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. Public and private balances occupy different ledger contracts, intents.near and intents.far. Integrators select balance channels rather than marking arbitrary functions or variables private. Per-contract captures this coarse ledger-level choice; a separate Confidential Account does not establish fine-grained hybrid programming."
+    },
+    {
+      "criterionId": "programmability.blending.private-reads",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The relay reads public signature authorization and FAR balances, but that is not a privacy/consistency guarantee for application logic reading public price or configuration state. No live FAR read primitive establishing concealment of the read set or consistency was verified."
+    },
+    {
+      "criterionId": "programmability.blending.crossing",
+      "status": "answered",
+      "optionId": "steps",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. Values cross between public NEAR and FAR through explicit shield/unshield steps, using bridge-mediated mint/burn and release. This fits separate steps rather than native atomic public/private state movement."
+    },
+    {
+      "criterionId": "programmability.disclosure.primitives",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. May architecture and July GA material still describe account-level view keys as planned. No released app-facing disclosure primitive or view-key API was located. Roadmap language cannot establish a live native or limited mechanism; incomplete implementation visibility also prevents a categorical universal absence claim."
+    },
+    {
+      "criterionId": "programmability.disclosure.compliance-proofs",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The documented compliance mechanism screens request addresses against AML databases, rather than having users prove private compliance statements. No native association-set, credential-attribute or non-sanction proof interface was verified. Ordinary address screening is not credited as a private cryptographic proof, while evidence is insufficient to assert universal absence."
+    },
+    {
+      "criterionId": "programmability.disclosure.verifiable",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Planned view keys and lawful disclosure statements do not establish live completeness/correctness proofs for disclosed FAR history. No scoped disclosure response format or cryptographic completeness guarantee was located. A hypothetical plaintext export is not credited without a verified live disclosure mechanism."
+    },
+    {
+      "criterionId": "programmability.developer.toolchain",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. TypeScript/API integration supports fixed confidential actions, but does not establish a language, debugger and test framework for third-party private contracts. Generic public NEAR Rust/WASM tooling and the current public Verifier source are not evidence of a FAR private deployment toolchain."
+    },
+    {
+      "criterionId": "programmability.developer.local-dev",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Public Verifier source provides integration tests, but no local FAR plus private relay and bridge environment was verified. No public testnet does not prove absence of a local sandbox. Public NEAR tests cannot be credited as full end-to-end confidential test support without a supported private-system fixture."
+    },
+    {
+      "criterionId": "programmability.developer.sdks",
+      "status": "answered",
+      "optionId": "one",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. near.com exposes the reference Confidential Account path, and the confidential integration guide uses the Intents SDK. At least one supported SDK/wallet path is established. No count of multiple independent wallets with released Confidential Account functionality was verified; ordinary public Intents integrations are not counted."
+    },
+    {
+      "criterionId": "programmability.developer.familiarity",
+      "status": "answered",
+      "optionId": "mainstream",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The available confidential integration uses mainstream TypeScript and REST/WebSocket APIs, with mode/configuration changes to an existing solver. This credits familiarity of actual fixed-action integration tooling without claiming general-purpose private-contract deployment."
+    },
+    {
+      "criterionId": "programmability.performance.proving-time",
+      "status": "not_applicable",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The reference confidential path does not require user-generated client-side cryptographic proofs. Client proving time is not applicable under the rubric; FAR finality and swap latency are not used as proof-time measurements."
+    },
+    {
+      "criterionId": "programmability.performance.throughput",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. No sustained live FAR private-transaction throughput measurement was located. This option explicitly includes unknown throughput. The approximately 200 ms finality claim is latency, not TPS; public NEAR theoretical peaks and aggregate Intents volume are outside this measurement."
+    },
+    {
+      "criterionId": "programmability.performance.cost",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Generic fees name the public intents.near ledger and 1Click quote schedules, but do not establish a typical all-in $1,000 confidential-to-confidential transfer cost through near.com. Foreign-chain gas, partner fee schedules and swaps are not silently substituted for the scoped P2P private transfer. No transaction or paid quote was executed."
+    },
+    {
+      "criterionId": "governance.upgrades.upgradeability",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Pinned public near/intents code contains DAO/Upgrader-authorized replacement deployment, but is not matched to deployed intents.far or the private bridge. An external controller may impose additional rules. No deployed private-system role state or enforceable notice delay was verified, so neither immutable nor instant upgrades are asserted."
+    },
+    {
+      "criterionId": "governance.upgrades.emergency",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. No deployed FAR/bridge emergency bypass policy, council signers or threshold was verified. Public NEAR governance and MPC image voting do not establish private-system permissions. Missing evidence supports neither no emergency path nor a particular multisig/council classification."
+    },
+    {
+      "criterionId": "governance.upgrades.verifier",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The system has public account-signature checks, FAR execution and bridge verification, but no complete deployed verifier/attestation-key change policy was verified. Absence of user ZK circuits does not settle verification administration, and this criterion does not allow N/A. Public MPC governance is not imported as private bridge control."
+    },
+    {
+      "criterionId": "governance.roles.scope",
+      "status": "answered",
+      "optionId": "funds-or-privacy",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. Privileged admission controls gate the confidential solver relay, while authorized SHIELD consumers can impose scoped delay on live integrated 1Click quotes. These roles affect execution access/liveness through the private integration, exceeding advisory or fee-only roles. This is a bounded execution-control finding, not proof of seizure or universal bridge pausing."
+    },
+    {
+      "criterionId": "governance.roles.holders",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Defuse is identified as the relay access team and SHIELD documents operational participants, but the full FAR/bridge role holders and signer independence/thresholds are not supplied. A complete single-key or multisig classification cannot be established from a named contact team."
+    },
+    {
+      "criterionId": "governance.roles.transparency",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Named access contacts and operational permission models do not identify every FAR/bridge holder or public timing of role changes. The source declares roles without matching deployed private-system holder state. Complete role inventory transparency is therefore unverified."
+    },
+    {
+      "criterionId": "governance.process.control",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Restricted FAR participation and relay admission do not specify who can ultimately impose FAR or private bridge upgrades. Public NEAR social consensus, Foundation activity and token governance cannot be assumed to govern this private fork. No private-system authorization hierarchy or ultimate-controller statement was verified."
+    },
+    {
+      "criterionId": "governance.process.public-process",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The dated changelog records releases, but does not prove that FAR/bridge decisions are public proposals executed on-chain. No proposal-to-execution record was verified. Failure to locate records is not presented as proof of an opaque governance process."
+    },
+    {
+      "criterionId": "governance.process.concentration",
+      "status": "answered",
+      "optionId": "unclear",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. Research did not locate FAR/bridge governance voting rules, role-holder distribution or threshold state needed to establish whether one entity can pass changes alone. The rubric explicitly supplies Unclear for this logged research gap. Public NEAR token distribution and nominal private validator count do not resolve private-system voting concentration."
+    },
+    {
+      "criterionId": "decentralization.operators.producers",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Seven permissioned validators are advertised, but names, independent ownership, voting weights and live admission configuration are not established. The rubric counts independent operators rather than validator keys; the public NEAR validator set is outside this private-host criterion."
+    },
+    {
+      "criterionId": "decentralization.operators.entry",
+      "status": "answered",
+      "optionId": "no",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. FAR is explicitly permissioned and has no public networking. Becoming a public NEAR validator does not grant entry to the private FAR producer set."
+    },
+    {
+      "criterionId": "decentralization.operators.concentration",
+      "status": "answered",
+      "optionId": "unclear",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. No public FAR voting-weight or independent-operator distribution was established. The advertised seven validators do not establish an ownership or client-diversity distribution."
+    },
+    {
+      "criterionId": "decentralization.censorship.forced-inclusion",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The documented path requires private RPC and bridge processing, but no bounded forced-inclusion mechanism is established for FAR. No such guarantee is inferred from public NEAR inclusion; unavailable deployed node code prevents asserting the absolute absence of all alternatives."
+    },
+    {
+      "criterionId": "decentralization.censorship.observed",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. No dated public dashboard measuring the fraction of FAR blocks censoring transactions was found. Sanctions screening and access controls are not a measured block censorship share."
+    },
+    {
+      "criterionId": "decentralization.censorship.indistinguishable",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. No deployed transaction/enclave topology establishes which private fields FAR producers inspect. Closed networking hides transactions from the public but does not establish indistinguishability to producers."
+    },
+    {
+      "criterionId": "decentralization.proving.client-side",
+      "status": "answered",
+      "optionId": "no",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The reference product explicitly uses private-shard execution without client-side proof generation. Signing an intent is not generating a zero-knowledge transaction proof."
+    },
+    {
+      "criterionId": "decentralization.proving.provers",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. No separate block-proving implementation, verifier or live prover network for FAR was established. Absence of client-side proofs does not itself prove that block proving is unnecessary or permissionless."
+    },
+    {
+      "criterionId": "decentralization.proving.verification",
+      "status": "answered",
+      "optionId": "committee",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. FAR is described as permissioned PBFT and asset release as a PoA bridge. Apply the rubric option for known-party re-execution/honest-majority committees; public NEAR consensus does not independently verify confidential FAR state."
+    },
+    {
+      "criterionId": "decentralization.settlement.settlement",
+      "status": "answered",
+      "optionId": "committee",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. Confidential swaps execute on FAR and settle back to public NEAR through the Private PoA Bridge. No public validity proof of private state is established; the evaluated settlement trust boundary is the private committee/bridge, rather than public NEAR consensus alone."
+    },
+    {
+      "criterionId": "decentralization.settlement.data",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. FAR has restricted network/RPC access, but that fact does not establish whether data availability is committee-held, operator-only or supported by an additional recovery/publication mechanism. No deployed data-availability/recovery topology is public. The public NEAR ledger cannot be substituted for private FAR state."
+    },
+    {
+      "criterionId": "security.soundness.open-critical",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. No complete dated disclosure record for FAR, the private bridge and reference client establishes presence or absence of an unpatched critical issue. Empty public verifier advisories do not prove that the whole system has none."
+    },
+    {
+      "criterionId": "security.soundness.history",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. Shared ecosystem bridge incidents exist, but their relationship to the selected confidential route and severity is unsettled. No dated source supplies a complete scoped 24-month critical-issue count; neither zero nor a particular exploit count is assigned."
+    },
+    {
+      "criterionId": "security.soundness.defense-in-depth",
+      "status": "answered",
+      "optionId": "one",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. SHIELD documents one live quote-time policy layer that can delay requests based on incidents and anomalies without a governance vote. Credit one immediate guard in the required 1Click route. Broader bridge/solver controls are rolling out or vision, not additional proven deployed layers."
+    },
+    {
+      "criterionId": "security.assurance.open-source",
+      "status": "answered",
+      "optionId": "partial",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The mandatory public verifier is documented as open source; public contract and SDK repositories exist. Exact FAR node/bridge and default near.com client source correspondence is not established. Credit only the published portion, without claiming all privacy-critical components are open source."
+    },
+    {
+      "criterionId": "security.assurance.reproducibility",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. No source-to-WASM or enclave-image match for deployed intents.far/private bridge was established. Public intents.near account hashes confirm public account state only. No reproduction of the deployed privacy-critical configuration is assumed."
+    },
+    {
+      "criterionId": "security.assurance.audits",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. The official security page lists general Intents contract audits, but no report was matched to live FAR/private-bridge/client revisions. Public NEAR, Chain Signatures and Omnibridge audits are not automatically audits of this private system."
+    },
+    {
+      "criterionId": "security.assurance.formal-verification",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. No machine-checked proof for the selected live FAR contract/bridge was identified. Consensus validation, signatures and TEE attestation are not formal verification of the implementation."
+    },
+    {
+      "criterionId": "security.assurance.bounty",
+      "status": "answered",
+      "optionId": "smaller",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. An active verifier bounty names near/intents and caps critical rewards at $300,000, also subject to 10% affected funds. Credit the public verifier component below $1M; coverage of FAR nodes/private bridge and near.com is not established."
+    },
+    {
+      "criterionId": "security.maturity.status",
+      "status": "answered",
+      "optionId": "mainnet",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. General availability is announced, and the dated May architecture article describes working confidential near.com balances, transfers, swaps and withdrawals. No current alpha/beta label is identified. Credit product availability; exact FAR binaries and operator independence remain unverified."
+    },
+    {
+      "criterionId": "security.maturity.age",
+      "status": "answered",
+      "optionId": "3m",
+      "decision": "accept",
+      "reason": "Accepted within the documented system boundary. The May 27, 2026 article describes confidential near.com deposits, withdrawals, swaps and transfers as already available. The selected privacy route is at least three months and under a year old by October 7. July B2B rollout is another milestone; public NEAR launch age is not used."
+    },
+    {
+      "criterionId": "security.maturity.continuity",
+      "status": "unknown",
+      "optionId": null,
+      "decision": "accept",
+      "reason": "Research completed; retain unknown without asserting an adverse fact. No complete dated record of forced FAR balance/state migrations was found. A state_migrate function and changelog feature updates do not prove that users have or have never been forced to withdraw and redeposit."
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+[
+  {
+    "criterionId": "trust.disclosure.granularity",
+    "searched": [
+      "/private/tmp/near-trust-intents/contracts/defuse/src/accounts.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AccountManager, public_keys_of, account-key rotation, view_key/viewing_key/disclosure scan",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AccountManager, public_keys_of, account-key rotation, view_key/viewing_key/disclosure scan",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/state.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AccountManager, public_keys_of, account-key rotation, view_key/viewing_key/disclosure scan",
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AccountManager, public_keys_of, account-key rotation, view_key/viewing_key/disclosure scan",
+      "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+    ],
+    "note": "Reviewed account APIs and u128 balance storage plus the intent enum. User signing-key management is present; no scoped disclosure API was identified in the reviewed public core. It cannot settle granularity of any independent FAR history/view-key service. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+    "codeChecked": true
+  },
+  {
+    "criterionId": "trust.crypto.hardware",
+    "searched": [
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, token_diff; case-insensitive word-boundary TEE/TDX/SGX/attestation/encrypt/decrypt scan across contracts/defuse and crates/near, crates/primitives, crates/signatures",
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/engine/state/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, token_diff; case-insensitive word-boundary TEE/TDX/SGX/attestation/encrypt/decrypt scan across contracts/defuse and crates/near, crates/primitives, crates/signatures",
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/token_diff.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, token_diff; case-insensitive word-boundary TEE/TDX/SGX/attestation/encrypt/decrypt scan across contracts/defuse and crates/near, crates/primitives, crates/signatures",
+      "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+    ],
+    "note": "Reviewed deterministic public ledger arithmetic and account state. The searched public core does not implement the FAR networking/enclave privacy boundary; no matches for the targeted TEE/encryption mechanisms were found. Bridge TEE marketing does not determine whether confidentiality depends on that hardware. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+    "codeChecked": true
+  },
+  {
+    "criterionId": "custody.pause.halt",
+    "searched": [
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Pausable, PauseManager, UnpauseManager, #[pause] on imt_burn, upgrade",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/tokens/imt.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Pausable, PauseManager, UnpauseManager, #[pause] on imt_burn, upgrade",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/upgrade.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Pausable, PauseManager, UnpauseManager, #[pause] on imt_burn, upgrade",
+      "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+    ],
+    "note": "Public core has contract-level pause roles and a paused IMT burn entry point. Contract pausing differs from halting the FAR host chain. No private consensus/node implementation was available to establish chain halt powers or their absence. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+    "codeChecked": true
+  },
+  {
+    "criterionId": "programmability.contracts.deployment",
+    "searched": [
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/upgrade.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed upgrade, deploy_contract, add_full_access_key, AuthCall, commented state_init, DeterministicStateInit",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/admin.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed upgrade, deploy_contract, add_full_access_key, AuthCall, commented state_init, DeterministicStateInit",
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/auth.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed upgrade, deploy_contract, add_full_access_key, AuthCall, commented state_init, DeterministicStateInit",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/auth_call.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed upgrade, deploy_contract, add_full_access_key, AuthCall, commented state_init, DeterministicStateInit",
+      "/private/tmp/near-trust-intents/crates/near/promise/src/actions/state_init.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed upgrade, deploy_contract, add_full_access_key, AuthCall, commented state_init, DeterministicStateInit",
+      "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+    ],
+    "note": "Public code can upgrade its own contract and includes generic deployment-related promise primitives. AuthCall state_init integration is commented out. None of this establishes third-party deployment permission or a deployment endpoint on FAR. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+    "codeChecked": true
+  },
+  {
+    "criterionId": "programmability.composability.private-private",
+    "searched": [
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AuthCall, Promise::new, on_auth, auth_call, concurrent promise warning",
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/auth.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AuthCall, Promise::new, on_auth, auth_call, concurrent promise warning",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/auth_call.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AuthCall, Promise::new, on_auth, auth_call, concurrent promise warning",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/state.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed AuthCall, Promise::new, on_auth, auth_call, concurrent promise warning",
+      "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+    ],
+    "note": "Public core has AuthCall creating asynchronous on_auth promises; the intent-container warning says promises from different intents execute concurrently. This is not evidence of atomic calls between arbitrary private FAR contracts, nor proof such capabilities are absent from the private fork. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+    "codeChecked": true
+  },
+  {
+    "criterionId": "programmability.blending.private-reads",
+    "searched": [
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/engine/state/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, auth_call, wnear_id, token_balances",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/state.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, auth_call, wnear_id, token_balances",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/state.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed StateView, balance_of, auth_call, wnear_id, token_balances",
+      "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+    ],
+    "note": "Reviewed ledger state access and external promise calls. No private read-set concealment or coherent public-to-FAR snapshot guarantee is supplied by these public interfaces. Private oracle/bridge runtime remains unavailable. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+    "codeChecked": true
+  },
+  {
+    "criterionId": "programmability.disclosure.primitives",
+    "searched": [
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/accounts.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/execute.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/token_diff.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+    ],
+    "note": "Reviewed published signing-key APIs, action enumeration and plain public event fields. The targeted disclosure/proof terms produced no matches in the selected public-core scan. Ordinary signature checks and event hashes do not establish live scoped disclosure, private compliance statements or completeness/correctness proofs for confidential FAR data. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+    "codeChecked": true
+  },
+  {
+    "criterionId": "programmability.disclosure.compliance-proofs",
+    "searched": [
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/accounts.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/execute.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/token_diff.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+    ],
+    "note": "Reviewed published signing-key APIs, action enumeration and plain public event fields. The targeted disclosure/proof terms produced no matches in the selected public-core scan. Ordinary signature checks and event hashes do not establish live scoped disclosure, private compliance statements or completeness/correctness proofs for confidential FAR data. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+    "codeChecked": true
+  },
+  {
+    "criterionId": "programmability.disclosure.verifiable",
+    "searched": [
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/accounts.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/accounts/mod.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/src/contract/intents/execute.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "/private/tmp/near-trust-intents/contracts/defuse/core/src/intents/token_diff.rs @ 4127e8e8fbe4206fa910c4fe7f8028c9e0972348; reviewed Intent enum, AccountManager, ExecuteInspector events, TokenDiffEvent; view_key/viewing_key/disclosure/association_set/sanction/compliance_proof scan across public core and support crates",
+      "Deployed FAR node/private-bridge/enclave runtime source and code-hash correspondence: unavailable in supplied public core and archived sources"
+    ],
+    "note": "Reviewed published signing-key APIs, action enumeration and plain public event fields. The targeted disclosure/proof terms produced no matches in the selected public-core scan. Ordinary signature checks and event hashes do not establish live scoped disclosure, private compliance statements or completeness/correctness proofs for confidential FAR data. This was a bounded public-source code review, not a verification of deployed FAR. No positive absence conclusion is derived from the missing private runtime.",
+    "codeChecked": true
+  }
+]
