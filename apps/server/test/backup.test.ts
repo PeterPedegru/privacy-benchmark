@@ -5,6 +5,7 @@
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { sql } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { backupBeforeMigrating, dailyBackup, exportDatabase, listBackups, pruneBackups, restoreExport } from "../src/db/backup.ts";
 import { closeDb, type DB, openDb, schema } from "../src/db/index.ts";
@@ -62,6 +63,16 @@ describe("exports", () => {
     const fresh = await openDb(quiet);
     await expect(restoreExport(fresh, bad)).rejects.toThrow(/isn't a privacy-benchmark export/);
     await closeDb(fresh);
+  });
+
+  it("exports a database that predates this build's tables (the export before the migration that adds them)", async () => {
+    const old = await openDb(quiet);
+    await old.execute(sql`DROP TABLE weighting_ballots`);
+    await old.execute(sql`DROP TABLE weighting_polls`);
+    const file = join(tmp, "before-migration.jsonl.gz");
+    expect(await exportDatabase(old, file)).toBeGreaterThanOrEqual(0);
+    expect(existsSync(file)).toBe(true);
+    await closeDb(old);
   });
 
   it("takes an export before migrating and keeps the newest three", async () => {

@@ -118,6 +118,9 @@ export async function exportDatabase(db: DB, file: string): Promise<number> {
     await write({ format: "privacy-benchmark-export", version: 1, at: new Date().toISOString(), migrations });
     for (const table of EXPORT_TABLES) {
       const name = getTableConfig(table).name;
+      // A table this build adds doesn't exist yet when the export runs before the migration that creates it.
+      const [exists] = await query<{ t: string | null }>(db, sql`SELECT to_regclass(${`public.${name}`})::text AS t`);
+      if (!exists?.t) continue;
       const key = keyOf(table);
       await write({ table: name });
       let after: unknown = null;
